@@ -77,6 +77,12 @@ if (typeof window.rnw === 'object' && typeof window.rnw.tamaro === 'object') {
 
    // switch campaign according to payment method selected
    window.rnw.tamaro.events.paymentMethodChanged.subscribe(function(event) {
+      const pm = event.data.api.paymentForm.data.payment_method;
+      const pp = event.data.api.paymentForm.data.purpose; 
+      switch (true) {
+         case ()
+      }
+
       switch(event.data.api.paymentForm.data.payment_method) {
          case 'twi':     //Twint
          case 'vis':     //Kreditkarte - Visa
