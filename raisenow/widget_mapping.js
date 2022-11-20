@@ -1,8 +1,8 @@
-// 1 determine language of widget
-// 1.1 get page language from meta tag
+// determine language of widget
+// get page language from meta tag - preferred over uri
 const pageLang_meta = document.head.querySelector('meta[http-equiv="content-language"]').content;
 if (typeof pageLang_meta === 'undefined' || pageLang_meta === '') {
-   // 1.2 get page language from uri
+   // get page language from uri
    if (window.location.href.match(/\/fr\//)) {
       const pageLang = 'fr';
    } else if (window.location.href.match(/\/it\//)) {
@@ -10,7 +10,7 @@ if (typeof pageLang_meta === 'undefined' || pageLang_meta === '') {
    } else if (window.location.href.match(/\/en\//)) {
       const pageLang = 'en';
    } else {
-      const pageLang = 'de'; // precatically defines the global fallback
+      const pageLang = 'de'; // practically defines the global fallback
    }
 } else {
    const pageLang = pageLang_meta;
@@ -77,112 +77,149 @@ if (typeof window.rnw === 'object' && typeof window.rnw.tamaro === 'object') {
 
    // switch campaign according to payment method selected
    window.rnw.tamaro.events.paymentMethodChanged.subscribe(function(event) {
-      const pm = event.data.api.paymentForm.data.payment_method;
-      const pp = event.data.api.paymentForm.data.purpose; 
-      switch (true) {
-         case ()
-      }
-
       switch(event.data.api.paymentForm.data.payment_method) {
-         case 'twi':     //Twint
-         case 'vis':     //Kreditkarte - Visa
-         case 'eca':     //Kreditkarte - Mastercard
-         case 'pfc':     //Postfinance
-            if (event.data.api.paymentForm.data.purpose == 'p1'||'p2'||'p3'||'p6'||'p11'||'p12'||'p15'||'p16') {
-               event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FKzKQAW';}
-            if (event.data.api.paymentForm.data.purpose == 'p4') {
-               event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FKztQAG';}
-            if (event.data.api.paymentForm.data.purpose == 'p5') {
-               event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL0vQAG';}
-            if (event.data.api.paymentForm.data.purpose == 'p7') {
-               event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLJqQAO';}            
-            if (event.data.api.paymentForm.data.purpose == 'p9') {
-               event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLAyQAO';}            
-            if (event.data.api.paymentForm.data.purpose == 'p10') {
-               event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL8TQAW';}
-            if (event.data.api.paymentForm.data.purpose == 'p13') {
-               event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL8sQAG';} 
-            if (event.data.api.paymentForm.data.purpose == 'p14') {
-               event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL08QAG';}               
-            if (event.data.api.paymentForm.data.purpose == 'p17') {
-               event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLBIQA4';}
-            if (event.data.api.paymentForm.data.purpose == 'p18') {
-               event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL9qQAG';} 
-            if (event.data.api.paymentForm.data.purpose == 'p19') {
-               event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FSyFQAW';} 
-            
+         case 'twi':     // Twint
+         case 'vis':     // Kreditkarte - Visa
+         case 'eca':     // Kreditkarte - Mastercard
+         case 'pfc':     // Postfinance
+         default:
+            switch (event.data.api.paymentForm.data.purpose) {
+               case 'p1':
+               case 'p2':
+               case 'p3':
+               case 'p6':
+               case 'p11':
+               case 'p12':
+               case 'p15':
+               case 'p16':
+               default:
+                  event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FKzKQAW';
+                  break;
+               case 'p4':
+                  event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FKztQAG';
+                  break;
+               case 'p5':
+                  event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL0vQAG';
+                  break;
+               case 'p7':
+                  event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLJqQAO';
+                  break;
+               case 'p9':
+                  event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLAyQAO';
+                  break;
+               case 'p10':
+                  event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL8TQAW';
+                  break;
+               case 'p13':
+                  event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL8sQAG';
+                  break;
+               case 'p14':
+                  event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL08QAG';
+                  break;
+               case 'p17':
+                  event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLBIQA4';
+                  break;
+               case 'p18':
+                  event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL9qQAG';
+                  break;
+               case 'p19':
+                  event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FSyFQAW';
+                  break;
+            }
             break;	    
-          case 'pp':      //Paypal
-              if(event.data.api.paymentForm.data.purpose == 'p1'||'p2'||'p3'||'p6'||'p11'||'p12'||'15'||'p16'){
-              event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FKzUQAW';}
-              if(event.data.api.paymentForm.data.purpose == 'p4') {
-              event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FKzuQAG';}
-              if(event.data.api.paymentForm.data.purpose == 'p5') {
-              event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL0zQAG';}
-              if(event.data.api.paymentForm.data.purpose == 'p7') {
-              event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLK0QAO';}            
-              if(event.data.api.paymentForm.data.purpose == 'p9') {
-              event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLB8QAO';}            
-              if(event.data.api.paymentForm.data.purpose == 'p10') {
-              event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL8YQAW';}
-              if(event.data.api.paymentForm.data.purpose == 'p13') {
-              event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL8qQAG';}
-              if(event.data.api.paymentForm.data.purpose == 'p14') {
-              event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL0DQAW';}               
-              if(event.data.api.paymentForm.data.purpose == 'p17') {
-              event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLBJQA4';} 
-    if(event.data.api.paymentForm.data.purpose == 'p19') {
-              event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FSyKQAW';} 
-    if(event.data.api.paymentForm.data.purpose == 'p18') {
-              event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLA0QAO';} 
-              break;
-          case 'dd':      //Lastschriftverfahren / Direct Debit
-              if(event.data.api.paymentForm.data.purpose == 'p1'||'p2'||'p3'||'p6'||'p11'||'p12'||'15'||'p16'){
-              event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FKzZQAW';}
-              if(event.data.api.paymentForm.data.purpose == 'p4') {
-              event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL03QAG';}
-              if(event.data.api.paymentForm.data.purpose == 'p5') {
-              event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL10QAG';}
-              if(event.data.api.paymentForm.data.purpose == 'p7') {
-              event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLK5QAO';}            
-              if(event.data.api.paymentForm.data.purpose == 'p9') {
-              event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLBDQA4';}            
-              if(event.data.api.paymentForm.data.purpose == 'p10') {
-              event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL8dQAG';}
-              if(event.data.api.paymentForm.data.purpose == 'p13') {
-              event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL8xQAG';}
-              if(event.data.api.paymentForm.data.purpose == 'p14') {
-              event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL0IQAW';}               
-              if(event.data.api.paymentForm.data.purpose == 'p17') {
-              event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLBNQA4';} 
-    if(event.data.api.paymentForm.data.purpose == 'p18') {
-              event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLA5QAO';}
-              break;
-          case 'ezs':      //Einzahlungsschein
-              if(event.data.api.paymentForm.data.purpose == 'p1'||'p2'||'p3'||'p6'||'p11'||'p12'||'15'||'p16'){
-              event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FKzZQAW';}
-              if(event.data.api.paymentForm.data.purpose == 'p4') {
-              event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL03QAG';}
-              if(event.data.api.paymentForm.data.purpose == 'p5') {
-              event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL10QAG';}
-              if(event.data.api.paymentForm.data.purpose == 'p7') {
-              event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLK5QAO';}            
-              if(event.data.api.paymentForm.data.purpose == 'p9') {
-              event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLBDQA4';}            
-              if(event.data.api.paymentForm.data.purpose == 'p10') {
-              event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL8dQAG';}
-              if(event.data.api.paymentForm.data.purpose == 'p13') {
-              event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL8xQAG';}
-              if(event.data.api.paymentForm.data.purpose == 'p14') {
-              event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL0IQAW';}               
-              if(event.data.api.paymentForm.data.purpose == 'p17') {
-              event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLBNQA4';} 
-    if(event.data.api.paymentForm.data.purpose == 'p19') {
-              event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FSyPQAW';} 
-    if(event.data.api.paymentForm.data.purpose == 'p18') {
-              event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLA5QAO';} 
-              break;     
-          }
-        });
-}
+         case 'pp':      // Paypal
+            switch (event.data.api.paymentForm.data.purpose) {
+               case 'p1':
+               case 'p2':
+               case 'p3':
+               case 'p6':
+               case 'p11':
+               case 'p12':
+               case 'p15':
+               case 'p16':
+               default:
+                  event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FKzUQAW';
+                  break;
+               case 'p4':
+                  event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FKzuQAG';
+                  break;
+               case 'p5':
+                  event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL0zQAG';
+                  break;
+               case 'p7':
+                  event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLK0QAO';
+                  break;
+               case 'p9':
+                  event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLB8QAO';
+                  break;
+               case 'p10':
+                  event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL8YQAW';
+                  break;
+               case 'p13':
+                  event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL8qQAG';
+                  break;
+               case 'p14':
+                  event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL0DQAW';
+                  break;
+               case 'p17':
+                  event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLBJQA4';
+                  break;
+               case 'p18':
+                  event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLA0QAO';
+                  break;
+               case 'p19':
+                  event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FSyKQAW';
+                  break;
+            }
+            break;
+         case 'dd':        // Lastschriftverfahren / Direct Debit
+         case 'ezs':       // Einzahlungsschein
+         case 'qr-bill':   // QR Rechnung
+            switch (event.data.api.paymentForm.data.purpose) {
+               case 'p1':
+               case 'p2':
+               case 'p3':
+               case 'p6':
+               case 'p11':
+               case 'p12':
+               case 'p15':
+               case 'p16':
+               default:
+                  event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FKzZQAW';
+                  break;
+               case 'p4':
+                  event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL03QAG';
+                  break;
+               case 'p5':
+                  event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL10QAG';
+                  break;
+               case 'p7':
+                  event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLK5QAO';
+                  break;
+               case 'p9':
+                  event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLBDQA4';
+                  break;
+               case 'p10':
+                  event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL8dQAG';
+                  break;
+               case 'p13':
+                  event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL8xQAG';
+                  break;
+               case 'p14':
+                  event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL0IQAW';
+                  break;
+               case 'p17':
+                  event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLBNQA4';
+                  break;
+               case 'p18':
+                  event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLA5QAO';
+                  break;
+               // case o19?
+            }
+            break;
+      }
+   });
 
+   // trigger gtm event on completion
+   // tbd
+}
