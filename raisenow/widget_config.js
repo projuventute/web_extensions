@@ -214,7 +214,9 @@ if (typeof window.rnw === 'object' && typeof window.rnw.tamaro === 'object') {
                case 'p18':
                   event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLA5QAO';
                   break;
-               // case o19?
+               case 'p18':
+                  event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FSyPQAW';
+                  break;
             }
             break;
       }
