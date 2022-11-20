@@ -82,7 +82,6 @@ if (typeof window.rnw === 'object' && typeof window.rnw.tamaro === 'object') {
          case 'vis':     // Kreditkarte - Visa
          case 'eca':     // Kreditkarte - Mastercard
          case 'pfc':     // Postfinance
-         default:
             switch (event.data.api.paymentForm.data.purpose) {
                case 'p1':
                case 'p2':
@@ -175,6 +174,7 @@ if (typeof window.rnw === 'object' && typeof window.rnw.tamaro === 'object') {
          case 'dd':        // Lastschriftverfahren / Direct Debit
          case 'ezs':       // Einzahlungsschein
          case 'qr-bill':   // QR Rechnung
+         default:
             switch (event.data.api.paymentForm.data.purpose) {
                case 'p1':
                case 'p2':
