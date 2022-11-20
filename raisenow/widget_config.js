@@ -172,7 +172,7 @@ if (typeof window.rnw === 'object' && typeof window.rnw.tamaro === 'object') {
             }
             break;
          case 'dd':        // Lastschriftverfahren / Direct Debit
-         case 'ezs':       // Einzahlungsschein
+//       case 'ezs':       // Einzahlungsschein
          case 'qr-bill':   // QR Rechnung
          default:
             switch (event.data.api.paymentForm.data.purpose) {
