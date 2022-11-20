@@ -220,6 +220,63 @@ if (typeof window.rnw === 'object' && typeof window.rnw.tamaro === 'object') {
       }
    });
 
-   // trigger gtm event on completion
-   // tbd
+   // trigger tracking (GTM) event on completion
+   if (typeof window.TMSProcessing === 'object') {
+      // agnosticalyze is availabe
+      window.rnw.tamaro.events.paymentComplete.subscribe(function(event) {
+         try {
+            // set secondsToWait to 15 seconds
+            var secondsToWait = 15;
+                  
+            var intervalCounter = 1;
+            intervalLoop = setInterval(function() {
+               if (typeof window.TMSEvent === 'undefined' || Object.keys(window.TMSEvent).length === 0) { // TMSEvent is deleted or empty
+                  clearInterval(intervalLoop);
+                  window.TMSHelper.console('[raiseNow customEventHandler paymentComplete] -> info: triggering DICE');
+                  event_data = {};
+                  event_data['event_eventInfo_type'] = 'raiseNow-paymentComplete';
+                  event_data['event_processing_trigger'] = 'raiseNow-customEventHandler';
+
+                  // ----------------------------------------- //
+                  // tba: other standard data layer variables  //
+                  // ----------------------------------------- //
+                  
+                  event_data['event_data'] = event.data;
+                  // trigger DICE
+                  window.TMSProcessing.dice(event_data);
+               } else if (intervalCounter >= secondsToWait * 2) { // after X * 2 tries = X seconds, stop the loop
+                  clearInterval(intervalLoop);
+                  window.TMSHelper.console('[raiseNow customEventHandler paymentComplete] -> warning: waited too long, DICE not triggered');
+               } else {
+                  window.TMSHelper.console('[raiseNow customEventHandler paymentComplete] -> info: TMSEvent not ready, trying again in 0.5 seconds...');
+                  intervalCounter++;
+               }
+            }, 500);
+         } catch (err) {
+            window.TMSHelper.console("[raiseNow customEventHandler paymentComplete] error:");
+            window.TMSHelper.errorHandler(err);
+         }
+      }
+   } else if (typeof window.dataLayer === 'object') {
+      // agnosticalyze isnt availabe
+      window.rnw.tamaro.events.paymentComplete.subscribe(function(event) {
+         try {
+            window.dataLayer.push({
+               'event': 'raiseNow-paymentComplete'
+
+               // -------------------------------- //
+               // tba: other data layer variables  //
+               // -------------------------------- //
+               
+               , 'event_data': event.data
+            });
+         } catch (err) {
+            window.console.log('[raiseNow customEventHandler paymentComplete] error:');
+            windowconsole.error(err);
+         }
+      }
+   }
+}
+
+      
 }
