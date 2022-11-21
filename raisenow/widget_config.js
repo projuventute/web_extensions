@@ -1,25 +1,34 @@
-// determine language of widget
-// get page language from meta tag - preferred over uri
-const pageLang_meta = document.head.querySelector('meta[http-equiv="content-language"]').content;
-if (typeof pageLang_meta === 'undefined' || pageLang_meta === '') {
-   // get page language from uri
-   if (window.location.href.match(/\/fr\//)) {
-      const pageLang = 'fr';
-   } else if (window.location.href.match(/\/it\//)) {
-      const pageLang = 'it';
-   } else if (window.location.href.match(/\/en\//)) {
-      const pageLang = 'en';
-   } else {
-      const pageLang = 'de'; // practically defines the global fallback
-   }
-} else {
-   const pageLang = pageLang_meta;
-}
-
 if (typeof window.rnw === 'object' && typeof window.rnw.tamaro === 'object') {
+   // determine language of widget
+   // get page language from meta tag - preferred over uri
+   const pageLang_meta = document.head.querySelector('meta[http-equiv="content-language"]').content;
+   if (typeof pageLang_meta === 'undefined' || pageLang_meta === '') {
+      // get page language from uri
+      if (window.location.href.match(/\/fr\//)) {
+         const pageLang = 'fr';
+      } else if (window.location.href.match(/\/it\//)) {
+         const pageLang = 'it';
+      } else if (window.location.href.match(/\/en\//)) {
+         const pageLang = 'en';
+      } else {
+         const pageLang = 'de'; // practically defines the global fallback
+      }
+   } else {
+      const pageLang = pageLang_meta;
+   }
+
+   // set default purpose based on page uri
+   // -> https://support.raisenow.com/hc/en-us/articles/360018786778-Adding-conditions-in-your-configuration
+   if (window.location.href.match(/.*\/meine-spende-rettet-leben.*|.*\/mon-don-sauve-des-vies.*|.*\/la-mia-donazione-salva-delle-vite.*/)) {
+      const defaultPurp = 'p18';
+   } else {
+      const defaultPurp = 'p1';
+   }
+
    // configure raiseNow widget
    window.rnw.tamaro.runWidget('.rnw-widget-container', {
       language: pageLang
+      , defaultPurpose: defaultPurp
       , amounts: [
          {
             "if": "paymentType() == onetime"
