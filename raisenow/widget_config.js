@@ -258,7 +258,7 @@ if (typeof window.rnw === 'object' && typeof window.rnw.tamaro === 'object') {
             window.TMSHelper.console("[raiseNow customEventHandler paymentComplete] error:");
             window.TMSHelper.errorHandler(err);
          }
-      }
+      });
    } else if (typeof window.dataLayer === 'object') {
       // agnosticalyze isnt availabe
       window.rnw.tamaro.events.paymentComplete.subscribe(function(event) {
@@ -276,9 +276,6 @@ if (typeof window.rnw === 'object' && typeof window.rnw.tamaro === 'object') {
             window.console.log('[raiseNow customEventHandler paymentComplete] error:');
             windowconsole.error(err);
          }
-      }
+      });
    }
-}
-
-      
 }
