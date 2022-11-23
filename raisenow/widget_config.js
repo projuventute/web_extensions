@@ -1,3 +1,9 @@
+var widgetContainer = document.getElementsByClassName("rnw-widget-container")[0];
+
+var widgetCore = document.createElement("script");
+widgetCore.setAttribute("src", "https://tamaro.raisenow.com/projuventute/latest/widget.js");
+widgetContainer.append(widgetCore);
+
 if (typeof window.rnw === 'object' && typeof window.rnw.tamaro === 'object') {
    // determine language of widget
    // get page language from meta tag - preferred over uri

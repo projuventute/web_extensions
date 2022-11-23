@@ -38,6 +38,8 @@ var styles = `
    }
 `;
 
-var styleSheet = document.createElement("style");
-styleSheet.innerText = styles;
-document.head.appendChild(styleSheet);
+var widgetContainer = document.getElementsByClassName("rnw-widget-container")[0];
+
+var widgetStyle = document.createElement("style");
+widgetStyle.innerText = styles;
+widgetContainer.append(widgetStyle);
