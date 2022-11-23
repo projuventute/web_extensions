@@ -1,1 +1,5 @@
-https://cdn.jsdelivr.net/combine/gh/projuventute/web_extensions@XYZ/widget_config.min.js,gh/projuventute/web_extensions@XYZ/widget_style.min.js
+https://cdn.jsdelivr.net/combine/gh/projuventute/web_extensions@v0.0.1/raisenow/widget_config.min.js,gh/projuventute/web_extensions@v0.0.1/raisenow/widget_style.min.js
+
+
+https://cdn.jsdelivr.net/npm/raisenow@2.1.5/tamaro-core/widget.min.js
+https://cdn.jsdelivr.net/gh/projuventute/web_extensions@v0.0.1/raisenow/widget_config.js
