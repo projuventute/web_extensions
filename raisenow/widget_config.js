@@ -1,10 +1,4 @@
-var widgetContainer = document.getElementsByClassName("rnw-widget-container")[0];
-
-var widgetCore = document.createElement("script");
-widgetCore.setAttribute("src", "https://tamaro.raisenow.com/projuventute/latest/widget.js");
-widgetCore.setAttribute("defer", ""); // script is added after DOM-ready => to execute it, defer!
-widgetContainer.append(widgetCore);
-
+// config and execute the widget (after the core is added!)
 if (typeof window.rnw === 'object' && typeof window.rnw.tamaro === 'object') {
    // determine language of widget
    // get page language from meta tag - preferred over uri
