@@ -38,8 +38,9 @@ var styles = `
    }
 `;
 
-var widgetContainer = document.getElementsByClassName("rnw-widget-container")[0];
+var widgetContainerStyle = document.getElementsByClassName("rnw-widget-container-style")[0];
+widgetContainerStyle.innerText = styles;
 
-var widgetStyle = document.createElement("style");
-widgetStyle.innerText = styles;
-widgetContainer.append(widgetStyle);
+// var widgetStyle = document.createElement("style");
+// widgetStyle.innerText = styles;
+// widgetContainer.append(widgetStyle);
