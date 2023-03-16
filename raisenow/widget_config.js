@@ -29,10 +29,11 @@ intervalLoopForRnw = setInterval(function () {
 
          // set default purpose based on page uri
          // -> https://support.raisenow.com/hc/en-us/articles/360018786778-Adding-conditions-in-your-configuration
+         var defaultPurp = 'p1'; // declare and set default
          if (window.location.href.match(/.*\/meine-spende-rettet-leben.*|.*\/mon-don-sauve-des-vies.*|.*\/la-mia-donazione-salva-delle-vite.*/)) {
-            const defaultPurp = 'p18';
+            defaultPurp = 'p18';
          } else {
-            const defaultPurp = 'p1';
+            defaultPurp = 'p1';
          }
 
          // configure raiseNow widget
