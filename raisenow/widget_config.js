@@ -1,24 +1,15 @@
-// set secondsToWait to or window.rnw to exist => 15 seconds
-var secondsToWaitForRnw = 15;
-                  
-var intervalCounterForRnw = 1;
-intervalLoopForRnw = setInterval(function() {
-   if (typeof window.rnw === 'object' && typeof window.rnw.tamaro === 'object') { // RaiseNow widget core is ready
-      clearInterval(intervalLoopForRnw);
-      // determine language of widget
-      // get page language from meta tag - preferred over uri
-      const pageLang_meta = document.head.querySelector('meta[http-equiv="content-language"]').content;
-      if (typeof pageLang_meta === 'undefined' || pageLang_meta === '') {
-         // get page language from uri
-         if (window.location.href.match(/\/fr\//)) {
-            const pageLang = 'fr';
-         } else if (window.location.href.match(/\/it\//)) {
-            const pageLang = 'it';
-         } else if (window.location.href.match(/\/en\//)) {
-            const pageLang = 'en';
-         } else {
-            const pageLang = 'de'; // practically defines the global fallback
-         }
+if (typeof window.rnw === 'object' && typeof window.rnw.tamaro === 'object') {
+   // determine language of widget
+   // get page language from meta tag - preferred over uri
+   const pageLang_meta = document.head.querySelector('meta[http-equiv="content-language"]').content;
+   if (typeof pageLang_meta === 'undefined' || pageLang_meta === '') {
+      // get page language from uri
+      if (window.location.href.match(/\/fr\//)) {
+         const pageLang = 'fr';
+      } else if (window.location.href.match(/\/it\//)) {
+         const pageLang = 'it';
+      } else if (window.location.href.match(/\/en\//)) {
+         const pageLang = 'en';
       } else {
          const pageLang = pageLang_meta;
       }

@@ -1,5 +1,5 @@
 // inject styles to page
-var styles = `
+var widgetStyleInnerText = `
    #tamaro-widget.tamaro-widget .btn-text {
    	text-transform: uppercase !important;
    }
@@ -38,6 +38,10 @@ var styles = `
    }
 `;
 
-var styleSheet = document.createElement("style");
-styleSheet.innerText = styles;
-document.head.appendChild(styleSheet);
+// var widgetContainer = document.getElementsByClassName("rnw-widget-container")[0];
+
+// var widgetStyle = document.createElement("style");
+// widgetStyle.innerText = widgetStyleInnerText;
+// widgetContainer.append(widgetStyle);
+
+document.head.innerHTML += '<style>' + widgetStyleInnerText + '</style>';
