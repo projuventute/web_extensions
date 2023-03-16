@@ -1,3 +1,6 @@
+window.console.log('     widget config start');
+
+
 // set secondsToWait to 15 seconds
 var secondsToWaitForRnw = 15;
 
@@ -308,3 +311,5 @@ intervalLoopForRnw = setInterval(function () {
       intervalCounterForRnw++;
    }
 }, 500);
+
+window.console.log('     widget config complete');
