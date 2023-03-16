@@ -11,19 +11,20 @@ intervalLoopForRnw = setInterval(function () {
          // determine language of widget
          // get page language from meta tag - preferred over uri
          const pageLang_meta = document.head.querySelector('meta[http-equiv="content-language"]').content;
+         var pageLang = 'de'; // declare and set default
          if (typeof pageLang_meta === 'undefined' || pageLang_meta === '') {
             // get page language from uri
             if (window.location.href.match(/\/fr\//)) {
-               const pageLang = 'fr';
+               pageLang = 'fr';
             } else if (window.location.href.match(/\/it\//)) {
-               const pageLang = 'it';
+               pageLang = 'it';
             } else if (window.location.href.match(/\/en\//)) {
-               const pageLang = 'en';
+               pageLang = 'en';
             } else {
-               const pageLang = 'de'; // practically defines the global fallback
+               pageLang = 'de'; // practically defines the global fallback
             }
          } else {
-            const pageLang = pageLang_meta;
+            pageLang = pageLang_meta;
          }
 
          // set default purpose based on page uri
