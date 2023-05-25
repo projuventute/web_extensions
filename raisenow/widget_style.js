@@ -44,6 +44,6 @@ var widgetStyleInnerText = `
 // widgetStyle.innerText = widgetStyleInnerText;
 // widgetContainer.append(widgetStyle);
 
-window.console.log('     widget style start');
+// window.console.log('     widget style start');
 document.head.innerHTML += '<style id="spendenwidget">' + widgetStyleInnerText + '</style>';
-window.console.log('     widget style end');
+// window.console.log('     widget style end');
