@@ -1,4 +1,4 @@
-window.console.log('     widget core start');
+// window.console.log('     widget core start');
 
 var widgetContainer = document.getElementsByClassName("rnw-widget-container")[0];
 
@@ -8,4 +8,4 @@ widgetCore.setAttribute("src", "https://tamaro.raisenow.com/projuventute/latest/
 widgetCore.setAttribute("defer", ""); // script is added after DOM-ready => to execute it, defer!
 widgetContainer.append(widgetCore);
 
-window.console.log('     widget core complete');
+// window.console.log('     widget core complete');
