@@ -1,12 +1,12 @@
-window.console.log('     widget config start');
-
+// window.console.log('     widget config start');
 
 // set secondsToWait to 15 seconds
 var secondsToWaitForRnw = 15;
 
 var intervalCounterForRnw = 1;
 intervalLoopForRnw = setInterval(function () {
-   if (typeof window.rnw === 'object' && typeof window.rnw.tamaro === 'object') { // RaiseNow widget core is ready
+   var styleLoaded = document.head.querySelector('style[id="spendenwidget"]');
+   if (typeof window.rnw === 'object' && typeof window.rnw.tamaro === 'object' && styleLoaded) { // RaiseNow widget core is ready
       clearInterval(intervalLoopForRnw);
 
       // config and execute the widget (after the core is added!)
@@ -312,4 +312,4 @@ intervalLoopForRnw = setInterval(function () {
    }
 }, 500);
 
-window.console.log('     widget config complete');
+// window.console.log('     widget config complete');

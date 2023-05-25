@@ -44,4 +44,4 @@ var widgetStyleInnerText = `
 // widgetStyle.innerText = widgetStyleInnerText;
 // widgetContainer.append(widgetStyle);
 
-document.head.innerHTML += '<style>' + widgetStyleInnerText + '</style>';
+document.head.innerHTML += '<style id="spendenwidget">' + widgetStyleInnerText + '</style>';
