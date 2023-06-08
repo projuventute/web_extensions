@@ -266,7 +266,9 @@ intervalLoopForRnw = setInterval(function () {
                         // tba: other standard data layer variables  //
                         // ----------------------------------------- //
 
-                        event_data['event_data'] = event.data;
+                        event_data['event_data_api_configEnv'] = event.data.api.configEnv;
+                        event_data['event_data_api_paymentForm'] = event.data.api.paymentForm;
+                        event_data['event_data_api_transactionInfo'] = event.data.api.transactionInfo;
                         // trigger DICE
                         window.TMSProcessing.dice(event_data);
                      } else if (intervalCounter >= secondsToWait * 2) { // after X * 2 tries = X seconds, stop the loop
@@ -293,7 +295,9 @@ intervalLoopForRnw = setInterval(function () {
                      // tba: other data layer variables  //
                      // -------------------------------- //
 
-                     , 'event_data': event.data
+                     , 'event_data_api_configEnv': event.data.api.configEnv
+                     , 'event_data_api_paymentForm': event.data.api.paymentForm
+                     , 'event_data_api_transactionInfo': event.data.api.transactionInfo
                   });
                } catch (err) {
                   window.console.log('[raiseNow customEventHandler paymentComplete] error:');
