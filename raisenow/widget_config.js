@@ -246,53 +246,18 @@ intervalLoopForRnw = setInterval(function () {
          });
 
          // trigger tracking (GTM) event on load
-         if (typeof window.TMSProcessing === 'object') {
-            // agnosticalyze is availabe
-            window.rnw.tamaro.events.afterRender.subscribe(function (event) {
-               try {
-                  // set secondsToWait to 15 seconds
-                  var secondsToWait = 15;
-
-                  var intervalCounter = 1;
-                  intervalLoop = setInterval(function () {
-                     if (typeof window.TMSEvent === 'undefined' || Object.keys(window.TMSEvent).length === 0) { // TMSEvent is deleted or empty
-                        clearInterval(intervalLoop);
-                        window.TMSHelper.console('[raiseNow customEventHandler afterRender] -> info: triggering DICE');
-                        event_data = {};
-                        event_data['event_eventInfo_type'] = 'raiseNow-afterRender';
-                        event_data['event_processing_trigger'] = 'raiseNow-customEventHandler';
-                        event_data['event_data_api_configEnv'] = event.data.api.configEnv;
-                        // event_data['event_data_api_paymentForm'] = event.data.api.paymentForm;
-                        // trigger DICE
-                        window.TMSProcessing.dice(event_data);
-                     } else if (intervalCounter >= secondsToWait * 2) { // after X * 2 tries = X seconds, stop the loop
-                        clearInterval(intervalLoop);
-                        window.TMSHelper.console('[raiseNow customEventHandler afterRender] -> warning: waited too long, DICE not triggered');
-                     } else {
-                        window.TMSHelper.console('[raiseNow customEventHandler afterRender] -> info: TMSEvent not ready, trying again in 0.5 seconds...');
-                        intervalCounter++;
-                     }
-                  }, 500);
-               } catch (err) {
-                  window.TMSHelper.console("[raiseNow customEventHandler afterRender] error:");
-                  window.TMSHelper.errorHandler(err);
-               }
-            });
-         } else if (typeof window.dataLayer === 'object') {
-            // agnosticalyze isnt availabe
-            window.rnw.tamaro.events.afterRender.subscribe(function (event) {
-               try {
-                  window.dataLayer.push({
-                     'event': 'raiseNow-afterRender'
-                     , 'event_data_api_configEnv': event.data.api.configEnv
-                     // , 'event_data_api_paymentForm': event.data.api.paymentForm
-                  });
-               } catch (err) {
-                  window.console.log('[raiseNow customEventHandler afterRender] error:');
-                  windowconsole.error(err);
-               }
-            });
-         }
+         window.rnw.tamaro.events.afterRender.subscribe(function (event) {
+            try {
+               window.dataLayer.push({
+                  'event': 'raiseNow-afterRender'
+                  , 'event_data_api_configEnv': event.data.api.configEnv
+                  // , 'event_data_api_paymentForm': event.data.api.paymentForm
+               });
+            } catch (err) {
+               window.console.log('[raiseNow customEventHandler afterRender] error:');
+               windowconsole.error(err);
+            }
+         });
          
          // trigger tracking (GTM) event on completion
          if (typeof window.TMSProcessing === 'object') {
