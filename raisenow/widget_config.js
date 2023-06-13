@@ -245,6 +245,7 @@ intervalLoopForRnw = setInterval(function () {
             }
          });
 
+         /*
          // trigger tracking (GTM) event on load
          window.rnw.tamaro.events.afterRender.subscribe(function (event) {
             try {
@@ -258,6 +259,7 @@ intervalLoopForRnw = setInterval(function () {
                windowconsole.error(err);
             }
          });
+         */
          
          // trigger tracking (GTM) event on completion
          if (typeof window.TMSProcessing === 'object') {
