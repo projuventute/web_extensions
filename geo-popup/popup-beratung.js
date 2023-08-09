@@ -15,6 +15,7 @@ function Popup(site, geo, links) {
   document.body.innerHTML += html;
 }
 
+/*
 Popup("147", "Frankreich", [
   {
     titel: "147 - Beratung für Kinder und Jugendliche",
@@ -22,3 +23,4 @@ Popup("147", "Frankreich", [
   },
   { titel: "Elternberatung", link: "https://www.projuventute.ch" },
 ]);
+*/
