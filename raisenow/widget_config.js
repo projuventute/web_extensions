@@ -93,6 +93,8 @@ intervalLoopForRnw = setInterval(function () {
                      , p17: 'Pro Juventute (Optic2000-DE)'
                      , p18: 'Winterkampagne (DE)'
                      , p19: 'Pro Juventute (Ich habe Angst)'
+                     , p20: 'Parkplatz'
+                     , p21: 'Event mit Barometer'
                   }
                }
             }
@@ -147,6 +149,12 @@ intervalLoopForRnw = setInterval(function () {
                      case 'p19':
                         event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FSyFQAW';
                         break;
+                     case 'p20':
+                        event.data.api.paymentForm.data.stored_campaign_id = '7013X000002CkSNQA0';
+                        break;
+                     case 'p21':
+                        event.data.api.paymentForm.data.stored_campaign_id = '7013X0000028z0nQAA';
+                        break;
                   }
                   break;
                case 'pp':      // Paypal
@@ -192,10 +200,16 @@ intervalLoopForRnw = setInterval(function () {
                      case 'p19':
                         event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FSyKQAW';
                         break;
+                     case 'p20':
+                        event.data.api.paymentForm.data.stored_campaign_id = '7013X000002CkSXQA0';
+                        break;
+                     case 'p21':
+                        event.data.api.paymentForm.data.stored_campaign_id = '7013X0000028z0jQAA';
+                        break;
                   }
                   break;
                case 'dd':        // Lastschriftverfahren / Direct Debit
-               //       case 'ezs':       // Einzahlungsschein
+//             case 'ezs':       // Einzahlungsschein
                case 'qr-bill':   // QR Rechnung
                default:
                   switch (event.data.api.paymentForm.data.purpose) {
@@ -239,6 +253,12 @@ intervalLoopForRnw = setInterval(function () {
                         break;
                      case 'p19':
                         event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FSyPQAW';
+                        break;
+                     case 'p20':
+                        event.data.api.paymentForm.data.stored_campaign_id = '7013X000002CkSSQA0';
+                        break;
+                     case 'p21':
+                        event.data.api.paymentForm.data.stored_campaign_id = '7013X0000028z0iQAA';
                         break;
                   }
                   break;
