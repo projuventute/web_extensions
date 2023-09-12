@@ -33,9 +33,11 @@ intervalLoopForRnw = setInterval(function () {
          // set default purpose based on page uri
          // -> https://support.raisenow.com/hc/en-us/articles/360018786778-Adding-conditions-in-your-configuration
          var defaultPurp = 'p1'; // declare and set default
-         if (window.location.href.match(/.*\/meine-spende-rettet-leben.*|.*\/mon-don-sauve-des-vies.*|.*\/la-mia-donazione-salva-delle-vite.*/)) {
+         if (window.location.href.match(/.*\/luca-leidet-still.*/)) {
+            defaultPurp = 'p22';
+         } else if (window.location.href.match(/.*\/meine-spende-rettet-leben.*|.*\/mon-don-sauve-des-vies.*|.*\/la-mia-donazione-salva-delle-vite.*/)) {
             defaultPurp = 'p18';
-         } else {
+         } {
             defaultPurp = 'p1';
          }
 
@@ -95,6 +97,7 @@ intervalLoopForRnw = setInterval(function () {
                      , p19: 'Pro Juventute (Ich habe Angst)'
                      , p20: 'Parkplatz'
                      , p21: 'Event mit Barometer'
+                     , p22: 'Luca leidet still (DE, 2023)'
                   }
                }
             }
@@ -155,6 +158,9 @@ intervalLoopForRnw = setInterval(function () {
                      case 'p21':
                         event.data.api.paymentForm.data.stored_campaign_id = '7013X0000028z0nQAA';
                         break;
+                     case 'p22':
+                        event.data.api.paymentForm.data.stored_campaign_id = '7013X00000290OHQAY';
+                        break;
                   }
                   break;
                case 'pp':      // Paypal
@@ -205,6 +211,9 @@ intervalLoopForRnw = setInterval(function () {
                         break;
                      case 'p21':
                         event.data.api.paymentForm.data.stored_campaign_id = '7013X0000028z0jQAA';
+                        break;
+                     case 'p22':
+                        event.data.api.paymentForm.data.stored_campaign_id = '7013X00000290OCQAY';
                         break;
                   }
                   break;
@@ -259,6 +268,9 @@ intervalLoopForRnw = setInterval(function () {
                         break;
                      case 'p21':
                         event.data.api.paymentForm.data.stored_campaign_id = '7013X0000028z0iQAA';
+                        break;
+                     case 'p22':
+                        event.data.api.paymentForm.data.stored_campaign_id = '7013X00000290O7QAI';
                         break;
                   }
                   break;
