@@ -51,12 +51,12 @@ intervalLoopForRnw = setInterval(function () {
                   , "then": [60, 120, 250]
                   ,
                }
-               , {
+/*             , {
                   "if": "purpose() == p22"
                   , "then": [45, 75, 120]
                   ,
                }
-               , {
+*/             , {
                   "if": "paymentType() == recurring && recurringInterval() == monthly"
                   , "then": [20, 40, 60]
                   ,
@@ -352,9 +352,9 @@ intervalLoopForRnw = setInterval(function () {
 
    } else if (intervalCounterForRnw >= secondsToWaitForRnw * 2) { // after X * 2 tries = X seconds, stop the loop
       clearInterval(intervalLoopForRnw);
-      window.TMSHelper.console('[raiseNow widget core] -> warning: waited too long, widget core not ready');
+      window.console.log('[raiseNow widget core] -> warning: waited too long, widget core not ready');
    } else {
-      window.TMSHelper.console('[raiseNow widget core] -> info: widget core not ready, trying again in 0.5 seconds...');
+      window.console.log('[raiseNow widget core] -> info: widget core not ready, trying again in 0.5 seconds...');
       intervalCounterForRnw++;
    }
 }, 500);
