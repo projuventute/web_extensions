@@ -1,3 +1,5 @@
+// v1.3.3
+
 // window.console.log('     widget config start');
 
 // set secondsToWait to 15 seconds
