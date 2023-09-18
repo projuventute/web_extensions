@@ -53,12 +53,12 @@ intervalLoopForRnw = setInterval(function () {
                   , "then": [60, 120, 250]
                   ,
                }
-/*             , {
+               , {
                   "if": "purpose() == p22"
                   , "then": [45, 75, 120]
                   ,
                }
-*/             , {
+               , {
                   "if": "paymentType() == recurring && recurringInterval() == monthly"
                   , "then": [20, 40, 60]
                   ,
