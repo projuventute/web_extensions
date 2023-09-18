@@ -1,4 +1,4 @@
-// v1.3.3
+// v1.3.5
 
 // window.console.log('     widget config start');
 
@@ -41,13 +41,7 @@ intervalLoopForRnw = setInterval(function () {
             defaultAmtOneTime = [45, 75, 120];
          } else if (window.location.href.match(/.*\/meine-spende-rettet-leben.*|.*\/mon-don-sauve-des-vies.*|.*\/la-mia-donazione-salva-delle-vite.*/)) {
             defaultPurp = 'p18';
-         } {
-            defaultPurp = 'p1';
-            defaultAmtOneTime = [60, 120, 250];
          }
-
-         // set amount arrays based on page uri
-
 
          // configure raiseNow widget
          window.rnw.tamaro.runWidget('.rnw-widget-container', {
