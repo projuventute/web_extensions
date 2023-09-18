@@ -32,16 +32,22 @@ intervalLoopForRnw = setInterval(function () {
             pageLang = pageLang_meta;
          }
 
-         // set default purpose based on page uri
+         // set default purpose and amount based on page uri
          // -> https://support.raisenow.com/hc/en-us/articles/360018786778-Adding-conditions-in-your-configuration
          var defaultPurp = 'p1'; // declare and set default
+         var defaultAmtOneTime = [60, 120, 250];
          if (window.location.href.match(/.*\/luca-leidet-still.*/)) {
             defaultPurp = 'p22';
+            defaultAmtOneTime = [45, 75, 120];
          } else if (window.location.href.match(/.*\/meine-spende-rettet-leben.*|.*\/mon-don-sauve-des-vies.*|.*\/la-mia-donazione-salva-delle-vite.*/)) {
             defaultPurp = 'p18';
          } {
             defaultPurp = 'p1';
+            defaultAmtOneTime = [60, 120, 250];
          }
+
+         // set amount arrays based on page uri
+
 
          // configure raiseNow widget
          window.rnw.tamaro.runWidget('.rnw-widget-container', {
@@ -50,12 +56,7 @@ intervalLoopForRnw = setInterval(function () {
             , amounts: [
                {
                   "if": "paymentType() == onetime"
-                  , "then": [60, 120, 250]
-                  ,
-               }
-               , {
-                  "if": "purpose() == p22"
-                  , "then": [45, 75, 120]
+                  , "then": defaultAmtOneTime
                   ,
                }
                , {
