@@ -35,7 +35,7 @@ intervalLoopForRnw = setInterval(function () {
          // set default purpose and amount based on page uri
          // -> https://support.raisenow.com/hc/en-us/articles/360018786778-Adding-conditions-in-your-configuration
          var defaultPurp = 'p1'; // declare and set default
-         var defaultAmtOneTime = [60, 120, 250];
+         var defaultAmtOneTime = [60, 120, 250]; // declare and set default
          if (window.location.href.match(/.*\/luca-leidet-still.*/)) {
             defaultPurp = 'p22';
             defaultAmtOneTime = [45, 75, 120];
