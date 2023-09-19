@@ -1,4 +1,4 @@
-// v1.3.5
+// v1.3.6
 
 // window.console.log('     widget config start');
 
@@ -41,6 +41,9 @@ intervalLoopForRnw = setInterval(function () {
             defaultAmtOneTime = [45, 75, 120];
          } else if (window.location.href.match(/.*\/meine-spende-rettet-leben.*|.*\/mon-don-sauve-des-vies.*|.*\/la-mia-donazione-salva-delle-vite.*/)) {
             defaultPurp = 'p18';
+         } else {
+            defaultPurp = 'p1';
+            defaultAmtOneTime = [60, 120, 250];
          }
 
          // configure raiseNow widget
