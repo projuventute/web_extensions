@@ -1,4 +1,5 @@
-// v1.3.6
+// v1.3.7
+// test kommentar von oli
 
 // window.console.log('     widget config start');
 
