@@ -100,10 +100,9 @@ intervalLoopForRnw = setInterval(function () {
                      , p16: 'Pro Juventute (Lidl-DE)'
                      , p17: 'Pro Juventute (Optic2000-DE)'
                      , p18: 'Winterkampagne (DE)'
-                     , p19: 'Pro Juventute (Ich habe Angst)'
+                     , p19: 'Luca leidet still (DE, 2023)'
                      , p20: 'Parkplatz'
-                     , p21: 'Event mit Barometer'
-                     , p22: 'Luca leidet still (DE, 2023)'
+                     // note: RaiseNow allows max. 20 different purposes
                   }
                }
             }
@@ -156,17 +155,12 @@ intervalLoopForRnw = setInterval(function () {
                         event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL9qQAG';
                         break;
                      case 'p19':
-                        event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FSyFQAW';
+                        event.data.api.paymentForm.data.stored_campaign_id = '7013X00000290OHQAY';
                         break;
                      case 'p20':
                         event.data.api.paymentForm.data.stored_campaign_id = '7013X000002CkSNQA0';
                         break;
-                     case 'p21':
-                        event.data.api.paymentForm.data.stored_campaign_id = '7013X0000028z0nQAA';
-                        break;
-                     case 'p22':
-                        event.data.api.paymentForm.data.stored_campaign_id = '7013X00000290OHQAY';
-                        break;
+                     // note: RaiseNow allows max. 20 different purposes
                   }
                   break;
                case 'pp':      // Paypal
@@ -210,17 +204,12 @@ intervalLoopForRnw = setInterval(function () {
                         event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLA0QAO';
                         break;
                      case 'p19':
-                        event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FSyKQAW';
+                        event.data.api.paymentForm.data.stored_campaign_id = '7013X00000290OCQAY';
                         break;
                      case 'p20':
                         event.data.api.paymentForm.data.stored_campaign_id = '7013X000002CkSXQA0';
                         break;
-                     case 'p21':
-                        event.data.api.paymentForm.data.stored_campaign_id = '7013X0000028z0jQAA';
-                        break;
-                     case 'p22':
-                        event.data.api.paymentForm.data.stored_campaign_id = '7013X00000290OCQAY';
-                        break;
+                     // note: RaiseNow allows max. 20 different purposes
                   }
                   break;
                case 'dd':        // Lastschriftverfahren / Direct Debit
@@ -267,17 +256,12 @@ intervalLoopForRnw = setInterval(function () {
                         event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLA5QAO';
                         break;
                      case 'p19':
-                        event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FSyPQAW';
+                        event.data.api.paymentForm.data.stored_campaign_id = '7013X00000290O7QAI';
                         break;
                      case 'p20':
                         event.data.api.paymentForm.data.stored_campaign_id = '7013X000002CkSSQA0';
                         break;
-                     case 'p21':
-                        event.data.api.paymentForm.data.stored_campaign_id = '7013X0000028z0iQAA';
-                        break;
-                     case 'p22':
-                        event.data.api.paymentForm.data.stored_campaign_id = '7013X00000290O7QAI';
-                        break;
+                     // note: RaiseNow allows max. 20 different purposes
                   }
                   break;
             }
