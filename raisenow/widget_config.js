@@ -37,7 +37,7 @@ intervalLoopForRnw = setInterval(function () {
          var defaultPurp = 'p1'; // declare and set default
          var defaultAmtOneTime = [60, 120, 250]; // declare and set default
          if (window.location.href.match(/.*\/luca-leidet-still.*/)) {
-            defaultPurp = 'p22';
+            defaultPurp = 'p19';
             defaultAmtOneTime = [45, 75, 120];
          } else if (window.location.href.match(/.*\/meine-spende-rettet-leben.*|.*\/mon-don-sauve-des-vies.*|.*\/la-mia-donazione-salva-delle-vite.*/)) {
             defaultPurp = 'p18';
