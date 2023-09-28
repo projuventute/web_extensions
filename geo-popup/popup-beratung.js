@@ -1,37 +1,41 @@
 function Popup(site, geo) {
-  // to do
-  // geo = FR, dann übersetzen zu "Frankreich" innerhalb der Funktion
-  // langauge == geo
-
-  let links = geo === "DE"
-    ? [
-        {
-          titel: "krisenchat | 24/7 Krisenberatung per Chat",
-          link: "https://krisenchat.de/",
-        },
-        {
-          titel:
-            "Kostenfreie Beratung für Eltern, Kinder und Jugendliche (nummergegenkummer.de)",
-          link: "https://www.nummergegenkummer.de/",
-        },
-      ]
-    : "AT"
-    ? [
-        {
-          titel: "147 Rat auf Draht - Notrufnummer & Beratung",
-          link: "https://www.rataufdraht.at/",
-        },
-      ]
-    : [];
+  let links =
+    geo === "DE"
+      ? [
+          {
+            titel: "krisenchat | 24/7 Krisenberatung per Chat",
+            link: "https://krisenchat.de/",
+          },
+          {
+            titel:
+              "Kostenfreie Beratung für Eltern, Kinder und Jugendliche (nummergegenkummer.de)",
+            link: "https://www.nummergegenkummer.de/",
+          },
+        ]
+      : geo === "AT"
+      ? [
+          {
+            titel: "147 Rat auf Draht - Notrufnummer & Beratung",
+            link: "https://www.rataufdraht.at/",
+          },
+        ]
+      : geo === "FR"
+      ? [
+          {
+            titel: "Les lignes d’écoute – Psycom – Santé Mentale Info",
+            link: "https://www.psycom.org/sorienter/les-lignes-decoute/",
+          },
+        ]
+      : [];
 
   let land =
     geo === "DE"
       ? "Deutschland"
-      : "AT"
+      : geo === "AT"
       ? "Österreich"
-      : "FR"
+      : geo === "FR"
       ? "Frankreich"
-      : "IT"
+      : geo === "IT"
       ? "Italia"
       : "";
   const geoTextDe =
@@ -43,69 +47,41 @@ function Popup(site, geo) {
       ? `Leider ist unser Beratungsangebot ausschließlich für Kinder und Jugendliche aus der Schweiz verfügbar.`
       : `Leider ist unser Beratungsangebot ausschließlich für Eltern und Bezugspersonen von Kindern und Jugendliche aus der Schweiz verfügbar.`;
   const geoTextFr = site === "147" ? `` : ``;
+  const infoTextFr = site === "147" ? `` : ``;
   const geoTextIt = site === "147" ? `` : ``;
+  const infoTextIt = site === "147" ? `` : ``;
 
   const geoText =
     geo === "DE"
       ? geoTextDe
-      : "AT"
+      : geo === "AT"
       ? geoTextDe
-      : "FR"
+      : geo === "FR"
       ? geoTextFr
-      : "IT"
+      : geo === "IT"
       ? geoTextIt
       : "";
   const infoText =
     geo === "DE"
       ? infoTextDe
-      : "AT"
+      : geo === "AT"
       ? infoTextDe
-      : "FR"
+      : geo === "FR"
       ? infoTextFr
-      : "IT"
+      : geo === "IT"
       ? infoTextIt
       : "";
 
   let linksHtml = "";
   for (let i = 0; i < links.length; i++) {
-    linksHtml += `<div><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" > <path d="M7 12H17" stroke="#CD679D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M13 8L17 12L13 16" stroke="#CD679D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> </svg> <a href="${links[i].link}" target="_blank" style="color:black">${links[i].titel}</a></div>`;
+    linksHtml += `<div style="display:flex"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" > <path d="M7 12H17" stroke="#CD679D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M13 8L17 12L13 16" stroke="#CD679D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> </svg> <a href="${links[i].link}" target="_blank" style="color:black">${links[i].titel}</a></div>`;
   }
-  let html = `<div id="geo-popup-pj" style="position: fixed;width: 95%; min-width: 320px; max-width: 650px; background-color: white; padding: 40px; font-family: Montserrat, Arial, Helvetica, sans-serif; left: 50%; top: 50%; transform: translate(-50%, -50%); " > <h2 style="font-size: 56px">Hallo</h2> <p>${geoText}</p><p>${infoText}</p><h3 style="font-size: 24px">Anlaufstellen in deinem Land</h3>
+  let html = `<div id="geo-popup-pj" style="position: fixed;z-index:10001;width: 95%; min-width: 320px; max-width: 650px; background-color: white; padding: 40px; font-family: Montserrat, Arial, Helvetica, sans-serif; left: 50%; top: 50%; transform: translate(-50%, -50%); " > <h2 style="font-size: 56px">Hallo</h2> <p>${geoText}</p><p>${infoText}</p><h3 style="font-size: 24px">Anlaufstellen in deinem Land</h3>
   ${linksHtml}
-  <div style="margin-top: 40px">Weiter zu 147.ch</div> </div>
+  <div style="margin-top: 40px; border-bottom: 1px solid #CD679D; display: inline-block; cursor:pointer;" onClick="closePopup()">Weiter zu 147.ch</div> </div>
+  <div style="position:fixed;width:100%;height:100%;background-color:rgba(255,255,255,0.6);z-index:10000;"></div>
   `;
   document.body.innerHTML += html;
 }
 
-// function getCookie(name) {
-//   var dc = document.cookie;
-//   var prefix = name + "=";
-//   var begin = dc.indexOf("; " + prefix);
-//   if (begin == -1) {
-//       begin = dc.indexOf(prefix);
-//       if (begin != 0) return null;
-//   }
-//   else
-//   {
-//       begin += 2;
-//       var end = document.cookie.indexOf(";", begin);
-//       if (end == -1) {
-//       end = dc.length;
-//       }
-//   }
-//   return decodeURI(dc.substring(begin + prefix.length, end));
-// } 
-
-// function doSomething() {
-//   var myCookie = getCookie("MyCookie");
-
-//   if (myCookie == null) {
-//     // cookie gibts nicht
-//   }
-//   else {
-//       // cookie gibts
-//       console.log("myCookie ", myCookie)
-//   }
-// }
-
-// Popup("147", "AT");
+Popup("147", "DE");
