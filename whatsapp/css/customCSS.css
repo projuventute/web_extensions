@@ -1,0 +1,17 @@
+#settings-container {
+    display: none;
+}
+
+/* Add styles for the iframe container */
+#iframe-container {
+    position: fixed;
+    top: 0;
+    right: -50%;
+    /* Start off the screen to the right */
+    width: 50%;
+    height: 100%;
+    background-color: white;
+    transition: right 0.3s ease-in-out;
+    z-index: 9999;
+    /* Ensure it's above other content */
+}
