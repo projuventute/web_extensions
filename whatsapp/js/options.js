@@ -4,7 +4,7 @@
  */
 function saveSettings() {
   const mediaBlockValue = document.getElementById('media-block').checked;
-
+  const conversationReaderValue = document.getElementById('conversation-reader').checked;
   // Save settings to Chrome storage
   chrome.storage.sync.set({
     'media-block': mediaBlockValue,
