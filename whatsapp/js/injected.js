@@ -43,6 +43,12 @@ var extSettings = JSON.parse(document.getElementById("settings-container").inner
             response.text().then(function (body) {
                 if ((url.includes('cursor=') || url.endsWith('/messages/?limit=25')) && extSettings['conversation-reader']) {
                     makeReadable();
+                    // Show button if already created
+                    document.querySelector('#uncleaner').style.display = 'block';
+                        
+                } if (!document.location.href.startsWith('https://www.userlike.com/de/umc/#/inbox/') && !document.location.href.startsWith('https://www.userlike.com/de/umc/#/conversation/')) {
+                    //Hide Button on other pages
+                    document.querySelector('#uncleaner').style.display = 'none';
                 }
                 // Add logging for response body if necessary
             });
