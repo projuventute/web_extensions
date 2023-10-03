@@ -12,15 +12,19 @@ function cleanReader() {
     const userMessages = findDivsWithComputedStyle('background-color', 'rgb(221, 226, 235)');
     const notesMessages = findDivsWithComputedStyle('background-color', 'rgb(255, 231, 169)', 'article');
     const ourMessages = findDivsWithComputedStyle('background-color', 'rgb(15, 139, 255)');
-    const cleanMessages = userMessages.concat(notesMessages, ourMessages);
     const allMessages = Array.from(findCommonAncestor(userMessages[0], ourMessages[0]).children);
+    const dayMessages = findDivsWithComputedStyle('background-color', 'rgb(224, 226, 228)', 'div', window.getComputedStyle(allMessages[0]).getPropertyValue('width'));
+    const cleanMessages = userMessages.concat(dayMessages, notesMessages, ourMessages);
     if (cleanMessages.length > 0) {
         userMessages.forEach(message => {
             message.classList.add("extMessage");
         });
         notesMessages.forEach(message => {
             message.classList.add("extMessage");
-        });
+        })
+        dayMessages.forEach(message => {
+            message.classList.add("extMessage");
+        });;
         ourMessages.forEach(message => {
             message.classList.add("extMessage");
         });
@@ -47,7 +51,7 @@ function cleanReader() {
  * @param {string} styleValue - The CSS property value to match.
  * @returns {Array<HTMLElement>} - An array of matching div elements.
  */
-function findDivsWithComputedStyle(styleProperty, styleValue, tagName = 'div') {
+function findDivsWithComputedStyle(styleProperty, styleValue, tagName = 'div', width = 0) {
     // Get all div elements within the body of the document.
     const divElements = document.querySelectorAll('body ' + tagName);
 
@@ -59,7 +63,7 @@ function findDivsWithComputedStyle(styleProperty, styleValue, tagName = 'div') {
         // Get the computed style of the current div element.
         const computedStyle = window.getComputedStyle(div);
         // Check if the specified style property matches the desired value.
-        if (computedStyle.getPropertyValue(styleProperty) === styleValue) {
+        if (computedStyle.getPropertyValue(styleProperty) === styleValue && (width == 0 || computedStyle.getPropertyValue("width") < width)) {
             // Add the div element to the matchingDivs array.
             matchingDivs.push(div);
         }
