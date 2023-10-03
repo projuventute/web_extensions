@@ -49,7 +49,12 @@ var extSettings = JSON.parse(document.getElementById("settings-container").inner
 
                 } if (!document.location.href.startsWith('https://www.userlike.com/de/umc/#/inbox/') && !document.location.href.startsWith('https://www.userlike.com/de/umc/#/conversation/')) {
                     //Hide Button on other pages
-                    document.querySelector('#uncleaner').style.display = 'none';
+
+                    const uncleanerElement = document.querySelector('#uncleaner');
+
+                    if (uncleanerElement) {
+                        uncleanerElement.style.display = 'none';
+                    }
                 }
                 // Add logging for response body if necessary
             });
