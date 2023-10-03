@@ -19,7 +19,9 @@ var extSettings = JSON.parse(document.getElementById("settings-container").inner
         if (url.startsWith('https://www.userlike.com/api/um/media/download/') && extSettings['media-block']) {
             input = mediaBlock(url);
         }
-
+        if (url.includes('/messages/?limit=25')) {
+            input = input.replace('limit=25', 'limit=100');
+        }
         // Intercept GET requests
         // Log request headers if needed
         if (input.headers) {
@@ -39,6 +41,9 @@ var extSettings = JSON.parse(document.getElementById("settings-container").inner
 
             // Log the response body (you can add this if needed)
             response.text().then(function (body) {
+                if ((url.includes('cursor=') || url.endsWith('/messages/?limit=25')) && extSettings['conversation-reader']) {
+                    makeReadable();
+                }
                 // Add logging for response body if necessary
             });
 
@@ -50,3 +55,33 @@ var extSettings = JSON.parse(document.getElementById("settings-container").inner
         return originalFetch(input, init);
     };
 })(window);
+
+/**
+ * Check for the existence of elements matching a selector at regular intervals.
+ * @param {string} selector - The CSS selector to match elements.
+ * @param {number} interval - The interval in milliseconds between checks.
+ * @param {number} timeout - The maximum duration in milliseconds to continue checking.
+ * @param {function} callback - The callback function to execute when elements are found or when the timeout is reached.
+ */
+function checkElementsExistence(selector, interval, timeout, callback, reverseExistence = false) {
+    let elapsedTime = 0;
+
+    const checkInterval = setInterval(() => {
+        const elements = document.querySelectorAll(selector);
+
+        if (elements.length > 0 && !reverseExistence) {
+            clearInterval(checkInterval); // Stop the interval when elements are found
+            callback(elements); // Call the callback function with the found elements
+        }
+        if (elements.length == 0 && reverseExistence) {
+            clearInterval(checkInterval); // Stop the interval when elements are found
+            callback(elements); // Call the callback function with the found elements
+        }
+        elapsedTime += interval;
+
+        if (elapsedTime >= timeout) {
+            clearInterval(checkInterval); // Stop the interval when the timeout is reached
+            callback([]); // Call the callback function with an empty array to indicate timeout
+        }
+    }, interval);
+}

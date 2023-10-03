@@ -4,14 +4,19 @@
 function setDefaultSettings() {
     // Use chrome.storage.sync.get to retrieve the settings from storage
     chrome.storage.sync.get([
-        'media-block'
-    ], function (data) {
+        'media-block',
+        'conversation-reader'
+      ], function (data) {
         // Check if settings exist in storage, if not, set default values
         if (typeof data['media-block'] === 'undefined') {
-            // Set the default value for media blocking
-            chrome.storage.sync.set({
-                'media-block': true // Default value for media blocking
-            });
+          chrome.storage.sync.set({
+            'media-block': true // Default value for media blocking
+          });
+        }
+        if (typeof data['conversation-reader'] === 'undefined') {
+          chrome.storage.sync.set({
+            'conversation-reader': true // Default value for media blocking
+          });
         }
         // Call the loadAndInject function after setting default settings
         loadAndInject();
@@ -29,7 +34,8 @@ setDefaultSettings();
 function loadAndInject() {
     // Load and make settings available to injected scripts
     chrome.storage.sync.get([
-        'media-block'
+        'media-block',
+        'conversation-reader'
     ], function (data) {
         var settingsContainer = document.createElement('div');
         settingsContainer.id = "settings-container";
@@ -44,5 +50,8 @@ function loadAndInject() {
         var s = document.createElement('script');
         s.src = chrome.runtime.getURL('js/media-block.js');
         (document.head || document.documentElement).appendChild(s);
+        var s = document.createElement('script');
+        s.src = chrome.runtime.getURL('js/conversation-reader.js');
+        (document.head || document.documentElement).appendChild(s);        
     });
 }

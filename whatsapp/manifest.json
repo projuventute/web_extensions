@@ -2,8 +2,8 @@
   "manifest_version": 3,
   "name": "147 Beratung",
   "author": "pjdwe, Pro Juventute",
-  "version": "0.1",
-  "version_name": "0.1 alpha",
+  "version": "0.2",
+  "version_name": "0.2 beta",
   "description": "Modify Websites for better user experience (block unwanted content, change user interface...)",
   "permissions": [
     "activeTab",
@@ -11,7 +11,7 @@
   ],
   "options_page": "html/options.html", 
   "icons": {
-    "48": "img/icon.png"
+    "48": "res/icon.png"
   },
   "content_scripts": [
     {
@@ -24,7 +24,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["js/injected.js","js/media-block.js","img/img.json","img/video.json","img/audio.json"],
+      "resources": ["js/injected.js","js/media-block.js","js/conversation-reader.js","res/img.json","res/video.json","res/audio.json"],
       "matches": ["https://www.userlike.com/*"]
   } ]
 }

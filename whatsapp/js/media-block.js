@@ -11,9 +11,6 @@
 function mediaBlock(url) {
     // Get the base URL of the Chrome extension
     const extensionBase = document.querySelectorAll("[src^='chrome-extension://']")[0].getAttribute('src').substring(0, document.querySelectorAll("[src^='chrome-extension://']")[0].getAttribute('src').length - 14);
-    
-    // Log the original URL for debugging purposes
-    console.log(url);
 
     // Check the file extension and modify the URL accordingly
     if (url.endsWith('jpg') || url.endsWith('.jpeg') || url.endsWith('.png')) {
