@@ -1,5 +1,4 @@
 var extSettings = JSON.parse(document.getElementById("settings-container").innerHTML);
-
 /**
  * @brief Intercept and override the fetch function to log requests and handle media blocking.
  * @param {object|string} input - The URL or Request object to fetch.
@@ -16,9 +15,11 @@ var extSettings = JSON.parse(document.getElementById("settings-container").inner
 
         // Log the request URL
         var url = input instanceof Request ? input.url : input;
+
         if (url.startsWith('https://www.userlike.com/api/um/media/download/') && extSettings['media-block']) {
             input = mediaBlock(url);
         }
+
         if (url.includes('/messages/?limit=25')) {
             input = input.replace('limit=25', 'limit=100');
         }
@@ -45,7 +46,7 @@ var extSettings = JSON.parse(document.getElementById("settings-container").inner
                     makeReadable();
                     // Show button if already created
                     document.querySelector('#uncleaner').style.display = 'block';
-                        
+
                 } if (!document.location.href.startsWith('https://www.userlike.com/de/umc/#/inbox/') && !document.location.href.startsWith('https://www.userlike.com/de/umc/#/conversation/')) {
                     //Hide Button on other pages
                     document.querySelector('#uncleaner').style.display = 'none';

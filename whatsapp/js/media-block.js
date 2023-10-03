@@ -10,19 +10,18 @@
  */
 function mediaBlock(url) {
     // Get the base URL of the Chrome extension
-    const extensionBase = document.querySelectorAll("[src^='chrome-extension://']")[0].getAttribute('src').substring(0, document.querySelectorAll("[src^='chrome-extension://']")[0].getAttribute('src').length - 14);
+    const extensionBase = extSettings['extensionBase'];
 
     // Check the file extension and modify the URL accordingly
     if (url.endsWith('jpg') || url.endsWith('.jpeg') || url.endsWith('.png')) {
-        url = extensionBase + "img/img.json";
+        url = extensionBase + "res/img.json";
     }
     if (url.endsWith('mp4') || url.endsWith('.3gp')) {
-        url = extensionBase + "img/video.json";
+        url = extensionBase + "res/video.json";
     }
     if (url.endsWith('.ogg') || url.endsWith('.mp3') || url.endsWith('.aac') || url.endsWith('bin')) {
-        url = extensionBase + "img/audio.json";
+        url = extensionBase + "res/audio.json";
     }
-
     // Return the modified or original URL
     return url;
 }

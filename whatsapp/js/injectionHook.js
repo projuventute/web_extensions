@@ -39,6 +39,7 @@ function loadAndInject() {
     ], function (data) {
         var settingsContainer = document.createElement('div');
         settingsContainer.id = "settings-container";
+        data['extensionBase'] = chrome.runtime.getURL('/');
         settingsContainer.innerHTML = JSON.stringify(data);
         (document.body || document.documentElement).appendChild(settingsContainer);
 
