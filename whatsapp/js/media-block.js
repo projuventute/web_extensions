@@ -16,13 +16,13 @@ function mediaBlock(url) {
     console.log(url);
 
     // Check the file extension and modify the URL accordingly
-    if (url.endsWith('jpg')) {
+    if (url.endsWith('jpg') || url.endsWith('.jpeg') || url.endsWith('.png')) {
         url = extensionBase + "img/img.json";
     }
-    if (url.endsWith('mp4')) {
+    if (url.endsWith('mp4') || url.endsWith('.3gp')) {
         url = extensionBase + "img/video.json";
     }
-    if (url.endsWith('bin')) {
+    if (url.endsWith('.ogg') || url.endsWith('.mp3') || url.endsWith('.aac') || url.endsWith('bin')) {
         url = extensionBase + "img/audio.json";
     }
 
