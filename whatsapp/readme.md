@@ -38,6 +38,6 @@
 - Ereignislistener: Das Skript fügt einen Ereignislistener zur Schaltfläche "Speichern" hinzu, um die Funktion `saveSettings()` auszulösen. Darüber hinaus werden die gespeicherten Einstellungen geladen und angezeigt, wenn die Optionsseite geladen wird.
 
 # ToDo:
-[] Möglichkeit schaffen, um bei Alle Konversationen Nachrichten direkt anzuzeigen und zu switchen (iframe)
-[] Konversationen an lokales LLM senden, um Einstufung zu berechnen und entsprechende Ampel anzuzeigen
-[] Assistent für Konversationen (Personendaten, Zusammenfassung, Antwort-Ideen)
+- [ ]  Möglichkeit schaffen, um bei Alle Konversationen Nachrichten direkt anzuzeigen und zu switchen (iframe)
+- [ ]  Konversationen an lokales LLM senden, um Einstufung zu berechnen und entsprechende Ampel anzuzeigen
+- [ ]  Assistent für Konversationen (Personendaten, Zusammenfassung, Antwort-Ideen)
