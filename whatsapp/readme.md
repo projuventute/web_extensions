@@ -36,3 +36,8 @@
 
 - `saveSettings()`: Diese Funktion wird aufgerufen, wenn der Benutzer auf der Optionsseite auf die Schaltfläche "Speichern" klickt. Sie ruft die Präferenz des Benutzers für die Blockierung von Medieninhalten ab und speichert sie in der Chrome-Speicherung. Außerdem wird eine Benachrichtigung angezeigt, um den Benutzer darüber zu informieren, dass die Einstellungen gespeichert wurden.
 - Ereignislistener: Das Skript fügt einen Ereignislistener zur Schaltfläche "Speichern" hinzu, um die Funktion `saveSettings()` auszulösen. Darüber hinaus werden die gespeicherten Einstellungen geladen und angezeigt, wenn die Optionsseite geladen wird.
+
+# ToDo:
+[] Möglichkeit schaffen, um bei Alle Konversationen Nachrichten direkt anzuzeigen und zu switchen (iframe)
+[] Konversationen an lokales LLM senden, um Einstufung zu berechnen und entsprechende Ampel anzuzeigen
+[] Assistent für Konversationen (Personendaten, Zusammenfassung, Antwort-Ideen)
