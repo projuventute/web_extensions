@@ -153,7 +153,7 @@ function Popup(site, geo) {
   <div style="margin-top: 40px; border-bottom: 1px solid #CD679D; display: inline-block; cursor:pointer;" onClick="closePopup()">${weiterText} ${" "} ${
     site === "147" ? "147.ch" : "projuventute.ch"
   }</div> </div>
-  <div id="geo-popup-pj-overlay" style="display: block; position:fixed;width:100%;height:100%;background-color:rgba(255,255,255,0.6);z-index:10000;" onClick="closePopup()"></div>
+  <div id="geo-popup-pj-overlay" style="display: block; position:fixed;width:100%;height:100%;background-color:rgba(0,0,0,0.7);z-index:10000;" onClick="closePopup()"></div>
   `;
   document.body.innerHTML += html;
 }
