@@ -141,7 +141,7 @@ function Popup(site, geo) {
       : geo === "FR"
       ? "Continuer sur le"
       : geo === "IT"
-      ? "IT: Vada su"
+      ? "Vada su"
       : "";
 
   let linksHtml = "";
