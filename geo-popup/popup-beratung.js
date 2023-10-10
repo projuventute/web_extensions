@@ -166,4 +166,4 @@ function closePopup() {
   document.getElementById("geo-popup-pj-overlay").style.display = "none";
 }
 
-Popup("projuventute", "IT");
+//Popup("projuventute", "IT");
