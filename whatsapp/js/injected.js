@@ -57,9 +57,9 @@ var extSettings = JSON.parse(document.getElementById("settings-container").inner
                     }
                 }
                 // Add logging for response body if necessary
-                return originalFetch(input, init);
+
             });
-                   
+            return originalFetch(input, init);   
         });
         } else{
             if ((url.includes('cursor=') || url.endsWith('/messages/?limit=25')) && extSettings['conversation-reader']) {
