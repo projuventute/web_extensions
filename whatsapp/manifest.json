@@ -2,8 +2,8 @@
   "manifest_version": 3,
   "name": "147 Beratung",
   "author": "pjdwe, Pro Juventute",
-  "version": "0.2",
-  "version_name": "0.2 beta",
+  "version": "0.3",
+  "version_name": "0.3 beta",
   "description": "Modify Websites for better user experience (block unwanted content, change user interface...)",
   "permissions": [
     "activeTab",

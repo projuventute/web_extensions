@@ -23,6 +23,7 @@ var extSettings = JSON.parse(document.getElementById("settings-container").inner
         if (url.includes('/messages/?limit=25')) {
             input = input.replace('limit=25', 'limit=100');
         }
+
         // Intercept GET requests
         // Log request headers if needed
         if (input.headers) {
@@ -33,40 +34,54 @@ var extSettings = JSON.parse(document.getElementById("settings-container").inner
         }
 
         // Make the actual fetch request
+        if ((url.includes('cursor=') || url.endsWith('/messages/?limit=100')) && extSettings['conversation-reader']) {
         return originalFetch(input, init).then(function (response) {
             // Log response headers
             var responseHeaders = {};
             response.headers.forEach(function (value, key) {
                 responseHeaders[key] = value;
             });
-
+            
             // Log the response body (you can add this if needed)
             response.text().then(function (body) {
                 if ((url.includes('cursor=') || url.endsWith('/messages/?limit=25')) && extSettings['conversation-reader']) {
                     makeReadable();
-                    // Show button if already created
+                    // Show a button if already created
                     document.querySelector('#uncleaner').style.display = 'block';
-
-                } if (!document.location.href.startsWith('https://www.userlike.com/de/umc/#/inbox/') && !document.location.href.startsWith('https://www.userlike.com/de/umc/#/conversation/')) {
-                    //Hide Button on other pages
-
+                }
+                if (!document.location.href.startsWith('https://www.userlike.com/de/umc/#/inbox/') && !document.location.href.startsWith('https://www.userlike.com/de/umc/#/conversation/')) {
+                    // Hide the button on other pages
                     const uncleanerElement = document.querySelector('#uncleaner');
-
                     if (uncleanerElement) {
                         uncleanerElement.style.display = 'none';
                     }
                 }
                 // Add logging for response body if necessary
+                return originalFetch(input, init);
             });
-
-            // Return the original response
-            return originalFetch(input, init);
+                   
         });
+        } else{
+            if ((url.includes('cursor=') || url.endsWith('/messages/?limit=25')) && extSettings['conversation-reader']) {
+                makeReadable();
+                // Show a button if already created
+                document.querySelector('#uncleaner').style.display = 'block';
+            }
+            if (!document.location.href.startsWith('https://www.userlike.com/de/umc/#/inbox/') && !document.location.href.startsWith('https://www.userlike.com/de/umc/#/conversation/')) {
+                // Hide the button on other pages
+                const uncleanerElement = document.querySelector('#uncleaner');
+                if (uncleanerElement) {
+                    uncleanerElement.style.display = 'none';
+                }
+            }
+            return originalFetch(input, init);
+        }
 
-        // For non-GET requests, just pass them through
-        return originalFetch(input, init);
+            // Return the original response without modification
+
     };
 })(window);
+
 
 /**
  * Check for the existence of elements matching a selector at regular intervals.
