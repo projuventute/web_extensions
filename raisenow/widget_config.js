@@ -36,7 +36,10 @@ intervalLoopForRnw = setInterval(function () {
          // -> https://support.raisenow.com/hc/en-us/articles/360018786778-Adding-conditions-in-your-configuration
          var defaultPurp = 'p1'; // declare and set default
          var defaultAmtOneTime = [60, 120, 250]; // declare and set default
-         if (window.location.href.match(/.*\/luca-leidet-still.*/)) {
+         if (window.location.href.match(/.*\/weltkindertag.*/)) {
+            defaultPurp = 'p17';
+            defaultAmtOneTime = [60, 120, 240];
+         } else if (window.location.href.match(/.*\/luca-leidet-still.*/)) {
             defaultPurp = 'p19';
             defaultAmtOneTime = [45, 75, 120];
          } else if (window.location.href.match(/.*\/meine-spende-rettet-leben.*|.*\/mon-don-sauve-des-vies.*|.*\/la-mia-donazione-salva-delle-vite.*/)) {
@@ -97,7 +100,7 @@ intervalLoopForRnw = setInterval(function () {
                      , p14: 'Kultissimo (DE)'
                      , p15: 'Stress-Studie (DE)'
                      , p16: 'Pro Juventute (Lidl-DE)'
-                     , p17: 'Pro Juventute (Optic2000-DE)'
+                     , p17: 'Weltkindertag (DE, 2023)'
                      , p18: 'Winterkampagne (DE)'
                      , p19: 'Luca leidet still (DE, 2023)'
                      , p20: 'Parkplatz'
@@ -148,7 +151,7 @@ intervalLoopForRnw = setInterval(function () {
                         event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL08QAG';
                         break;
                      case 'p17':
-                        event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLBIQA4';
+                        event.data.api.paymentForm.data.stored_campaign_id = '7013X000001pP0zQAE';
                         break;
                      case 'p18':
                         event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL9qQAG';
@@ -197,7 +200,7 @@ intervalLoopForRnw = setInterval(function () {
                         event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL0DQAW';
                         break;
                      case 'p17':
-                        event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLBJQA4';
+                        event.data.api.paymentForm.data.stored_campaign_id = '7013X000001pP0vQAE';
                         break;
                      case 'p18':
                         event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLA0QAO';
@@ -249,7 +252,7 @@ intervalLoopForRnw = setInterval(function () {
                         event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL0IQAW';
                         break;
                      case 'p17':
-                        event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLBNQA4';
+                        event.data.api.paymentForm.data.stored_campaign_id = '7013X000001pP0uQAE';
                         break;
                      case 'p18':
                         event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLA5QAO';
