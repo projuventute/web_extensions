@@ -1,6 +1,6 @@
-// v1.4
+// v1.6.0
 
-// window.console.log('     widget config start');
+// window.console.log('[raiseNow widget config] start');
 
 // set secondsToWait to 15 seconds
 var secondsToWaitForRnw = 15;
