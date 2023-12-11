@@ -1,6 +1,6 @@
-// v1.4
+// v1.6.0
 
-// window.console.log('     widget config start');
+// window.console.log('[raiseNow widget config] start');
 
 // set secondsToWait to 15 seconds
 var secondsToWaitForRnw = 15;
@@ -36,7 +36,13 @@ intervalLoopForRnw = setInterval(function () {
          // -> https://support.raisenow.com/hc/en-us/articles/360018786778-Adding-conditions-in-your-configuration
          var defaultPurp = 'p1'; // declare and set default
          var defaultAmtOneTime = [60, 120, 250]; // declare and set default
-         if (window.location.href.match(/.*\/luca-leidet-still.*/)) {
+         if (window.location.href.match(/.*\/(weltkindertag|de\/node\/1357).*/)) {
+            defaultPurp = 'p17';
+            defaultAmtOneTime = [60, 120, 240];
+         } else if (window.location.href.match(/.*\/(de\/danke|fr\/merci|it\/grazie).*/)) {
+            defaultPurp = 'p14';
+            defaultAmtOneTime = [45, 90, 150];
+         } else if (window.location.href.match(/.*\/luca-leidet-still.*/)) {
             defaultPurp = 'p19';
             defaultAmtOneTime = [45, 75, 120];
          } else if (window.location.href.match(/.*\/meine-spende-rettet-leben.*|.*\/mon-don-sauve-des-vies.*|.*\/la-mia-donazione-salva-delle-vite.*/)) {
@@ -94,10 +100,10 @@ intervalLoopForRnw = setInterval(function () {
                      , p11: 'Newsletter (DE)'
                      , p12: 'Jugendappell (DE)'
                      , p13: 'Bewerbungstraining (DE)'
-                     , p14: 'Kultissimo (DE)'
+                     , p14: 'Weihnachtsmailing (DE-FR-IT, 2023)'
                      , p15: 'Stress-Studie (DE)'
                      , p16: 'Pro Juventute (Lidl-DE)'
-                     , p17: 'Pro Juventute (Optic2000-DE)'
+                     , p17: 'Weltkindertag (DE, 2023)'
                      , p18: 'Winterkampagne (DE)'
                      , p19: 'Luca leidet still (DE, 2023)'
                      , p20: 'Parkplatz'
@@ -145,10 +151,10 @@ intervalLoopForRnw = setInterval(function () {
                         event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL8sQAG';
                         break;
                      case 'p14':
-                        event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL08QAG';
+                        event.data.api.paymentForm.data.stored_campaign_id = '7013X000001pP2gQAE';
                         break;
                      case 'p17':
-                        event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLBIQA4';
+                        event.data.api.paymentForm.data.stored_campaign_id = '7013X000001pP0zQAE';
                         break;
                      case 'p18':
                         event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL9qQAG';
@@ -194,10 +200,10 @@ intervalLoopForRnw = setInterval(function () {
                         event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL8qQAG';
                         break;
                      case 'p14':
-                        event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL0DQAW';
+                        event.data.api.paymentForm.data.stored_campaign_id = '7013X000001pP2bQAE';
                         break;
                      case 'p17':
-                        event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLBJQA4';
+                        event.data.api.paymentForm.data.stored_campaign_id = '7013X000001pP0vQAE';
                         break;
                      case 'p18':
                         event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLA0QAO';
@@ -246,10 +252,10 @@ intervalLoopForRnw = setInterval(function () {
                         event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL8xQAG';
                         break;
                      case 'p14':
-                        event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FL0IQAW';
+                        event.data.api.paymentForm.data.stored_campaign_id = '7013X000001pP2WQAU';
                         break;
                      case 'p17':
-                        event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLBNQA4';
+                        event.data.api.paymentForm.data.stored_campaign_id = '7013X000001pP0uQAE';
                         break;
                      case 'p18':
                         event.data.api.paymentForm.data.stored_campaign_id = '7013X000002FLA5QAO';
