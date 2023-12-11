@@ -1,0 +1,58 @@
+{
+    "extensionName": {
+        "message": "147 Beratung",
+        "description": "Name der Erweiterung"
+    },
+    "popupTitle": {
+        "message": "147 Anpasser",
+        "description": "Titel für das Popup"
+    },
+    "ll_conversation_cleaner": {
+        "message": "Gesprächsreiniger",
+        "description": "Anzeigen/Verbergen des Gesprächsreiniger-Symbols"
+    },
+    "ll_media_blocker": {
+        "message": "Medienblocker",
+        "description": "Medienblocker deaktivieren/aktivieren"
+    },
+    "ll_dark_mode": {
+        "message": "Dunkelmodus",
+        "description": "Dunkelmodus deaktivieren/aktivieren"
+    },
+    "ll_settings_saved": {
+        "message": "Einstellungen gespeichert!",
+        "description": "Nachricht für gespeicherte Einstellungen"
+    },
+    "ll_conversation_preview": {
+        "message": "Gesprächsvorschau",
+        "description": "Gesprächsvorschau in der Ansicht aller Gespräche aktivieren/deaktivieren"
+    },
+    "ll_hide_admins": {
+        "message": "Admins verbergen",
+        "description": "Nachricht für gespeicherte Einstellungen"
+    },
+    "ll_not_delivered": {
+        "message": "Nicht zugestellte hervorheben",
+        "description": "Gesprächsvorschau in der Ansicht aller Gespräche aktivieren/deaktivieren"
+    },
+    "ll_clean_layout": {
+        "message": "Klares Layout",
+        "description": "Gesprächsvorschau in der Ansicht aller Gespräche aktivieren/deaktivieren"
+    },
+    "ll_show_unanswered": {
+        "message": "Unbeantwortete anzeigen",
+        "description": "Nur unbeantwortete Gespräche anzeigen"
+    },
+    "ll_show_all": {
+        "message": "Alle anzeigen",
+        "description": "Alle Gespräche anzeigen"
+    },
+    "ll_support_message": {
+        "message": "Für Vorschläge oder Fehlermeldungen kontaktieren Sie bitte David Welten über Microsoft Teams.",
+        "description": "Kontaktinformationen für Support"
+    },
+    "ll_beraitung_url": {
+        "message": "URL for BerAItung",
+        "description": "URL for BerAItung"
+    }
+}
