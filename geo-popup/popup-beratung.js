@@ -42,6 +42,10 @@ function Popup(site, geo) {
             titel: "Les lignes d’écoute – Psycom – Santé Mentale Info",
             link: "https://www.psycom.org/sorienter/les-lignes-decoute/",
           },
+          {
+            titel: "Soutenir la parentalité",
+            link: "https://solidarites.gouv.fr/soutenir-la-parentalite",
+          },
         ]
       : geo === "IT"
       ? [
@@ -103,7 +107,7 @@ function Popup(site, geo) {
   const infoTextFr =
     site === "147"
       ? `Notre service de conseil n’est destiné qu’aux enfants et aux jeunes qui vivent en Suisse.`
-      : `Notre service de conseils aux parents est destiné aux familles vivant en Suisse exclusivement.`;
+      : `Notre service de conseils aux parents est destiné exclusivement aux familles qui vivent en Suisse et au Lichtenstein. `;
   const geoTextIt =
     site === "147"
       ? `Sembra che tu stia accedendo a 147.ch dall'${land}. `
