@@ -62,11 +62,11 @@ function Popup(site, geo) {
             link: "https://wa.link/ug93ne",
           },
           {
-            titel: "114 (numero per le emergenze gestito dal Telefono Azzurro",
+            titel: "114 (numero per le emergenze gestito dal Telefono Azzurro)",
             link: "tel:114",
           },
           {
-            titel: "116 000 (numero unico europeo per minori scomparsi",
+            titel: "116 000",
             link: "tel:116000",
           },
         ]
