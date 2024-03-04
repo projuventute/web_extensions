@@ -117,6 +117,7 @@ intervalLoopForRnw = setInterval(function () {
          window.rnw.tamaro.events.paymentMethodChanged.subscribe(function (event) {
             switch (event.data.api.paymentForm.data.payment_method) {
                case 'twi':     // Twint
+               case 'twint':   // Twint
                case 'vis':     // Kreditkarte - Visa
                case 'eca':     // Kreditkarte - Mastercard
                case 'pfc':     // Postfinance
