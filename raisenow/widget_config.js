@@ -1,4 +1,4 @@
-// v1.6.0
+// v1.7.0 - 2024-03-04
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -117,7 +117,7 @@ intervalLoopForRnw = setInterval(function () {
          window.rnw.tamaro.events.paymentMethodChanged.subscribe(function (event) {
             switch (event.data.api.paymentForm.data.payment_method) {
                case 'twi':     // Twint
-               case 'twint':   // Twint
+               case 'twint':   // Twint - cf. SD-11883
                case 'vis':     // Kreditkarte - Visa
                case 'eca':     // Kreditkarte - Mastercard
                case 'pfc':     // Postfinance
