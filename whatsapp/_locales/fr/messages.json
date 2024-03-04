@@ -1,0 +1,58 @@
+{
+    "extensionName": {
+        "message": "147 Conseil",
+        "description": "Nom de l'extension"
+    },
+    "popupTitle": {
+        "message": "147 Personnalisateur",
+        "description": "Titre du popup"
+    },
+    "ll_conversation_cleaner": {
+        "message": "Nettoyeur de conversation",
+        "description": "Afficher/Masquer l'icône de nettoyage de conversation"
+    },
+    "ll_media_blocker": {
+        "message": "Bloqueur de médias",
+        "description": "Désactiver/Activer le bloqueur de médias"
+    },
+    "ll_dark_mode": {
+        "message": "mode sombre",
+        "description": "Désactiver/Activer le mode sombre"
+    },
+    "ll_settings_saved": {
+        "message": "Paramètres enregistrés !",
+        "description": "Message pour les paramètres enregistrés"
+    },
+    "ll_conversation_preview": {
+        "message": "Aperçu de la conversation",
+        "description": "Activer/Désactiver l'aperçu de la conversation dans toutes les vues de conversations"
+    },
+    "ll_hide_admins": {
+        "message": "Cacher les administrateurs",
+        "description": "Message pour les paramètres enregistrés"
+    },
+    "ll_not_delivered": {
+        "message": "Mettre en évidence non livré",
+        "description": "Activer/Désactiver l'aperçu de la conversation dans toutes les vues de conversations"
+    },
+    "ll_clean_layout": {
+        "message": "Disposition épurée",
+        "description": "Activer/Désactiver l'aperçu de la conversation dans toutes les vues de conversations"
+    },
+    "ll_show_unanswered": {
+        "message": "Afficher les non-répondus",
+        "description": "Afficher uniquement les conversations sans réponse"
+    },
+    "ll_show_all": {
+        "message": "Afficher tout",
+        "description": "Afficher toutes les conversations"
+    },
+    "ll_support_message": {
+        "message": "Pour des suggestions ou des rapports de bugs, veuillez contacter David Welten sur Microsoft Teams.",
+        "description": "Informations de Contact du Support"
+    },
+    "ll_beraitung_url": {
+        "message": "URL for BerAItung",
+        "description": "URL for BerAItung"
+    }
+}

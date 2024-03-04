@@ -15,3 +15,59 @@
     z-index: 9999;
     /* Ensure it's above other content */
 }
+@keyframes blink {
+    0% {
+        opacity: 1; /* Fully visible */
+        transform:scale(1);
+    }
+    50% {
+        opacity: 0; /* Fully invisible */
+        transform:scale(2);
+    }
+    100% {
+        opacity: 1; /* Fully visible again */
+        transform:scale(3);
+    }
+}
+.ext_filters {
+    display: flex;
+    gap: 10px; /* Adds space between buttons */
+    justify-content: center; /* Center the buttons */
+    padding: 20px;
+}
+
+.ext_filters button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.ext_filters button:hover {
+    opacity: 0.9;
+}
+
+.ext_filters button:active {
+    transform: scale(0.98); /* Slightly shrink the button when clicked */
+}
+
+/* Styling for 'Show all' button */
+.ext_filters button.show-all {
+    background-color: #4CAF50; /* Green color */
+}
+
+/* Styling for 'Show unanswered' button */
+.ext_filters button.show-unanswered {
+    background-color: #FF9800; /* Orange color */
+}
+.ai-button{
+    border:3px red solid;
+    padding: 5px;
+    border-radius: 10px;
+}
+.dayMessage{
+    border:1px var(--chakra-colors-background-lead) solid;
+}

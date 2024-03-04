@@ -1,0 +1,58 @@
+{
+    "extensionName": {
+        "message": "147 Consulenza",
+        "description": "Nome dell'estensione"
+    },
+    "popupTitle": {
+        "message": "147 Personalizzatore",
+        "description": "Titolo del popup"
+    },
+    "ll_conversation_cleaner": {
+        "message": "Pulitore di conversazioni:",
+        "description": "Mostra/Nascondi icona del pulitore di conversazioni"
+    },
+    "ll_media_blocker": {
+        "message": "Blocca media",
+        "description": "Disattiva/Attiva blocco media"
+    },
+    "ll_dark_mode": {
+        "message": "modalità scura",
+        "description": "Disattiva/Attiva modalità scura"
+    },
+    "ll_settings_saved": {
+        "message": "Impostazioni salvate!",
+        "description": "Messaggio per impostazioni salvate"
+    },
+    "ll_conversation_preview": {
+        "message": "Anteprima conversazione",
+        "description": "Attiva/Disattiva anteprima conversazione in tutte le visualizzazioni di conversazioni"
+    },
+    "ll_hide_admins": {
+        "message": "Nascondi amministratori",
+        "description": "Messaggio per impostazioni salvate"
+    },
+    "ll_not_delivered": {
+        "message": "Evidenzia non consegnati",
+        "description": "Attiva/Disattiva anteprima conversazione in tutte le visualizzazioni di conversazioni"
+    },
+    "ll_clean_layout": {
+        "message": "Layout pulito",
+        "description": "Attiva/Disattiva anteprima conversazione in tutte le visualizzazioni di conversazioni"
+    },
+    "ll_show_unanswered": {
+        "message": "Mostra non risposti",
+        "description": "Mostra solo conversazioni senza risposta"
+    },
+    "ll_show_all": {
+        "message": "Mostra tutti",
+        "description": "Mostra tutte le conversazioni"
+    },
+    "ll_support_message": {
+        "message": "Per suggerimenti o segnalazioni di bug, si prega di contattare David Welten su Microsoft Teams.",
+        "description": "Informazioni per il Contatto di Supporto"
+    },
+    "ll_beraitung_url": {
+        "message": "URL for BerAItung",
+        "description": "URL for BerAItung"
+    }
+}

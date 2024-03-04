@@ -1,0 +1,58 @@
+{
+    "extensionName": {
+        "message": "147 Counselling",
+        "description": "Name of the Extension"
+    },
+    "popupTitle": {
+        "message": "147 Customizer:",
+        "description": "Title for the Popup Window"
+    },
+    "ll_conversation_cleaner": {
+        "message": "Conversation Cleaner:",
+        "description": "Display or Hide the Conversation Cleaner Icon"
+    },
+    "ll_media_blocker": {
+        "message": "Media Blocker:",
+        "description": "Disable or Enable the Media Blocker"
+    },
+    "ll_dark_mode": {
+        "message": "Dark Mode:",
+        "description": "Disable or Enable Dark Mode"
+    },
+    "ll_settings_saved": {
+        "message": "Settings Saved!",
+        "description": "Confirmation Message for Saved Settings"
+    },
+    "ll_conversation_preview": {
+        "message": "Conversation Preview",
+        "description": "Enable or Disable the Conversation Preview in All Conversations View"
+    },
+    "ll_hide_admins": {
+        "message": "Hide Admins",
+        "description": "Option to Hide Admins"
+    },
+    "ll_not_delivered": {
+        "message": "Highlight Not Delivered",
+        "description": "Enable or Disable Highlighting of Undelivered Messages"
+    },
+    "ll_clean_layout": {
+        "message": "Clean Layout",
+        "description": "Enable or Disable a Clean Layout in Conversation View"
+    },
+    "ll_show_unanswered": {
+        "message": "Show Unanswered",
+        "description": "Option to Show Only Unanswered Conversations"
+    },
+    "ll_show_all": {
+        "message": "Show All",
+        "description": "Option to Show All Conversations"
+    },
+    "ll_support_message": {
+        "message": "For suggestions or bug reports, please contact David Welten on Microsoft Teams.",
+        "description": "Support Contact Information"
+    },
+    "ll_beraitung_url": {
+        "message": "URL for BerAItung",
+        "description": "URL for BerAItung"
+    }
+}
