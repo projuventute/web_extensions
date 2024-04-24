@@ -127,11 +127,12 @@ intervalLoopForRnw = setInterval(function () {
       // switch campaign according to payment method selected
       window.rnw.tamaro.events.paymentMethodChanged.subscribe(function (event) {
         switch (event.data.api.paymentForm.data.payment_method) {
-          case "twi": // Twint
-          case "twint": // Twint - cf. SD-11883
-          case "vis": // Kreditkarte - Visa
-          case "eca": // Kreditkarte - Mastercard
-          case "pfc": // Postfinance
+          case "twi":     // Twint
+          case "twint":   // Twint - cf. SD-11883
+          case "card":    // Kreditkarte - replacing "vis" and "eca" since v2.8.3
+          case "vis":     // Kreditkarte - Visa
+          case "eca":     // Kreditkarte - Mastercard
+          case "pfc":     // Postfinance
             switch (event.data.api.paymentForm.data.purpose) {
               case "p1":
               case "p2":
@@ -195,7 +196,7 @@ intervalLoopForRnw = setInterval(function () {
               // note: RaiseNow allows max. 20 different purposes
             }
             break;
-          case "pp": // Paypal
+          case "pp":      // Paypal
             switch (event.data.api.paymentForm.data.purpose) {
               case "p1":
               case "p2":
@@ -259,8 +260,8 @@ intervalLoopForRnw = setInterval(function () {
               // note: RaiseNow allows max. 20 different purposes
             }
             break;
-          case "dd": // Lastschriftverfahren / Direct Debit
-          //             case 'ezs':       // Einzahlungsschein
+          case "dd":      // Lastschriftverfahren / Direct Debit
+//        case 'ezs':     // Einzahlungsschein
           case "qr-bill": // QR Rechnung
           default:
             switch (event.data.api.paymentForm.data.purpose) {
