@@ -1,4 +1,4 @@
-// v1.7.0 - 2024-03-04
+// v1.7.3 - 2024-04-24
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -127,9 +127,9 @@ intervalLoopForRnw = setInterval(function () {
       // switch campaign according to payment method selected
       window.rnw.tamaro.events.paymentMethodChanged.subscribe(function (event) {
         switch (event.data.api.paymentForm.data.payment_method) {
-          case "twi":     // Twint
           case "twint":   // Twint - cf. SD-11883
-          case "card":    // Kreditkarte - replacing "vis" and "eca" since v2.8.3
+          case "twi":     // Twint
+          case "card":    // Kreditkarte - replacing "vis" and "eca" since tamaro v2.8.3
           case "vis":     // Kreditkarte - Visa
           case "eca":     // Kreditkarte - Mastercard
           case "pfc":     // Postfinance
@@ -196,7 +196,8 @@ intervalLoopForRnw = setInterval(function () {
               // note: RaiseNow allows max. 20 different purposes
             }
             break;
-          case "pp":      // Paypal
+            case "payppal": // Paypal - replacing "pp" since tamaro v2.8.3
+            case "pp":      // Paypal
             switch (event.data.api.paymentForm.data.purpose) {
               case "p1":
               case "p2":
