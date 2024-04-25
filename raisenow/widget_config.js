@@ -1,4 +1,4 @@
-// v1.7.3 - 2024-04-24
+// v1.7.4 - 2024-04-25
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -196,7 +196,7 @@ intervalLoopForRnw = setInterval(function () {
               // note: RaiseNow allows max. 20 different purposes
             }
             break;
-            case "payppal": // Paypal - replacing "pp" since tamaro v2.8.3
+            case "paypal":  // Paypal - replacing "pp" since tamaro v2.8.3
             case "pp":      // Paypal
             switch (event.data.api.paymentForm.data.purpose) {
               case "p1":
