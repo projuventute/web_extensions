@@ -102,7 +102,7 @@ intervalLoopForRnw = setInterval(function () {
               p4: "Medienkompetenz (DE)",
               p5: "Chesa (DE)",
               p6: "Für mehr Geborgenheit",
-              p7: "Emika (DE, 2024)",       // SD-12555
+              p7: "Emika Türhänger (DE, 2024)",       // SD-12555
               p8: "wup (DE)",
               p9: "Future Skills (DE)",
               p10: "Ferienpass (DE)",
