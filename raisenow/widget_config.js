@@ -48,7 +48,6 @@ intervalLoopForRnw = setInterval(function () {
       var defaultAmtOneTime = [60, 120, 250]; // declare and set default
       if (window.location.href.match(/.*\/de\/so-koennen-sie-helfen.*/)) {  // SD-12555
         defaultPurp = "p7";
-        defaultAmtOneTime = [60, 120, 240];
       } else if (window.location.href.match(/.*\/(weltkindertag|de\/node\/1357).*/)) {
         defaultPurp = "p17";
         defaultAmtOneTime = [60, 120, 240];
