@@ -1,4 +1,4 @@
-// v1.7.5 - 2024-04-30
+// v1.7.6 - 2024-04-30
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -46,7 +46,10 @@ intervalLoopForRnw = setInterval(function () {
       // -> https://support.raisenow.com/hc/en-us/articles/360018786778-Adding-conditions-in-your-configuration
       var defaultPurp = "p1"; // declare and set default
       var defaultAmtOneTime = [60, 120, 250]; // declare and set default
-      if (window.location.href.match(/.*\/(weltkindertag|de\/node\/1357).*/)) {
+      if (window.location.href.match(/.*\/de\/so-koennen-sie-helfen.*/)) {  // SD-12555
+        defaultPurp = "p7";
+        defaultAmtOneTime = [60, 120, 240];
+      } else if (window.location.href.match(/.*\/(weltkindertag|de\/node\/1357).*/)) {
         defaultPurp = "p17";
         defaultAmtOneTime = [60, 120, 240];
       } else if (
