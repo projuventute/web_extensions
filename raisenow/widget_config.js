@@ -1,4 +1,4 @@
-// v1.7.3 - 2024-04-24
+// v1.7.4 - 2024-04-30
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -104,7 +104,7 @@ intervalLoopForRnw = setInterval(function () {
               p4: "Medienkompetenz (DE)",
               p5: "Chesa (DE)",
               p6: "Für mehr Geborgenheit",
-              p7: "Finanzkompetenz (DE)",
+              p7: "Emika (DE, 2024)",       // SD-12555
               p8: "wup (DE)",
               p9: "Future Skills (DE)",
               p10: "Ferienpass (DE)",
@@ -158,8 +158,17 @@ intervalLoopForRnw = setInterval(function () {
                   "701Vj000004uOGkIAM";
                 break;
               case "p7":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002FLJqQAO";
+                switch(event.data.api.paymentForm.data.payment_type) {
+                  case "onetime":
+                  default:
+                    event.data.api.paymentForm.data.stored_campaign_id =
+                      "701Vj000006ZLMLIA4";
+                    break;
+                  case "recurring":
+                    event.data.api.paymentForm.data.stored_campaign_id =
+                      "701Vj000007BOB4IAO";
+                    break;
+                }
                 break;
               case "p9":
                 event.data.api.paymentForm.data.stored_campaign_id =
@@ -223,8 +232,17 @@ intervalLoopForRnw = setInterval(function () {
                   "701Vj000004uQTmIAM";
                 break;
               case "p7":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002FLK0QAO";
+                switch(event.data.api.paymentForm.data.payment_type) {
+                  case "onetime":
+                  default:
+                    event.data.api.paymentForm.data.stored_campaign_id =
+                      "701Vj000006ZNYCIA4";
+                    break;
+                  case "recurring":
+                    event.data.api.paymentForm.data.stored_campaign_id =
+                      "701Vj000007BNWjIAO";
+                    break;
+                }
                 break;
               case "p9":
                 event.data.api.paymentForm.data.stored_campaign_id =
@@ -291,7 +309,7 @@ intervalLoopForRnw = setInterval(function () {
                 break;
               case "p7":
                 event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002FLK5QAO";
+                  "701Vj000006YXpJIAW";
                 break;
               case "p9":
                 event.data.api.paymentForm.data.stored_campaign_id =
