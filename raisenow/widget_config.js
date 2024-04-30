@@ -48,7 +48,6 @@ intervalLoopForRnw = setInterval(function () {
       var defaultAmtOneTime = [60, 120, 250]; // declare and set default
       if (window.location.href.match(/.*\/de\/so-koennen-sie-helfen.*/)) {  // SD-12555
         defaultPurp = "p7";
-        defaultAmtOneTime = [60, 120, 240];
       } else if (window.location.href.match(/.*\/(weltkindertag|de\/node\/1357).*/)) {
         defaultPurp = "p17";
         defaultAmtOneTime = [60, 120, 240];
@@ -60,11 +59,7 @@ intervalLoopForRnw = setInterval(function () {
       } else if (window.location.href.match(/.*\/luca-leidet-still.*/)) {
         defaultPurp = "p19";
         defaultAmtOneTime = [45, 75, 120];
-      } else if (
-        window.location.href.match(
-          /.*\/meine-spende-rettet-leben.*|.*\/mon-don-sauve-des-vies.*|.*\/la-mia-donazione-salva-delle-vite.*/
-        )
-      ) {
+      } else if (window.location.href.match(/.*\/meine-spende-rettet-leben.*|.*\/mon-don-sauve-des-vies.*|.*\/la-mia-donazione-salva-delle-vite.*/)) {
         defaultPurp = "p18";
       } else {
         defaultPurp = "p1";
