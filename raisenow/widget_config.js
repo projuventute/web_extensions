@@ -46,7 +46,9 @@ intervalLoopForRnw = setInterval(function () {
       // -> https://support.raisenow.com/hc/en-us/articles/360018786778-Adding-conditions-in-your-configuration
       var defaultPurp = "p1"; // declare and set default
       var defaultAmtOneTime = [60, 120, 250]; // declare and set default
-      if (window.location.href.match(/.*\/(weltkindertag|de\/node\/1357).*/)) {
+      if (window.location.href.match(/.*\/de\/so-koennen-sie-helfen.*/)) {  // SD-12555
+        defaultPurp = "p7";
+      } else if (window.location.href.match(/.*\/(weltkindertag|de\/node\/1357).*/)) {
         defaultPurp = "p17";
         defaultAmtOneTime = [60, 120, 240];
       } else if (window.location.href.match(/.*\/(de\/danke|fr\/merci|it\/grazie).*/)) {
@@ -55,6 +57,7 @@ intervalLoopForRnw = setInterval(function () {
       } else if (window.location.href.match(/.*\/luca-leidet-still.*/)) {
         defaultPurp = "p19";
         defaultAmtOneTime = [45, 75, 120];
+      } else if (window.location.href.match(/.*\/meine-spende-rettet-leben.*|.*\/mon-don-sauve-des-vies.*|.*\/la-mia-donazione-salva-delle-vite.*/)) {
       } else if (window.location.href.match(/.*\/meine-spende-rettet-leben.*|.*\/mon-don-sauve-des-vies.*|.*\/la-mia-donazione-salva-delle-vite.*/)) {
         defaultPurp = "p18";
       } else {
@@ -102,7 +105,7 @@ intervalLoopForRnw = setInterval(function () {
               p4: "Medienkompetenz (DE)",
               p5: "Chesa (DE)",
               p6: "Für mehr Geborgenheit",
-              p7: "Finanzkompetenz (DE)",
+              p7: "Emika Türhänger (DE, 2024)",       // SD-12555
               p8: "wup (DE)",
               p9: "Future Skills (DE)",
               p10: "Ferienpass (DE)",
@@ -156,8 +159,17 @@ intervalLoopForRnw = setInterval(function () {
                   "701Vj000004uOGkIAM";
                 break;
               case "p7":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002FLJqQAO";
+                switch(event.data.api.paymentForm.data.payment_type) {
+                  case "onetime":
+                  default:
+                    event.data.api.paymentForm.data.stored_campaign_id =
+                      "701Vj000006ZLMLIA4";
+                    break;
+                  case "recurring":
+                    event.data.api.paymentForm.data.stored_campaign_id =
+                      "701Vj000007BOB4IAO";
+                    break;
+                }
                 break;
               case "p9":
                 event.data.api.paymentForm.data.stored_campaign_id =
@@ -221,8 +233,17 @@ intervalLoopForRnw = setInterval(function () {
                   "701Vj000004uQTmIAM";
                 break;
               case "p7":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002FLK0QAO";
+                switch(event.data.api.paymentForm.data.payment_type) {
+                  case "onetime":
+                  default:
+                    event.data.api.paymentForm.data.stored_campaign_id =
+                      "701Vj000006ZNYCIA4";
+                    break;
+                  case "recurring":
+                    event.data.api.paymentForm.data.stored_campaign_id =
+                      "701Vj000007BNWjIAO";
+                    break;
+                }
                 break;
               case "p9":
                 event.data.api.paymentForm.data.stored_campaign_id =
@@ -289,7 +310,7 @@ intervalLoopForRnw = setInterval(function () {
                 break;
               case "p7":
                 event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002FLK5QAO";
+                  "701Vj000006YXpJIAW";
                 break;
               case "p9":
                 event.data.api.paymentForm.data.stored_campaign_id =
