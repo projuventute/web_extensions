@@ -1,4 +1,4 @@
-// v1.7.4 - 2024-04-25
+// v1.8.0 - 2024-05-27
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -49,19 +49,13 @@ intervalLoopForRnw = setInterval(function () {
       if (window.location.href.match(/.*\/(weltkindertag|de\/node\/1357).*/)) {
         defaultPurp = "p17";
         defaultAmtOneTime = [60, 120, 240];
-      } else if (
-        window.location.href.match(/.*\/(de\/danke|fr\/merci|it\/grazie).*/)
-      ) {
+      } else if (window.location.href.match(/.*\/(de\/danke|fr\/merci|it\/grazie).*/)) {
         defaultPurp = "p14";
         defaultAmtOneTime = [45, 90, 150];
       } else if (window.location.href.match(/.*\/luca-leidet-still.*/)) {
         defaultPurp = "p19";
         defaultAmtOneTime = [45, 75, 120];
-      } else if (
-        window.location.href.match(
-          /.*\/meine-spende-rettet-leben.*|.*\/mon-don-sauve-des-vies.*|.*\/la-mia-donazione-salva-delle-vite.*/
-        )
-      ) {
+      } else if (window.location.href.match(/.*\/meine-spende-rettet-leben.*|.*\/mon-don-sauve-des-vies.*|.*\/la-mia-donazione-salva-delle-vite.*/)) {
         defaultPurp = "p18";
       } else {
         defaultPurp = "p1";
@@ -73,6 +67,10 @@ intervalLoopForRnw = setInterval(function () {
         language: pageLang,
         defaultPurpose: defaultPurp,
         amounts: [
+          {
+            if: "paymentType() == onetime && purpose() == p20",
+            then: [5, 15, 20],
+          },
           {
             if: "paymentType() == onetime",
             then: defaultAmtOneTime,
