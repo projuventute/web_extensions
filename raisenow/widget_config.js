@@ -1,4 +1,4 @@
-// v1.8.0 - 2024-05-27
+// v1.8.1 - 2024-05-29
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -72,7 +72,7 @@ intervalLoopForRnw = setInterval(function () {
         amounts: [
           {
             if: "paymentType() == onetime && purpose() == p20",
-            then: [5, 15, 20],
+            then: [5, 10, 20],
           },
           {
             if: "paymentType() == onetime",
