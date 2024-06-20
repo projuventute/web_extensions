@@ -6,7 +6,7 @@ var widgetStyleInnerText = `
    :root {
       --tamaro-block-header-position-color: white !important;
       --tamaro-primary-color: black !important;
-      --tamaro-primary-color__hover: #f0eeeb !important;
+      --tamaro-primary-color__hover: #000000 !important;
       --tamaro-primary-bg-color: #fbbb21 !important;
       --tamaro-text-color: black !important;
       --tamaro-bg-color__hover: #f0eeeb !important;
