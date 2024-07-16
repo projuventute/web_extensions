@@ -1,4 +1,4 @@
-// v1.8.1 - 2024-05-29
+// v1.8.2 - 2024-07-16
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -128,86 +128,8 @@ intervalLoopForRnw = setInterval(function () {
       // switch campaign according to payment method selected
       window.rnw.tamaro.events.paymentMethodChanged.subscribe(function (event) {
         switch (event.data.api.paymentForm.data.payment_method) {
-          case "twint":   // Twint - cf. SD-11883
-          case "twi":     // Twint
-          case "card":    // Kreditkarte - replacing "vis" and "eca" since tamaro v2.8.3
-          case "vis":     // Kreditkarte - Visa
-          case "eca":     // Kreditkarte - Mastercard
-          case "pfc":     // Postfinance
-            switch (event.data.api.paymentForm.data.purpose) {
-              case "p1":
-              case "p2":
-              case "p3":
-              case "p11":
-              case "p12":
-              case "p15":
-              case "p16":
-              default:
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002FKzKQAW";
-                break;
-              case "p4":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002FKztQAG";
-                break;
-              case "p5":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002FL0vQAG";
-                break;
-              case "p6":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj000004uOGkIAM";
-                break;
-              case "p7":
-                switch(event.data.api.paymentForm.data.payment_type) {
-                  case "onetime":
-                  default:
-                    event.data.api.paymentForm.data.stored_campaign_id =
-                      "701Vj000006ZLMLIA4";
-                    break;
-                  case "recurring":
-                    event.data.api.paymentForm.data.stored_campaign_id =
-                      "701Vj000007BOB4IAO";
-                    break;
-                }
-                break;
-              case "p9":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002FLAyQAO";
-                break;
-              case "p10":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002FL8TQAW";
-                break;
-              case "p13":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002FL8sQAG";
-                break;
-              case "p14":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000001pP2gQAE";
-                break;
-              case "p17":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000001pP0zQAE";
-                break;
-              case "p18":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002FL9qQAG";
-                break;
-              case "p19":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X00000290OHQAY";
-                break;
-              case "p20":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002CkSNQA0";
-                break;
-              // note: RaiseNow allows max. 20 different purposes
-            }
-            break;
-            case "paypal":  // Paypal - replacing "pp" since tamaro v2.8.3
-            case "pp":      // Paypal
+          case "paypal":  // Paypal - replacing "pp" since tamaro v2.8.3
+          case "pp":      // Paypal
             switch (event.data.api.paymentForm.data.purpose) {
               case "p1":
               case "p2":
@@ -283,7 +205,6 @@ intervalLoopForRnw = setInterval(function () {
           case "dd":      // Lastschriftverfahren / Direct Debit
 //        case 'ezs':     // Einzahlungsschein
           case "qr-bill": // QR Rechnung
-          default:
             switch (event.data.api.paymentForm.data.purpose) {
               case "p1":
               case "p2":
@@ -343,6 +264,85 @@ intervalLoopForRnw = setInterval(function () {
               case "p20":
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "7013X000002CkSSQA0";
+                break;
+              // note: RaiseNow allows max. 20 different purposes
+            }
+            break;
+          case "twint":   // Twint - cf. SD-11883
+          case "twi":     // Twint
+          case "card":    // Kreditkarte - replacing "vis" and "eca" since tamaro v2.8.3
+          case "vis":     // Kreditkarte - Visa
+          case "eca":     // Kreditkarte - Mastercard
+          case "pfc":     // Postfinance
+          default:
+            switch (event.data.api.paymentForm.data.purpose) {
+              case "p1":
+              case "p2":
+              case "p3":
+              case "p11":
+              case "p12":
+              case "p15":
+              case "p16":
+              default:
+                event.data.api.paymentForm.data.stored_campaign_id =
+                  "7013X000002FKzKQAW";
+                break;
+              case "p4":
+                event.data.api.paymentForm.data.stored_campaign_id =
+                  "7013X000002FKztQAG";
+                break;
+              case "p5":
+                event.data.api.paymentForm.data.stored_campaign_id =
+                  "7013X000002FL0vQAG";
+                break;
+              case "p6":
+                event.data.api.paymentForm.data.stored_campaign_id =
+                  "701Vj000004uOGkIAM";
+                break;
+              case "p7":
+                switch(event.data.api.paymentForm.data.payment_type) {
+                  case "onetime":
+                  default:
+                    event.data.api.paymentForm.data.stored_campaign_id =
+                      "701Vj000006ZLMLIA4";
+                    break;
+                  case "recurring":
+                    event.data.api.paymentForm.data.stored_campaign_id =
+                      "701Vj000007BOB4IAO";
+                    break;
+                }
+                break;
+              case "p9":
+                event.data.api.paymentForm.data.stored_campaign_id =
+                  "7013X000002FLAyQAO";
+                break;
+              case "p10":
+                event.data.api.paymentForm.data.stored_campaign_id =
+                  "7013X000002FL8TQAW";
+                break;
+              case "p13":
+                event.data.api.paymentForm.data.stored_campaign_id =
+                  "7013X000002FL8sQAG";
+                break;
+              case "p14":
+                event.data.api.paymentForm.data.stored_campaign_id =
+                  "7013X000001pP2gQAE";
+                break;
+              case "p17":
+                event.data.api.paymentForm.data.stored_campaign_id =
+                  "7013X000001pP0zQAE";
+                break;
+              case "p18":
+                event.data.api.paymentForm.data.stored_campaign_id =
+                  "7013X000002FL9qQAG";
+                break;
+              case "p19":
+                event.data.api.paymentForm.data.stored_campaign_id =
+                  "7013X00000290OHQAY";
+                break;
+              case "p20":
+                event.data.api.paymentForm.data.stored_campaign_id =
+                  "7013X000002CkSNQA0";
                 break;
               // note: RaiseNow allows max. 20 different purposes
             }
