@@ -1,4 +1,4 @@
-// v1.8.3 - 2024-07-16
+// v1.8.4 - 2024-07-20
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -392,8 +392,12 @@ intervalLoopForRnw = setInterval(function () {
                 event_data["event_data_api_configEnv"] =
                   event.data.api.configEnv;
                 // event_data['event_data_api_paymentForm'] = event.data.api.paymentForm;
-                event_data["event_data_api_transactionInfo"] =
-                  event.data.api.transactionInfo;
+                event_data["event_data_api_transactionInfo_amount"] =
+                  event.data.api.transactionInfo("amount");
+                event_data["event_data_api_transactionInfo_transactionId"] =
+                  event.data.api.transactionInfo("transaction_id");
+                event_data["event_data_api_transactionInfo_transactionStatus"] =
+                    event.data.api.transactionInfo("epayment_status");                
                 // trigger DICE
                 window.TMSProcessing.dice(event_data);
               } else if (intervalCounter >= secondsToWait * 2) {
@@ -424,7 +428,9 @@ intervalLoopForRnw = setInterval(function () {
               event: "raiseNow-paymentComplete",
               event_data_api_configEnv: event.data.api.configEnv,
               // , 'event_data_api_paymentForm': event.data.api.paymentForm
-              event_data_api_transactionInfo: event.data.api.transactionInfo,
+              event_data_api_transactionInfo_amount: event.data.api.transactionInfo("amount"),
+              event_data_api_transactionInfo_transactionId: event.data.api.transactionInfo("transaction_id"),
+              event_data_api_transactionInfo_transactionStatus: event.data.api.transactionInfo("epayment_status"),
             });
           } catch (err) {
             window.console.log(
