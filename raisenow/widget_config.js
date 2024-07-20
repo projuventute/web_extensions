@@ -1,4 +1,4 @@
-// v1.8.4 - 2024-07-20
+// v1.8.5 - 2024-07-20
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -389,15 +389,21 @@ intervalLoopForRnw = setInterval(function () {
                 event_data["event_eventInfo_type"] = "raiseNow-paymentComplete";
                 event_data["event_processing_trigger"] =
                   "raiseNow-customEventHandler";
-                event_data["event_data_api_configEnv"] =
-                  event.data.api.configEnv;
+                event_data["event_data_api_configEnv_widget"] =
+                  event.data.api.configEnv.WIDGET_UUID;
+                event_data["event_data_api_configEnv_build"] =
+                  event.data.api.configEnv.BUILD_DATE;
                 // event_data['event_data_api_paymentForm'] = event.data.api.paymentForm;
                 event_data["event_data_api_transactionInfo_amount"] =
-                  event.data.api.transactionInfo("amount");
+                  event.data.api.transactionInfo.amount;
+                event_data["event_data_api_transactionInfo_paymentMethod"] =
+                  event.data.api.transactionInfo.payment_method;
+                event_data["event_data_api_transactionInfo_purposeId"] =
+                  event.data.api.transactionInfo.stored_rnw_purpose_id;
                 event_data["event_data_api_transactionInfo_transactionId"] =
-                  event.data.api.transactionInfo("transaction_id");
-                event_data["event_data_api_transactionInfo_transactionStatus"] =
-                    event.data.api.transactionInfo("epayment_status");                
+                  event.data.api.transactionInfo.epp_transaction_id;
+                event_data["event_data_api_transactionInfo_epaymentStatus"] =
+                    event.data.api.transactionInfo.epayment_status;                
                 // trigger DICE
                 window.TMSProcessing.dice(event_data);
               } else if (intervalCounter >= secondsToWait * 2) {
@@ -426,11 +432,14 @@ intervalLoopForRnw = setInterval(function () {
           try {
             window.dataLayer.push({
               event: "raiseNow-paymentComplete",
-              event_data_api_configEnv: event.data.api.configEnv,
+              event_data_api_configEnv_widget: event.data.api.configEnv.WIDGET_UUID,
+              event_data_api_configEnv_build: event.data.api.configEnv.BUILD_DATE,
               // , 'event_data_api_paymentForm': event.data.api.paymentForm
-              event_data_api_transactionInfo_amount: event.data.api.transactionInfo("amount"),
-              event_data_api_transactionInfo_transactionId: event.data.api.transactionInfo("transaction_id"),
-              event_data_api_transactionInfo_transactionStatus: event.data.api.transactionInfo("epayment_status"),
+              event_data_api_transactionInfo_amount: event.data.api.transactionInfo.amount,
+              event_data_api_transactionInfo_paymentMethod: event.data.api.transactionInfo.payment_method,
+              event_data_api_transactionInfo_purposeId: event.data.api.transactionInfo.stored_rnw_purpose_id,
+              event_data_api_transactionInfo_transactionId: event.data.api.transactionInfo.epp_transaction_id,
+              event_data_api_transactionInfo_epaymentStatus: event.data.api.transactionInfo.epayment_status,
             });
           } catch (err) {
             window.console.log(
