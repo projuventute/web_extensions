@@ -1,4 +1,4 @@
-// v1.8.5 - 2024-07-20
+// v1.8.6 - 2024-07-20
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -367,66 +367,7 @@ intervalLoopForRnw = setInterval(function () {
          */
 
       // trigger tracking (GTM) event on completion
-      if (typeof window.TMSProcessing === "object") {
-        // agnosticalyze is availabe
-        window.rnw.tamaro.events.paymentComplete.subscribe(function (event) {
-          try {
-            // set secondsToWait to 15 seconds
-            var secondsToWait = 15;
-
-            var intervalCounter = 1;
-            intervalLoop = setInterval(function () {
-              if (
-                typeof window.TMSEvent === "undefined" ||
-                Object.keys(window.TMSEvent).length === 0
-              ) {
-                // TMSEvent is deleted or empty
-                clearInterval(intervalLoop);
-                window.TMSHelper.console(
-                  "[raiseNow customEventHandler paymentComplete] -> info: triggering DICE"
-                );
-                event_data = {};
-                event_data["event_eventInfo_type"] = "raiseNow-paymentComplete";
-                event_data["event_processing_trigger"] =
-                  "raiseNow-customEventHandler";
-                event_data["event_data_api_configEnv_widget"] =
-                  event.data.api.configEnv.WIDGET_UUID;
-                event_data["event_data_api_configEnv_build"] =
-                  event.data.api.configEnv.BUILD_DATE;
-                // event_data['event_data_api_paymentForm'] = event.data.api.paymentForm;
-                event_data["event_data_api_transactionInfo_amount"] =
-                  event.data.api.transactionInfo.amount;
-                event_data["event_data_api_transactionInfo_paymentMethod"] =
-                  event.data.api.transactionInfo.payment_method;
-                event_data["event_data_api_transactionInfo_purposeId"] =
-                  event.data.api.transactionInfo.stored_rnw_purpose_id;
-                event_data["event_data_api_transactionInfo_transactionId"] =
-                  event.data.api.transactionInfo.epp_transaction_id;
-                event_data["event_data_api_transactionInfo_epaymentStatus"] =
-                    event.data.api.transactionInfo.epayment_status;                
-                // trigger DICE
-                window.TMSProcessing.dice(event_data);
-              } else if (intervalCounter >= secondsToWait * 2) {
-                // after X * 2 tries = X seconds, stop the loop
-                clearInterval(intervalLoop);
-                window.TMSHelper.console(
-                  "[raiseNow customEventHandler paymentComplete] -> warning: waited too long, DICE not triggered"
-                );
-              } else {
-                window.TMSHelper.console(
-                  "[raiseNow customEventHandler paymentComplete] -> info: TMSEvent not ready, trying again in 0.5 seconds..."
-                );
-                intervalCounter++;
-              }
-            }, 500);
-          } catch (err) {
-            window.TMSHelper.console(
-              "[raiseNow customEventHandler paymentComplete] error:"
-            );
-            window.TMSHelper.errorHandler(err);
-          }
-        });
-      } else if (typeof window.dataLayer === "object") {
+      if (typeof window.dataLayer === "object") {
         // agnosticalyze isnt availabe
         window.rnw.tamaro.events.paymentComplete.subscribe(function (event) {
           try {
@@ -436,10 +377,10 @@ intervalLoopForRnw = setInterval(function () {
               event_data_api_configEnv_build: event.data.api.configEnv.BUILD_DATE,
               // , 'event_data_api_paymentForm': event.data.api.paymentForm
               event_data_api_transactionInfo_amount: event.data.api.transactionInfo.amount,
+              event_data_api_transactionInfo_epaymentStatus: event.data.api.transactionInfo.epayment_status,
               event_data_api_transactionInfo_paymentMethod: event.data.api.transactionInfo.payment_method,
               event_data_api_transactionInfo_purposeId: event.data.api.transactionInfo.stored_rnw_purpose_id,
               event_data_api_transactionInfo_transactionId: event.data.api.transactionInfo.epp_transaction_id,
-              event_data_api_transactionInfo_epaymentStatus: event.data.api.transactionInfo.epayment_status,
             });
           } catch (err) {
             window.console.log(
