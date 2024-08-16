@@ -1,4 +1,4 @@
-// v1.8.7 - 2024-08-14
+// v1.8.8 - 2024-08-16
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -114,7 +114,7 @@ intervalLoopForRnw = setInterval(function () {
               p13: "Bewerbungstraining (DE)",
               p14: "Weihnachtsmailing (DE-FR-IT, 2023)",
               p15: "Stress-Studie (DE)",
-              p16: "Pro Juventute (Lidl-DE)",
+              p16: "Weihnachtsaufruf CMS (2024)",
               p17: "Weltkindertag (DE, 2023)",
               p18: "Winterkampagne (DE)",
               p19: "Luca leidet still (DE, 2023)",
@@ -212,7 +212,6 @@ intervalLoopForRnw = setInterval(function () {
               case "p11":
               case "p12":
               case "p15":
-              case "p16":
               default:
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "7013X000002FKzZQAW";
@@ -249,6 +248,10 @@ intervalLoopForRnw = setInterval(function () {
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "7013X000001pP2WQAU";
                 break;
+              case "p16":
+                event.data.api.paymentForm.data.stored_campaign_id =
+                  "701Vj00000CaQjXIAV";
+                break;
               case "p17":
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "7013X000001pP0uQAE";
@@ -282,7 +285,6 @@ intervalLoopForRnw = setInterval(function () {
               case "p11":
               case "p12":
               case "p15":
-              case "p16":
               default:
                 switch(event.data.api.paymentForm.data.payment_type) {
                   case "onetime":
@@ -336,6 +338,10 @@ intervalLoopForRnw = setInterval(function () {
               case "p14":
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "7013X000001pP2gQAE";
+                break;
+              case "p16":
+                event.data.api.paymentForm.data.stored_campaign_id =
+                  "701Vj00000CadARIAZ";
                 break;
               case "p17":
                 event.data.api.paymentForm.data.stored_campaign_id =
