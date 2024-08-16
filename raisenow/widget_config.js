@@ -1,4 +1,4 @@
-// v1.8.8 - 2024-08-16
+// v1.8.9 - 2024-08-16
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -249,8 +249,17 @@ intervalLoopForRnw = setInterval(function () {
                   "7013X000001pP2WQAU";
                 break;
               case "p16":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj00000CaQjXIAV";
+                switch(event.data.api.paymentForm.data.payment_type) {
+                  case "onetime":
+                  default:
+                    event.data.api.paymentForm.data.stored_campaign_id =
+                      "701Vj00000CaQjXIAV";
+                    break;
+                  case "recurring":
+                    event.data.api.paymentForm.data.stored_campaign_id =
+                      "7013X000002FKzZQAW";
+                    break;
+                }
                 break;
               case "p17":
                 event.data.api.paymentForm.data.stored_campaign_id =
@@ -340,8 +349,17 @@ intervalLoopForRnw = setInterval(function () {
                   "7013X000001pP2gQAE";
                 break;
               case "p16":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj00000CadARIAZ";
+                switch(event.data.api.paymentForm.data.payment_type) {
+                  case "onetime":
+                  default:
+                    event.data.api.paymentForm.data.stored_campaign_id =
+                      "701Vj00000CadARIAZ";
+                    break;
+                  case "recurring":
+                    event.data.api.paymentForm.data.stored_campaign_id =
+                      "701Vj00000BZZB5IAP";
+                    break;
+                }
                 break;
               case "p17":
                 event.data.api.paymentForm.data.stored_campaign_id =
