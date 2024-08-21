@@ -58,7 +58,7 @@
                     pj_isBot.cookieCreate('pj_bot', 'true', '');
                     return true;
                 } else {
-                    ipj_isBotBot.cookieCreate('pj_bot', 'false', '');
+                    pj_isBot.cookieCreate('pj_bot', 'false', '');
                     return false;
                 }
             } else {
