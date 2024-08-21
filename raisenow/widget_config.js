@@ -1,4 +1,4 @@
-// v1.8.9 - 2024-08-16
+// v1.8.10 - 2024-08-21
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -106,7 +106,7 @@ intervalLoopForRnw = setInterval(function () {
               p5: "Chesa (DE)",
               p6: "Für mehr Geborgenheit",
               p7: "Emika Türhänger (DE, 2024)",       // SD-12555
-              p8: "wup (DE)",
+              p8: "E-Mail Signatur",
               p9: "Future Skills (DE)",
               p10: "Ferienpass (DE)",
               p11: "Newsletter (DE)",
@@ -232,6 +232,19 @@ intervalLoopForRnw = setInterval(function () {
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "701Vj000006YXpJIAW";
                 break;
+              case "p8":
+                switch(event.data.api.paymentForm.data.payment_type) {
+                  case "onetime":
+                  default:
+                    event.data.api.paymentForm.data.stored_campaign_id =
+                      "701Vj00000CfjH6IAJ";
+                    break;
+                  case "recurring":
+                    event.data.api.paymentForm.data.stored_campaign_id =
+                      "7013X000002FKzZQAW";
+                    break;
+                }
+                break;
               case "p9":
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "7013X000002FLBDQA4";
@@ -329,6 +342,19 @@ intervalLoopForRnw = setInterval(function () {
                   case "recurring":
                     event.data.api.paymentForm.data.stored_campaign_id =
                       "701Vj000007BOB4IAO";
+                    break;
+                }
+                break;
+              case "p8":
+                switch(event.data.api.paymentForm.data.payment_type) {
+                  case "onetime":
+                  default:
+                    event.data.api.paymentForm.data.stored_campaign_id =
+                      "701Vj00000CfiB4IAJ";
+                    break;
+                  case "recurring":
+                    event.data.api.paymentForm.data.stored_campaign_id =
+                      "701Vj00000BZZB5IAP";
                     break;
                 }
                 break;

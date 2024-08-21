@@ -62,7 +62,7 @@
                     return false;
                 }
             } else {
-                return cookieValue === 'true'
+                return cookieValue === 'true';
             }
         } catch(err) {
             window.console.error(err);
