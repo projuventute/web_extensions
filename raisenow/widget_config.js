@@ -1,4 +1,4 @@
-// v1.8.10 - 2024-08-21
+// v1.8.11 - 2024-09-09
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -202,6 +202,7 @@ intervalLoopForRnw = setInterval(function () {
               // note: RaiseNow allows max. 20 different purposes
             }
             break;
+          case "chqr":    // QR Rechnung
           case "dd":      // Lastschriftverfahren / Direct Debit
 //        case 'ezs':     // Einzahlungsschein
           case "qr-bill": // QR Rechnung
