@@ -1,4 +1,4 @@
-// v1.8.11 - 2024-09-09
+// v1.8.12 - 2024-11-07
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -46,8 +46,13 @@ intervalLoopForRnw = setInterval(function () {
       // -> https://support.raisenow.com/hc/en-us/articles/360018786778-Adding-conditions-in-your-configuration
       var defaultPurp = "p1"; // declare and set default
       var defaultAmtOneTime = [60, 120, 250]; // declare and set default
-      if (window.location.href.match(/.*\/de\/so-koennen-sie-helfen.*/)) {  // SD-12555
+      if (window.location.href.match(/.*\/de\/sarah-fehlt.*|.*\/fr\/sarah-manque.*|.*\/it\/sarah-mancante.*/)) {  // SD-14721
+        defaultPurp = "p2";
+        defaultAmtOneTime = [45, 75, 120];
+      } else if (window.location.href.match(/.*\/de\/so-koennen-sie-helfen.*/)) {  // SD-12555
         defaultPurp = "p7";
+      } else if (window.location.href.match(/.*\/adventskalender-24-ideen-fuer-gemeinsame-erlebnisse.*/)) { // SD-14716
+        defaultPurp = "p9";
       } else if (window.location.href.match(/.*\/(weltkindertag|de\/node\/1357).*/)) {
         defaultPurp = "p17";
         defaultAmtOneTime = [60, 120, 240];
@@ -57,7 +62,6 @@ intervalLoopForRnw = setInterval(function () {
       } else if (window.location.href.match(/.*\/luca-leidet-still.*/)) {
         defaultPurp = "p19";
         defaultAmtOneTime = [45, 75, 120];
-      } else if (window.location.href.match(/.*\/meine-spende-rettet-leben.*|.*\/mon-don-sauve-des-vies.*|.*\/la-mia-donazione-salva-delle-vite.*/)) {
       } else if (window.location.href.match(/.*\/meine-spende-rettet-leben.*|.*\/mon-don-sauve-des-vies.*|.*\/la-mia-donazione-salva-delle-vite.*/)) {
         defaultPurp = "p18";
       } else {
@@ -100,14 +104,14 @@ intervalLoopForRnw = setInterval(function () {
           de: {
             purposes: {
               p1: "Pro Juventute (DE)",
-              p2: "Pro Juventute (DE)",
+              p2: "Begleitkampagne Novembermailing (2024)",   // SD-14721
               p3: "Pro Juventute (GA-DE)",
               p4: "Medienkompetenz (DE)",
               p5: "Chesa (DE)",
               p6: "Für mehr Geborgenheit",
-              p7: "Emika Türhänger (DE, 2024)",       // SD-12555
+              p7: "Emika Türhänger (DE, 2024)",               // SD-12555
               p8: "E-Mail Signatur",
-              p9: "Future Skills (DE)",
+              p9: "Adventkalender (2024)",                    // SD-14716
               p10: "Ferienpass (DE)",
               p11: "Newsletter (DE)",
               p12: "Jugendappell (DE)",
@@ -132,7 +136,6 @@ intervalLoopForRnw = setInterval(function () {
           case "pp":      // Paypal
             switch (event.data.api.paymentForm.data.purpose) {
               case "p1":
-              case "p2":
               case "p3":
               case "p11":
               case "p12":
@@ -166,10 +169,6 @@ intervalLoopForRnw = setInterval(function () {
                       "701Vj000007BNWjIAO";
                     break;
                 }
-                break;
-              case "p9":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002FLB8QAO";
                 break;
               case "p10":
                 event.data.api.paymentForm.data.stored_campaign_id =
@@ -208,7 +207,6 @@ intervalLoopForRnw = setInterval(function () {
           case "qr-bill": // QR Rechnung
             switch (event.data.api.paymentForm.data.purpose) {
               case "p1":
-              case "p2":
               case "p3":
               case "p11":
               case "p12":
@@ -216,6 +214,10 @@ intervalLoopForRnw = setInterval(function () {
               default:
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "7013X000002FKzZQAW";
+                break;
+              case "p2":
+                event.data.api.paymentForm.data.stored_campaign_id =
+                  "701Vj00000GK7qaIAD";
                 break;
               case "p4":
                 event.data.api.paymentForm.data.stored_campaign_id =
@@ -248,7 +250,7 @@ intervalLoopForRnw = setInterval(function () {
                 break;
               case "p9":
                 event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002FLBDQA4";
+                  "701Vj00000GK5iNIAT";
                 break;
               case "p10":
                 event.data.api.paymentForm.data.stored_campaign_id =
@@ -303,7 +305,6 @@ intervalLoopForRnw = setInterval(function () {
           default:
             switch (event.data.api.paymentForm.data.purpose) {
               case "p1":
-              case "p2":
               case "p3":
               case "p11":
               case "p12":
@@ -320,6 +321,10 @@ intervalLoopForRnw = setInterval(function () {
                       "701Vj00000BZZB5IAP";
                     break;
                 }
+                break;
+              case "p2":
+                event.data.api.paymentForm.data.stored_campaign_id =
+                  "701Vj00000GKFPtIAP";
                 break;
               case "p4":
                 event.data.api.paymentForm.data.stored_campaign_id =
@@ -361,7 +366,7 @@ intervalLoopForRnw = setInterval(function () {
                 break;
               case "p9":
                 event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002FLAyQAO";
+                  "701Vj00000GK24hIAD";
                 break;
               case "p10":
                 event.data.api.paymentForm.data.stored_campaign_id =
