@@ -1,4 +1,4 @@
-// v1.8.13 - 2024-11-07
+// v1.8.14 - 2024-11-11
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -48,7 +48,7 @@ intervalLoopForRnw = setInterval(function () {
       var defaultAmtOneTime = [60, 120, 250]; // declare and set default
       if (window.location.href.match(/.*\/de\/so-koennen-sie-helfen.*/)) {  // SD-12555
         defaultPurp = "p7";
-      } else if (window.location.href.match(/.*\/adventskalender-24-ideen-fuer-gemeinsame-erlebnisse.*/)) { // SD-14716
+      } else if (window.location.href.match(/.*\/adventskalender-24-ideen-fuer-gemeinsame-erlebnisse.*|.*\/le-calendrier-de-lavent.*|\/calendario-dellavvento.*/)) { // SD-14716
         defaultPurp = "p9";
       } else if (window.location.href.match(/.*\/(de\/danke|fr\/merci|it\/grazie).*/)) {
         defaultPurp = "p14";
