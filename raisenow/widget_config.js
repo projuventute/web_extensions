@@ -1,4 +1,4 @@
-// v1.8.14 - 2024-11-11
+// v1.9 - 2024-11-25
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -419,6 +419,7 @@ intervalLoopForRnw = setInterval(function () {
               event_data_api_transactionInfo_paymentMethod: event.data.api.transactionInfo.payment_method,
               event_data_api_transactionInfo_purposeId: event.data.api.transactionInfo.stored_rnw_purpose_id,
               event_data_api_transactionInfo_transactionId: event.data.api.transactionInfo.epp_transaction_id,
+              event_data_api_customer_email: event.data.api.transactionInfo.stored_customer_email
             });
           } catch (err) {
             window.console.log(
