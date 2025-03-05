@@ -1,4 +1,4 @@
-// v1.9.0 - 2024-11-25
+// v1.9.1 - 2025-03-05
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -50,6 +50,15 @@ intervalLoopForRnw = setInterval(function () {
         defaultPurp = "p7";
       } else if (window.location.href.match(/.*\/adventskalender-24-ideen-fuer-gemeinsame-erlebnisse.*|.*\/le-calendrier-de-lavent.*|\/calendario-dellavvento.*/)) { // SD-14716
         defaultPurp = "p9";
+      } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/kleiner-hase.*|.*\/fr\/soutenir\/dons\/petit-lapin.*|.*\/it\/supporto\/donare\/coniglietto.*/)) {
+        defaultPurp = "p10";
+        defaultAmtOneTime = [45, 100, 150];
+      } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/kleine-maus.*|.*\/fr\/soutenir\/dons\/petite-souris.*|.*\/it\/supporto\/donare\/topino.*/)) {
+        defaultPurp = "p11";
+        defaultAmtOneTime = [45, 100, 150];
+      } else if (window.location.href.match(/.*\/de\/bestaetigung-ich-bin-der-kleine-hase.*|.*\/fr\/confirmation-petit-lapin.*|.*\/it\/confirmazione-piacere-sono-coniglietto.*/)) {
+        defaultPurp = "p13";
+        defaultAmtOneTime = [25, 50, 100];
       } else if (window.location.href.match(/.*\/(de\/danke|fr\/merci|it\/grazie).*/)) {
         defaultPurp = "p14";
         defaultAmtOneTime = [45, 90, 150];
@@ -112,10 +121,10 @@ intervalLoopForRnw = setInterval(function () {
               p7: "Emika Türhänger (DE, 2024)",                     // SD-12555
               p8: "E-Mail Signatur",
               p9: "Adventkalender (2024)",                          // SD-14716
-              p10: "Ferienpass (DE)",
-              p11: "Newsletter (DE)",
+              p10: "Ostern - Landingpage Hase (2025)",              // SD-16430
+              p11: "Ostern - Landingpage Maus (2025)",              // SD-16430
               p12: "Jugendappell (DE)",
-              p13: "Bewerbungstraining (DE)",
+              p13: "Ostern - Bestellbestätigung Hase (2025)",       // SD-16430
               p14: "Weihnachtsmailing (DE-FR-IT, 2023)",
               p15: "Stress-Studie (DE)",
               p16: "Digitale Begleitung November-Mailing (2024)",   // SD-13753 + SD-14721
@@ -137,7 +146,6 @@ intervalLoopForRnw = setInterval(function () {
             switch (event.data.api.paymentForm.data.purpose) {
               case "p1":
               case "p3":
-              case "p11":
               case "p12":
               case "p15":
               default:
@@ -169,14 +177,6 @@ intervalLoopForRnw = setInterval(function () {
                     break;
                 }
                 break;
-              case "p10":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002FL8YQAW";
-                break;
-              case "p13":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002FL8qQAG";
-                break;
               case "p14":
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "7013X000001pP2bQAE";
@@ -207,7 +207,6 @@ intervalLoopForRnw = setInterval(function () {
             switch (event.data.api.paymentForm.data.purpose) {
               case "p1":
               case "p3":
-              case "p11":
               case "p12":
               case "p15":
               default:
@@ -249,11 +248,15 @@ intervalLoopForRnw = setInterval(function () {
                 break;
               case "p10":
                 event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002FL8dQAG";
+                  "701Vj00000KXGLsIAP";
+                break;
+              case "p11":
+                event.data.api.paymentForm.data.stored_campaign_id =
+                  "701Vj00000KXM34IAH";
                 break;
               case "p13":
                 event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002FL8xQAG";
+                  "701Vj00000KgaV6IAJ";
                 break;
               case "p14":
                 event.data.api.paymentForm.data.stored_campaign_id =
@@ -292,7 +295,6 @@ intervalLoopForRnw = setInterval(function () {
             switch (event.data.api.paymentForm.data.purpose) {
               case "p1":
               case "p3":
-              case "p11":
               case "p12":
               case "p15":
               default:
@@ -352,11 +354,15 @@ intervalLoopForRnw = setInterval(function () {
                 break;
               case "p10":
                 event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002FL8TQAW";
+                  "701Vj00000KXKA8IAP";
+                break;
+              case "p11":
+                event.data.api.paymentForm.data.stored_campaign_id =
+                  "701Vj00000KXEf3IAH";
                 break;
               case "p13":
                 event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002FL8sQAG";
+                  "701Vj00000KgbsWIAR";
                 break;
               case "p14":
                 event.data.api.paymentForm.data.stored_campaign_id =
