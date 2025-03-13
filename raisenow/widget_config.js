@@ -1,4 +1,4 @@
-// v1.9.1 - 2025-03-05
+// v1.9.2 - 2025-03-13
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -108,7 +108,8 @@ intervalLoopForRnw = setInterval(function () {
             then: [240, 480, 600],
           },
         ],
-        defaultAmount: 120,
+        autoselectAmount: true, // added (SD-16523)
+//      defaultAmount: 120,     // removed (SD-16523)
         translations: {
           de: {
             purposes: {
