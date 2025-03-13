@@ -1,4 +1,4 @@
-// v1.9.2 - 2025-03-13
+// v2.0.0 - 2025-03-13
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -73,15 +73,12 @@ intervalLoopForRnw = setInterval(function () {
       } else if (window.location.href.match(/.*\/luca-leidet-still.*/)) {
         defaultPurp = "p19";
         defaultAmtOneTime = [45, 75, 120];
-      } else {
-        defaultPurp = "p1";
-        defaultAmtOneTime = [60, 120, 250];
       }
 
       // configure raiseNow widget
       window.rnw.tamaro.runWidget(".rnw-widget-container", {
         language: pageLang,
-        defaultPurpose: defaultPurp,
+//      defaultPurpose: defaultPurp,  // deprecated with tamaro v2.7.0
         amounts: [
           {
             if: "paymentType() == onetime && purpose() == p20",
@@ -108,8 +105,13 @@ intervalLoopForRnw = setInterval(function () {
             then: [240, 480, 600],
           },
         ],
-        autoselectAmount: true, // added (SD-16523)
 //      defaultAmount: 120,     // removed (SD-16523)
+        autoselectAmount: true, // added (SD-16523)
+        paymentFormPrefill: {   // https://docs.raisenow.com/elements/tamaro/concepts/configuration#paymentformprefill
+          purpose: defaultPurp,
+          payment_type: 'onetime',
+          amount: defaultAmtOneTime[2]
+        },
         translations: {
           de: {
             purposes: {
