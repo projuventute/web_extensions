@@ -110,7 +110,7 @@ intervalLoopForRnw = setInterval(function () {
         paymentFormPrefill: {   // https://docs.raisenow.com/elements/tamaro/concepts/configuration#paymentformprefill
           purpose: defaultPurp,
           payment_type: 'onetime',
-          amount: defaultAmtOneTime[2]
+          amount: Math.max(...defaultAmtOneTime)
         },
         translations: {
           de: {
