@@ -1,4 +1,4 @@
-// v2.0.0 - 2025-03-13
+// v2.0.1 - 2025-03-15
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -75,6 +75,12 @@ intervalLoopForRnw = setInterval(function () {
         defaultAmtOneTime = [45, 75, 120];
       }
 
+      function getMedian(arr) {
+        arr.sort((a, b) => a - b);
+        const middleIndex = Math.floor(arr.length / 2);
+        return arr[middleIndex];
+      }
+
       // configure raiseNow widget
       window.rnw.tamaro.runWidget(".rnw-widget-container", {
         language: pageLang,
@@ -110,7 +116,7 @@ intervalLoopForRnw = setInterval(function () {
         paymentFormPrefill: {   // https://docs.raisenow.com/elements/tamaro/concepts/configuration#paymentformprefill
           purpose: defaultPurp,
           payment_type: 'onetime',
-          amount: Math.max(...defaultAmtOneTime)
+          amount: getMedian(defaultAmtOneTime)
         },
         translations: {
           de: {
