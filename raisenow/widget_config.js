@@ -1,6 +1,12 @@
-// v2.0.1 - 2025-03-15
+// v2.0.2 - 2025-03-15
 
 // window.console.log('[raiseNow widget config] start');
+
+function getMedian(arr) {
+  arr.sort((a, b) => a - b);
+  const middleIndex = Math.floor(arr.length / 2);
+  return arr[middleIndex];
+}
 
 // set secondsToWait to 15 seconds
 var secondsToWaitForRnw = 15;
@@ -73,12 +79,6 @@ intervalLoopForRnw = setInterval(function () {
       } else if (window.location.href.match(/.*\/luca-leidet-still.*/)) {
         defaultPurp = "p19";
         defaultAmtOneTime = [45, 75, 120];
-      }
-
-      function getMedian(arr) {
-        arr.sort((a, b) => a - b);
-        const middleIndex = Math.floor(arr.length / 2);
-        return arr[middleIndex];
       }
 
       // configure raiseNow widget
