@@ -1,4 +1,4 @@
-// v2.0.2 - 2025-03-15
+// v2.1.0 - 2025-04-14
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -111,9 +111,10 @@ intervalLoopForRnw = setInterval(function () {
             then: [240, 480, 600],
           },
         ],
-//      defaultAmount: 120,     // removed (SD-16523)
-        autoselectAmount: true, // added (SD-16523)
-        paymentFormPrefill: {   // https://docs.raisenow.com/elements/tamaro/concepts/configuration#paymentformprefill
+//      defaultAmount: 120,       // removed (SD-16523)
+        autoselectAmount: true,   // added (SD-16523)
+        allowCustomAmount: true,  // always show custom amount
+        paymentFormPrefill: {     // https://docs.raisenow.com/elements/tamaro/concepts/configuration#paymentformprefill
           purpose: defaultPurp,
           payment_type: 'onetime',
           amount: getMedian(defaultAmtOneTime)
