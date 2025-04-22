@@ -1,4 +1,4 @@
-// v2.1.0 - 2025-04-14
+// v2.1.1 - 2025-04-22
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -124,7 +124,7 @@ intervalLoopForRnw = setInterval(function () {
             purposes: {
               p1: "Pro Juventute (DE)",
               p2: "n/a",
-              p3: "Pro Juventute (GA-DE)",
+              p3: "SEA (Google Ads, 2025)",
               p4: "Medienkompetenz (DE)",
               p5: "Chesa (DE)",
               p6: "Für mehr Geborgenheit",
@@ -155,7 +155,6 @@ intervalLoopForRnw = setInterval(function () {
           case "pp":      // Paypal
             switch (event.data.api.paymentForm.data.purpose) {
               case "p1":
-              case "p3":
               case "p12":
               case "p15":
               default:
@@ -216,12 +215,15 @@ intervalLoopForRnw = setInterval(function () {
           case "qr-bill": // QR Rechnung
             switch (event.data.api.paymentForm.data.purpose) {
               case "p1":
-              case "p3":
               case "p12":
               case "p15":
               default:
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "7013X000002FKzZQAW";
+                break;
+              case "p3":
+                event.data.api.paymentForm.data.stored_campaign_id =
+                  "701Vj00000NHXASIA5";
                 break;
               case "p4":
                 event.data.api.paymentForm.data.stored_campaign_id =
@@ -304,7 +306,6 @@ intervalLoopForRnw = setInterval(function () {
           default:
             switch (event.data.api.paymentForm.data.purpose) {
               case "p1":
-              case "p3":
               case "p12":
               case "p15":
               default:
@@ -319,6 +320,10 @@ intervalLoopForRnw = setInterval(function () {
                       "701Vj00000BZZB5IAP";
                     break;
                 }
+                break;
+              case "p3":
+                event.data.api.paymentForm.data.stored_campaign_id =
+                  "701Vj00000NHbdqIAD";
                 break;
               case "p4":
                 event.data.api.paymentForm.data.stored_campaign_id =
