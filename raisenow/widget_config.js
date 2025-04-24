@@ -1,4 +1,4 @@
-// v2.1.1 - 2025-04-22
+// v2.2.0 - 2025-04-24
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -86,6 +86,34 @@ intervalLoopForRnw = setInterval(function () {
         language: pageLang,
 //      defaultPurpose: defaultPurp,  // deprecated with tamaro v2.7.0
         amounts: [
+          {
+            if: "paymentType() == onetime && purpose() == p10",
+            then: [45, 100, 150],
+          },
+          {
+            if: "paymentType() == onetime && purpose() == p11",
+            then: [45, 100, 150],
+          },
+          {
+            if: "paymentType() == onetime && purpose() == p13",
+            then: [25, 50, 100],
+          },
+          {
+            if: "paymentType() == onetime && purpose() == p14",
+            then: [45, 90, 150],
+          },
+          {
+            if: "paymentType() == onetime && purpose() == p16",
+            then: [45, 75, 120],
+          },
+          {
+            if: "paymentType() == onetime && purpose() == p17",
+            then: [60, 120, 240],
+          },
+          {
+            if: "paymentType() == onetime && purpose() == p19",
+            then: [45, 75, 120],
+          },
           {
             if: "paymentType() == onetime && purpose() == p20",
             then: [5, 10, 20],
