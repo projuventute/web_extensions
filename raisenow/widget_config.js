@@ -1,4 +1,4 @@
-// v2.2.0 - 2025-06-02
+// v2.3.0 - 2025-06-02
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -90,6 +90,34 @@ intervalLoopForRnw = setInterval(function () {
 //      defaultPurpose: defaultPurp,  // deprecated with tamaro v2.7.0
         amounts: [
           {
+            if: "paymentType() == onetime && purpose() == p10",
+            then: [45, 100, 150],
+          },
+          {
+            if: "paymentType() == onetime && purpose() == p11",
+            then: [45, 100, 150],
+          },
+          {
+            if: "paymentType() == onetime && purpose() == p13",
+            then: [25, 50, 100],
+          },
+          {
+            if: "paymentType() == onetime && purpose() == p14",
+            then: [45, 90, 150],
+          },
+          {
+            if: "paymentType() == onetime && purpose() == p16",
+            then: [45, 75, 120],
+          },
+          {
+            if: "paymentType() == onetime && purpose() == p17",
+            then: [60, 120, 240],
+          },
+          {
+            if: "paymentType() == onetime && purpose() == p19",
+            then: [45, 75, 120],
+          },
+          {
             if: "paymentType() == onetime && purpose() == p20",
             then: [5, 10, 20],
           },
@@ -127,7 +155,7 @@ intervalLoopForRnw = setInterval(function () {
             purposes: {
               p1: "Pro Juventute (DE)",
               p2: "Geburtstagskalender (2025)",                     // SD-17437
-              p3: "Pro Juventute (GA-DE)",
+              p3: "SEA (Google Ads, 2025)",
               p4: "Medienkompetenz (DE)",
               p5: "Chesa (DE)",
               p6: "Für mehr Geborgenheit",
@@ -215,7 +243,6 @@ intervalLoopForRnw = setInterval(function () {
           case "qr-bill": // QR Rechnung
             switch (event.data.api.paymentForm.data.purpose) {
               case "p1":
-              case "p3":
               case "p12":
               case "p15":
               default:
@@ -225,6 +252,9 @@ intervalLoopForRnw = setInterval(function () {
               case "p2":
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "701Vj00000OxcwJIAR";
+              case "p3":
+                event.data.api.paymentForm.data.stored_campaign_id =
+                  "701Vj00000NHXASIA5";
                 break;
               case "p4":
                 event.data.api.paymentForm.data.stored_campaign_id =
@@ -307,7 +337,6 @@ intervalLoopForRnw = setInterval(function () {
           default:
             switch (event.data.api.paymentForm.data.purpose) {
               case "p1":
-              case "p3":
               case "p12":
               case "p15":
               default:
@@ -326,6 +355,9 @@ intervalLoopForRnw = setInterval(function () {
               case "p2":
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "701Vj00000OxdfRIAR";
+              case "p3":
+                event.data.api.paymentForm.data.stored_campaign_id =
+                  "701Vj00000NHbdqIAD";
                 break;
               case "p4":
                 event.data.api.paymentForm.data.stored_campaign_id =
