@@ -1,4 +1,4 @@
-// v2.1.0 - 2025-04-14
+// v2.2.0 - 2025-06-02
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -52,7 +52,10 @@ intervalLoopForRnw = setInterval(function () {
       // -> https://support.raisenow.com/hc/en-us/articles/360018786778-Adding-conditions-in-your-configuration
       var defaultPurp = "p1"; // declare and set default
       var defaultAmtOneTime = [60, 120, 250]; // declare and set default
-      if (window.location.href.match(/.*\/de\/so-koennen-sie-helfen.*/)) {  // SD-12555
+      if (window.location.href.match(/.*\/de\/bestaetigung-geburtstagskalender.*|.*\/fr\/confirmation-calendrier-anniversaires.*|.*\/it\/confirmazione-calendario-compleanni.*/)) {  // SD-17437
+        defaultPurp = "p2";
+        defaultAmtOneTime = [20, 30, 50];
+      } else if (window.location.href.match(/.*\/de\/so-koennen-sie-helfen.*/)) {  // SD-12555
         defaultPurp = "p7";
       } else if (window.location.href.match(/.*\/adventskalender-24-ideen-fuer-gemeinsame-erlebnisse.*|.*\/le-calendrier-de-lavent.*|\/calendario-dellavvento.*/)) { // SD-14716
         defaultPurp = "p9";
@@ -123,7 +126,7 @@ intervalLoopForRnw = setInterval(function () {
           de: {
             purposes: {
               p1: "Pro Juventute (DE)",
-              p2: "n/a",
+              p2: "Geburtstagskalender (2025)",                     // SD-17437
               p3: "Pro Juventute (GA-DE)",
               p4: "Medienkompetenz (DE)",
               p5: "Chesa (DE)",
@@ -154,10 +157,6 @@ intervalLoopForRnw = setInterval(function () {
           case "paypal":  // Paypal - replacing "pp" since tamaro v2.8.3
           case "pp":      // Paypal
             switch (event.data.api.paymentForm.data.purpose) {
-              case "p1":
-              case "p3":
-              case "p12":
-              case "p15":
               default:
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "7013X000002FKzUQAW";
@@ -222,6 +221,10 @@ intervalLoopForRnw = setInterval(function () {
               default:
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "7013X000002FKzZQAW";
+                break;
+              case "p2":
+                event.data.api.paymentForm.data.stored_campaign_id =
+                  "701Vj00000OxcwJIAR";
                 break;
               case "p4":
                 event.data.api.paymentForm.data.stored_campaign_id =
@@ -319,6 +322,10 @@ intervalLoopForRnw = setInterval(function () {
                       "701Vj00000BZZB5IAP";
                     break;
                 }
+                break;
+              case "p2":
+                event.data.api.paymentForm.data.stored_campaign_id =
+                  "701Vj00000OxdfRIAR";
                 break;
               case "p4":
                 event.data.api.paymentForm.data.stored_campaign_id =
