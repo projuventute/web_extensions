@@ -1,4 +1,4 @@
-// v2.3.0 - 2025-06-02
+// v2.3.1 - 2025-06-04
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -252,6 +252,7 @@ intervalLoopForRnw = setInterval(function () {
               case "p2":
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "701Vj00000OxcwJIAR";
+                break;
               case "p3":
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "701Vj00000NHXASIA5";
@@ -355,6 +356,7 @@ intervalLoopForRnw = setInterval(function () {
               case "p2":
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "701Vj00000OxdfRIAR";
+                break;
               case "p3":
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "701Vj00000NHbdqIAD";
