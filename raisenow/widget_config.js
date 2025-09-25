@@ -78,6 +78,9 @@ intervalLoopForRnw = setInterval(function () {
       } else if (window.location.href.match(/.*\/(de\/danke|fr\/merci|it\/grazie).*/)) {
         currentPurpose = "p14";
         currentAmounts = [45, 90, 150];
+      } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/ihre-spende-gegen-mobbing.*|.*\/fr\/soutenir\/dons\/votre-don-contre-le-harcelement.*|.*\/it\/supporto\/donare\/la-sua-donazione-contro-il-bullismo.*/)) {
+        currentPurpose = "p15";
+        currentAmounts = [45, 75, 120];
       } else if (window.location.href.match(/.*\/de\/sarah-fehlt.*|.*\/fr\/sarah-manque.*|.*\/it\/sarah-manca.*/)) {  // SD-13753 + SD-14721
         currentPurpose = "p16";
         currentAmounts = [45, 75, 120];
@@ -115,6 +118,10 @@ intervalLoopForRnw = setInterval(function () {
           {
             if: "paymentType() == onetime && purpose() == p14",
             then: [45, 90, 150],
+          },
+          {
+            if: "paymentType() == onetime && purpose() == p15",
+            then: [45, 75, 120],
           },
           {
             if: "paymentType() == onetime && purpose() == p16",
@@ -177,7 +184,7 @@ intervalLoopForRnw = setInterval(function () {
               p12: "Herbst - Haupt-LP (2025)",                      // SD-18794
               p13: "Ostern - Bestellbestätigung Hase (2025)",       // SD-16430
               p14: "Weihnachtsmailing (DE-FR-IT, 2023)",
-              p15: "Stress-Studie (DE)",
+              p15: "Digitale Begleitung August-Mailing (2025)",     // SD-18099
               p16: "Digitale Begleitung November-Mailing (2024)",   // SD-13753 + SD-14721
               p17: "Weltkindertag (DE, 2023)",
               p18: "Winterkampagne (DE)",
@@ -250,7 +257,6 @@ intervalLoopForRnw = setInterval(function () {
           case "ch_qr_reference": // QR Rechnung (SD-18716)
             switch (event.data.api.paymentForm.data.purpose) {
               case "p1":
-              case "p15":
               default:
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "7013X000002FKzZQAW";
@@ -258,6 +264,7 @@ intervalLoopForRnw = setInterval(function () {
               case "p2":
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "701Vj00000OxcwJIAR";
+                break;
               case "p3":
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "701Vj00000NHXASIA5";
@@ -315,6 +322,10 @@ intervalLoopForRnw = setInterval(function () {
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "7013X000001pP2WQAU";
                 break;
+              case "p15":
+                event.data.api.paymentForm.data.stored_campaign_id =
+                  "701Vj00000RkmLSIAZ";
+                break;
               case "p16":
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "701Vj00000GK7qaIAD";
@@ -347,7 +358,6 @@ intervalLoopForRnw = setInterval(function () {
           default:
             switch (event.data.api.paymentForm.data.purpose) {
               case "p1":
-              case "p15":
               default:
                 switch(event.data.api.paymentForm.data.payment_type) {
                   case "onetime":
@@ -364,6 +374,7 @@ intervalLoopForRnw = setInterval(function () {
               case "p2":
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "701Vj00000OxdfRIAR";
+                break;
               case "p3":
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "701Vj00000NHbdqIAD";
@@ -429,6 +440,10 @@ intervalLoopForRnw = setInterval(function () {
               case "p14":
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "7013X000001pP2gQAE";
+                break;
+              case "p15":
+                event.data.api.paymentForm.data.stored_campaign_id =
+                  "701Vj00000RknsbIAB";
                 break;
               case "p16":
                 event.data.api.paymentForm.data.stored_campaign_id =
