@@ -1,4 +1,4 @@
-// v2.3.0 - 2025-06-02
+// v2.4.0 - 2025-09-25
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -48,47 +48,54 @@ intervalLoopForRnw = setInterval(function () {
         pageLang = pageLang_meta;
       }
 
-      // set default purpose and amount based on page uri
+      // set default purpose and amounts based on page uri
+      // why define the amounts here, too? -> for getMedian() to work on prefill
       // -> https://support.raisenow.com/hc/en-us/articles/360018786778-Adding-conditions-in-your-configuration
-      var defaultPurp = "p1"; // declare and set default
-      var defaultAmtOneTime = [60, 120, 250]; // declare and set default
+      var currentPurpose = "p1"; // declare and set default
+      var currentAmounts = [60, 120, 250]; // declare and set default
       if (window.location.href.match(/.*\/de\/bestaetigung-geburtstagskalender.*|.*\/fr\/confirmation-calendrier-anniversaires.*|.*\/it\/confirmazione-calendario-compleanni.*/)) {  // SD-17437
-        defaultPurp = "p2";
-        defaultAmtOneTime = [20, 30, 50];
+        currentPurpose = "p2";
+        currentAmounts = [20, 30, 50];
       } else if (window.location.href.match(/.*\/de\/so-koennen-sie-helfen.*/)) {  // SD-12555
-        defaultPurp = "p7";
+        currentPurpose = "p7";
       } else if (window.location.href.match(/.*\/adventskalender-24-ideen-fuer-gemeinsame-erlebnisse.*|.*\/le-calendrier-de-lavent.*|\/calendario-dellavvento.*/)) { // SD-14716
-        defaultPurp = "p9";
+        currentPurpose = "p9";
       } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/kleiner-hase.*|.*\/fr\/soutenir\/dons\/petit-lapin.*|.*\/it\/supporto\/donare\/coniglietto.*/)) {
-        defaultPurp = "p10";
-        defaultAmtOneTime = [45, 100, 150];
+        currentPurpose = "p10";
+        currentAmounts = [45, 100, 150];
       } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/kleine-maus.*|.*\/fr\/soutenir\/dons\/petite-souris.*|.*\/it\/supporto\/donare\/topino.*/)) {
-        defaultPurp = "p11";
-        defaultAmtOneTime = [45, 100, 150];
+        currentPurpose = "p11";
+        currentAmounts = [45, 100, 150];
+      } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/zuhoeren-kann-leben-retten-unternehmen.*/)) {
+        currentPurpose = "p19";
+        currentAmounts = [125, 250, 375];
+      } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/zuhoeren-kann-leben-retten.*|.*\/fr\/soutenir\/dons\/ecouter-peut-sauver-des-vies.*|.*\/it\/supporto\/donare\/ascoltare-puo-salvare-vite.*/)) {
+        currentPurpose = "p12";
+        currentAmounts = [45, 75, 150];
       } else if (window.location.href.match(/.*\/de\/bestaetigung-ich-bin-der-kleine-hase.*|.*\/fr\/confirmation-petit-lapin.*|.*\/it\/confirmazione-piacere-sono-coniglietto.*/)) {
-        defaultPurp = "p13";
-        defaultAmtOneTime = [25, 50, 100];
+        currentPurpose = "p13";
+        currentAmounts = [25, 50, 100];
       } else if (window.location.href.match(/.*\/(de\/danke|fr\/merci|it\/grazie).*/)) {
-        defaultPurp = "p14";
-        defaultAmtOneTime = [45, 90, 150];
+        currentPurpose = "p14";
+        currentAmounts = [45, 90, 150];
       } else if (window.location.href.match(/.*\/de\/sarah-fehlt.*|.*\/fr\/sarah-manque.*|.*\/it\/sarah-manca.*/)) {  // SD-13753 + SD-14721
-        defaultPurp = "p16";
-        defaultAmtOneTime = [45, 75, 120];
+        currentPurpose = "p16";
+        currentAmounts = [45, 75, 120];
       } else if (window.location.href.match(/.*\/(weltkindertag|de\/node\/1357).*/)) {
-        defaultPurp = "p17";
-        defaultAmtOneTime = [60, 120, 240];
+        currentPurpose = "p17";
+        currentAmounts = [60, 120, 240];
       } else if (window.location.href.match(/.*\/meine-spende-rettet-leben.*|.*\/mon-don-sauve-des-vies.*|.*\/la-mia-donazione-salva-delle-vite.*/)) {
-        defaultPurp = "p18";
-      } else if (window.location.href.match(/.*\/luca-leidet-still.*/)) {
-        defaultPurp = "p19";
-        defaultAmtOneTime = [45, 75, 120];
-      }
+        currentPurpose = "p18";
+      } 
 
       // configure raiseNow widget
       window.rnw.tamaro.runWidget(".rnw-widget-container", {
         language: pageLang,
-//      defaultPurpose: defaultPurp,  // deprecated with tamaro v2.7.0
         amounts: [
+          {
+            if: "paymentType() == onetime && purpose() == p2",
+            then: [20, 30, 50],
+          },
           {
             if: "paymentType() == onetime && purpose() == p10",
             then: [45, 100, 150],
@@ -96,6 +103,10 @@ intervalLoopForRnw = setInterval(function () {
           {
             if: "paymentType() == onetime && purpose() == p11",
             then: [45, 100, 150],
+          },
+          {
+            if: "paymentType() == onetime && purpose() == p12",
+            then: [45, 75, 150],
           },
           {
             if: "paymentType() == onetime && purpose() == p13",
@@ -115,7 +126,7 @@ intervalLoopForRnw = setInterval(function () {
           },
           {
             if: "paymentType() == onetime && purpose() == p19",
-            then: [45, 75, 120],
+            then: [125, 250, 375],
           },
           {
             if: "paymentType() == onetime && purpose() == p20",
@@ -123,7 +134,7 @@ intervalLoopForRnw = setInterval(function () {
           },
           {
             if: "paymentType() == onetime",
-            then: defaultAmtOneTime,
+            then: [60, 120, 250], // default for one-time donations
           },
           {
             if: "paymentType() == recurring && recurringInterval() == monthly",
@@ -142,13 +153,12 @@ intervalLoopForRnw = setInterval(function () {
             then: [240, 480, 600],
           },
         ],
-//      defaultAmount: 120,       // removed (SD-16523)
-        autoselectAmount: true,   // added (SD-16523)
-        allowCustomAmount: true,  // always show custom amount
-        paymentFormPrefill: {     // https://docs.raisenow.com/elements/tamaro/concepts/configuration#paymentformprefill
-          purpose: defaultPurp,
+        autoselectAmount: true,             // added (SD-16523)
+        allowCustomAmount: true,            // always show custom amount
+        paymentFormPrefill: {               // https://docs.raisenow.com/elements/tamaro/concepts/configuration#paymentformprefill
+          purpose: currentPurpose,
           payment_type: 'onetime',
-          amount: getMedian(defaultAmtOneTime)
+          amount: getMedian(currentAmounts) // can't reference amounts here, hence using currentAmounts
         },
         translations: {
           de: {
@@ -164,14 +174,14 @@ intervalLoopForRnw = setInterval(function () {
               p9: "Adventkalender (2024)",                          // SD-14716
               p10: "Ostern - Landingpage Hase (2025)",              // SD-16430
               p11: "Ostern - Landingpage Maus (2025)",              // SD-16430
-              p12: "Jugendappell (DE)",
+              p12: "Herbst - Haupt-LP (2025)",                      // SD-18794
               p13: "Ostern - Bestellbestätigung Hase (2025)",       // SD-16430
               p14: "Weihnachtsmailing (DE-FR-IT, 2023)",
               p15: "Stress-Studie (DE)",
               p16: "Digitale Begleitung November-Mailing (2024)",   // SD-13753 + SD-14721
               p17: "Weltkindertag (DE, 2023)",
               p18: "Winterkampagne (DE)",
-              p19: "Luca leidet still (DE, 2023)",
+              p19: "Herbst - KMU-LP (2025)",                        // SD-18794
               p20: "Parkplatz",
               // note: RaiseNow allows max. 20 different purposes
             },
@@ -226,10 +236,6 @@ intervalLoopForRnw = setInterval(function () {
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "7013X000002FLA0QAO";
                 break;
-              case "p19":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X00000290OCQAY";
-                break;
               case "p20":
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "7013X000002CkSXQA0";
@@ -237,13 +243,13 @@ intervalLoopForRnw = setInterval(function () {
               // note: RaiseNow allows max. 20 different purposes
             }
             break;
-          case "chqr":    // QR Rechnung
-          case "dd":      // Lastschriftverfahren / Direct Debit
-//        case 'ezs':     // Einzahlungsschein
-          case "qr-bill": // QR Rechnung
+          case "chqr":            // QR Rechnung
+          case "dd":              // Lastschriftverfahren / Direct Debit
+//        case 'ezs':             // Einzahlungsschein
+          case "qr-bill":         // QR Rechnung
+          case "ch_qr_reference": // QR Rechnung (SD-18716)
             switch (event.data.api.paymentForm.data.purpose) {
               case "p1":
-              case "p12":
               case "p15":
               default:
                 event.data.api.paymentForm.data.stored_campaign_id =
@@ -297,6 +303,10 @@ intervalLoopForRnw = setInterval(function () {
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "701Vj00000KXM34IAH";
                 break;
+              case "p12":
+                event.data.api.paymentForm.data.stored_campaign_id =
+                  "701Vj00000TGKOkIAP";
+                break;
               case "p13":
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "701Vj00000KgaV6IAJ";
@@ -319,7 +329,7 @@ intervalLoopForRnw = setInterval(function () {
                 break;
               case "p19":
                 event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X00000290O7QAI";
+                  "701Vj00000TVCH7IAP";
                 break;
               case "p20":
                 event.data.api.paymentForm.data.stored_campaign_id =
@@ -337,7 +347,6 @@ intervalLoopForRnw = setInterval(function () {
           default:
             switch (event.data.api.paymentForm.data.purpose) {
               case "p1":
-              case "p12":
               case "p15":
               default:
                 switch(event.data.api.paymentForm.data.payment_type) {
@@ -409,6 +418,10 @@ intervalLoopForRnw = setInterval(function () {
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "701Vj00000KXEf3IAH";
                 break;
+              case "p12":
+                event.data.api.paymentForm.data.stored_campaign_id =
+                  "701Vj00000TGJfdIAH";
+                break;
               case "p13":
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "701Vj00000KgbsWIAR";
@@ -431,7 +444,7 @@ intervalLoopForRnw = setInterval(function () {
                 break;
               case "p19":
                 event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X00000290OHQAY";
+                  "701Vj00000TV0FzIAL";
                 break;
               case "p20":
                 event.data.api.paymentForm.data.stored_campaign_id =
