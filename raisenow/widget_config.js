@@ -1,4 +1,4 @@
-// v2.4.0 - 2025-09-25
+// v2.4.1 - 2025-09-26
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -141,7 +141,7 @@ intervalLoopForRnw = setInterval(function () {
           },
           {
             if: "paymentType() == onetime",
-            then: [60, 120, 250], // default for one-time donations
+            then: currentAmounts, // default or page-specific value
           },
           {
             if: "paymentType() == recurring && recurringInterval() == monthly",
