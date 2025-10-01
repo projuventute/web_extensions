@@ -1,4 +1,4 @@
-// v2.4.1 - 2025-09-26
+// v2.4.2 - 2025-10-01
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -170,27 +170,74 @@ intervalLoopForRnw = setInterval(function () {
         translations: {
           de: {
             purposes: {
-              p1: "Pro Juventute (DE)",
-              p2: "Geburtstagskalender (2025)",                     // SD-17437
-              p3: "SEA (Google Ads, 2025)",
-              p4: "Medienkompetenz (DE)",
-              p5: "Chesa (DE)",
-              p6: "Für mehr Geborgenheit",
-              p7: "Emika Türhänger (DE, 2024)",                     // SD-12555
-              p8: "E-Mail Signatur",
-              p9: "Adventkalender (2024)",                          // SD-14716
-              p10: "Ostern - Landingpage Hase (2025)",              // SD-16430
-              p11: "Ostern - Landingpage Maus (2025)",              // SD-16430
-              p12: "Herbst - Haupt-LP (2025)",                      // SD-18794
-              p13: "Ostern - Bestellbestätigung Hase (2025)",       // SD-16430
-              p14: "Weihnachtsmailing (DE-FR-IT, 2023)",
-              p15: "Digitale Begleitung August-Mailing (2025)",     // SD-18099
-              p16: "Digitale Begleitung November-Mailing (2024)",   // SD-13753 + SD-14721
-              p17: "Weltkindertag (DE, 2023)",
-              p18: "Winterkampagne (DE)",
-              p19: "Herbst - KMU-LP (2025)",                        // SD-18794
+              p1: "Kinder und Jugendliche in der Schweiz",
+              p2: "Kinder und Jugendliche in der Schweiz", 
+              p3: "Kinder und Jugendliche in der Schweiz",
+              p4: "Kinder und Jugendliche in der Schweiz",
+              p5: "Kinder und Jugendliche in der Schweiz",
+              p6: "Kinder und Jugendliche in der Schweiz",
+              p7: "Kinder und Jugendliche in der Schweiz", 
+              p8: "Kinder und Jugendliche in der Schweiz",
+              p9: "Kinder und Jugendliche in der Schweiz", 
+              p10: "Kinder und Jugendliche in der Schweiz",
+              p11: "Kinder und Jugendliche in der Schweiz",
+              p12: "Kinder und Jugendliche in der Schweiz",
+              p13: "Kinder und Jugendliche in der Schweiz",
+              p14: "Kinder und Jugendliche in der Schweiz",
+              p15: "Kinder und Jugendliche in der Schweiz",
+              p16: "Kinder und Jugendliche in der Schweiz",
+              p17: "Kinder und Jugendliche in der Schweiz",
+              p18: "Kinder und Jugendliche in der Schweiz",
+              p19: "Kinder und Jugendliche in der Schweiz",
               p20: "Parkplatz",
-              // note: RaiseNow allows max. 20 different purposes
+            },
+          },
+          fr: {
+            purposes: {
+              p1: "Enfants et adolescents en Suisse",
+              p2: "Enfants et adolescents en Suisse", 
+              p3: "Enfants et adolescents en Suisse",
+              p4: "Enfants et adolescents en Suisse",
+              p5: "Enfants et adolescents en Suisse",
+              p6: "Enfants et adolescents en Suisse",
+              p7: "Enfants et adolescents en Suisse", 
+              p8: "Enfants et adolescents en Suisse",
+              p9: "Enfants et adolescents en Suisse", 
+              p10: "Enfants et adolescents en Suisse",
+              p11: "Enfants et adolescents en Suisse",
+              p12: "Enfants et adolescents en Suisse",
+              p13: "Enfants et adolescents en Suisse",
+              p14: "Enfants et adolescents en Suisse",
+              p15: "Enfants et adolescents en Suisse",
+              p16: "Enfants et adolescents en Suisse",
+              p17: "Enfants et adolescents en Suisse",
+              p18: "Enfants et adolescents en Suisse",
+              p19: "Enfants et adolescents en Suisse",
+              p20: "Parkplatz",
+            },
+          },
+          it: {
+            purposes: {
+              p1: "Bambini e adolescenti in Svizzera",
+              p2: "Bambini e adolescenti in Svizzera", 
+              p3: "Bambini e adolescenti in Svizzera",
+              p4: "Bambini e adolescenti in Svizzera",
+              p5: "Bambini e adolescenti in Svizzera",
+              p6: "Bambini e adolescenti in Svizzera",
+              p7: "Bambini e adolescenti in Svizzera", 
+              p8: "Bambini e adolescenti in Svizzera",
+              p9: "Bambini e adolescenti in Svizzera", 
+              p10: "Bambini e adolescenti in Svizzera",
+              p11: "Bambini e adolescenti in Svizzera",
+              p12: "Bambini e adolescenti in Svizzera",
+              p13: "Bambini e adolescenti in Svizzera",
+              p14: "Bambini e adolescenti in Svizzera",
+              p15: "Bambini e adolescenti in Svizzera",
+              p16: "Bambini e adolescenti in Svizzera",
+              p17: "Bambini e adolescenti in Svizzera",
+              p18: "Bambini e adolescenti in Svizzera",
+              p19: "Bambini e adolescenti in Svizzera",
+              p20: "Parkplatz",
             },
           },
         },
