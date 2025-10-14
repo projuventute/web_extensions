@@ -1,4 +1,4 @@
-// v2.5.0 - 2025-10-14
+// v2.5.1 - 2025-10-14
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -12,7 +12,7 @@ function getUtmParams() {
   // get UTM parameters from URL or local storage and return as stringified object (SD-17060)
   const urlParams = new URLSearchParams(window.location.search);
   const utmParams = {}; // Object to hold UTM parameters  
-  ['utm_source', 'utm_medium', 'utm_campaign'].forEach(param => {
+  ['utm_campaign', 'utm_content', 'utm_medium', 'utm_source', 'utm_term', 'dclid', 'fbclid', 'gclid', 'ttclid'].forEach(param => {
     const valueInUrl = urlParams.get(param); // Get the value of the UTM parameter
     if (valueInUrl) {
       utmParams[param] = valueInUrl; // Add to object if it exists
