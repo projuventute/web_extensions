@@ -1,4 +1,4 @@
-// v2.4.3 - 2025-10-02
+// v2.5.0 - 2025-10-14
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -6,6 +6,28 @@ function getMedian(arr) {
   arr.sort((a, b) => a - b);
   const middleIndex = Math.floor(arr.length / 2);
   return arr[middleIndex];
+}
+
+function getUtmParams() {
+  // get UTM parameters from URL or local storage and return as stringified object (SD-17060)
+  const urlParams = new URLSearchParams(window.location.search);
+  const utmParams = {}; // Object to hold UTM parameters  
+  ['utm_source', 'utm_medium', 'utm_campaign'].forEach(param => {
+    const valueInUrl = urlParams.get(param); // Get the value of the UTM parameter
+    if (valueInUrl) {
+      utmParams[param] = valueInUrl; // Add to object if it exists
+    } else {  
+      const valueInLocalStorage = localStorage.getItem(param); // Check localStorage if not in URL
+      if (valueInLocalStorage) {
+        utmParams[param] = valueInLocalStorage; // Add to object if it exists in localStorage
+      } 
+    }
+  });
+  var utmParamsString = "";
+  if (Object.keys(utmParams).length > 0) {
+    utmParamsString = JSON.stringify(utmParams);
+  };
+  return utmParamsString;
 }
 
 // set secondsToWait to 15 seconds
@@ -242,6 +264,11 @@ intervalLoopForRnw = setInterval(function () {
           },
         },
       });
+
+      // set UTM parameters for Opportunity.RaiseNow__Attachment__c if available (SD-17060)
+      paymentForm.data.raisenow_parameters.fundraising_automation = {
+        attachment: getUtmParams()
+      }
 
       // switch campaign according to payment method selected
       window.rnw.tamaro.events.paymentMethodChanged.subscribe(function (event) {
@@ -529,7 +556,7 @@ intervalLoopForRnw = setInterval(function () {
                });
             } catch (err) {
                window.console.log('[raiseNow customEventHandler afterRender] error:');
-               windowconsole.error(err);
+               window.console.error(err);
             }
          });
          */
@@ -548,14 +575,14 @@ intervalLoopForRnw = setInterval(function () {
               event_data_api_transactionInfo_epaymentStatus: event.data.api.transactionInfo.epayment_status,
               event_data_api_transactionInfo_paymentMethod: event.data.api.transactionInfo.payment_method,
               event_data_api_transactionInfo_purposeId: event.data.api.transactionInfo.stored_rnw_purpose_id,
-              event_data_api_transactionInfo_transactionId: event.data.api.transactionInfo.epp_transaction_id,
+              event_data_api_transactionInfo_transactionId: event.data.api.transactionInfo.epp_transaction_id || event.data.api.transactionInfo.epms_payment_uuid,
               event_data_api_customer_email: event.data.api.transactionInfo.stored_customer_email
             });
           } catch (err) {
             window.console.log(
               "[raiseNow customEventHandler paymentComplete] error:"
             );
-            windowconsole.error(err);
+            window.console.error(err);
           }
         });
       }
