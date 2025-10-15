@@ -1,4 +1,4 @@
-// v2.5.1 - 2025-10-14
+// v2.5.2 - 2025-10-15
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -113,7 +113,7 @@ intervalLoopForRnw = setInterval(function () {
         currentPurpose = "p18";
       } 
 
-      // configure raiseNow widget
+      // configure and run raiseNow widget
       window.rnw.tamaro.runWidget(".rnw-widget-container", {
         language: pageLang,
         amounts: [
@@ -264,14 +264,14 @@ intervalLoopForRnw = setInterval(function () {
           },
         },
       });
-
-      // set UTM parameters for Opportunity.RaiseNow__Attachment__c if available (SD-17060)
-      paymentForm.data.raisenow_parameters.fundraising_automation = {
-        attachment: getUtmParams()
-      }
-
+          
       // switch campaign according to payment method selected
       window.rnw.tamaro.events.paymentMethodChanged.subscribe(function (event) {
+        // set UTM parameters for Opportunity.RaiseNow__Attachment__c if available (SD-17060)
+        event.data.api.paymentForm.data.raisenow_parameters.fundraising_automation = {
+          attachment: getUtmParams()
+        };
+        // set campaign id according to payment method and purpose
         switch (event.data.api.paymentForm.data.payment_method) {
           case "paypal":  // Paypal - replacing "pp" since tamaro v2.8.3
           case "pp":      // Paypal
@@ -542,9 +542,9 @@ intervalLoopForRnw = setInterval(function () {
               // note: RaiseNow allows max. 20 different purposes
             }
             break;
-        }
+        };
       });
-
+      
       /*
          // trigger tracking (GTM) event on load
          window.rnw.tamaro.events.afterRender.subscribe(function (event) {
@@ -559,7 +559,7 @@ intervalLoopForRnw = setInterval(function () {
                window.console.error(err);
             }
          });
-         */
+      */
 
       // trigger tracking (GTM) event on completion
       if (typeof window.dataLayer === "object") {
@@ -571,12 +571,12 @@ intervalLoopForRnw = setInterval(function () {
               event_data_api_configEnv_widget: event.data.api.configEnv.WIDGET_UUID,
               event_data_api_configEnv_build: event.data.api.configEnv.BUILD_DATE,
               // , 'event_data_api_paymentForm': event.data.api.paymentForm
-              event_data_api_transactionInfo_amount: event.data.api.transactionInfo.amount,
-              event_data_api_transactionInfo_epaymentStatus: event.data.api.transactionInfo.epayment_status,
-              event_data_api_transactionInfo_paymentMethod: event.data.api.transactionInfo.payment_method,
-              event_data_api_transactionInfo_purposeId: event.data.api.transactionInfo.stored_rnw_purpose_id,
-              event_data_api_transactionInfo_transactionId: event.data.api.transactionInfo.epp_transaction_id || event.data.api.transactionInfo.epms_payment_uuid,
-              event_data_api_customer_email: event.data.api.transactionInfo.stored_customer_email
+              event_data_api_transactionInfo_amount: event.data.api.transactionInfo?.amount ?? event.data.api.epmsPaymentAgreementInfo?.amount,
+              event_data_api_transactionInfo_epaymentStatus: event.data.api.transactionInfo?.epayment_status ?? event.data.api.epmsPaymentAgreementInfo?.last_status,
+              event_data_api_transactionInfo_paymentMethod: event.data.api.transactionInfo?.payment_method ?? event.data.api.epmsPaymentAgreementInfo?.payment_method,
+              event_data_api_transactionInfo_purposeId: event.data.api.transactionInfo?.stored_rnw_purpose_id ?? event.data.api.epmsPaymentAgreementInfo?.custom_parameters?.rnw_purpose_id,
+              event_data_api_transactionInfo_transactionId: event.data.api.transactionInfo?.epp_transaction_id ?? event.data.api.transactionInfo?.epms_payment_uuid ?? event.data.api.epmsPaymentAgreementInfo?.uuid,
+              event_data_api_customer_email: event.data.api.transactionInfo?.stored_customer_email ?? event.data.api.epmsPaymentAgreementInfo?.supporter_snapshot?.email
             });
           } catch (err) {
             window.console.log(
