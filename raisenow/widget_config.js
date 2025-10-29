@@ -91,15 +91,15 @@ intervalLoopForRnw = setInterval(function () {
       } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/zuhoeren-kann-leben-retten-unternehmen.*/)) {
         currentPurpose = "p19";
         currentAmounts = [125, 250, 375];
+      } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/zuhoeren-kann-leben-retten-social-do.*|.*\/fr\/soutenir\/dons\/ecouter-peut-sauver-des-vies-social-do.*|.*\/it\/supporto\/donare\/ascoltare-puo-salvare-vite-social-do.*/)) {
+        currentPurpose = "p14";
+        currentAmounts = [25, 75, 150];
       } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/zuhoeren-kann-leben-retten.*|.*\/fr\/soutenir\/dons\/ecouter-peut-sauver-des-vies.*|.*\/it\/supporto\/donare\/ascoltare-puo-salvare-vite.*/)) {
         currentPurpose = "p12";
         currentAmounts = [45, 75, 150];
       } else if (window.location.href.match(/.*\/de\/bestaetigung-ich-bin-der-kleine-hase.*|.*\/fr\/confirmation-petit-lapin.*|.*\/it\/confirmazione-piacere-sono-coniglietto.*/)) {
         currentPurpose = "p13";
         currentAmounts = [25, 50, 100];
-      } else if (window.location.href.match(/.*\/(de\/danke|fr\/merci|it\/grazie).*/)) {
-        currentPurpose = "p14";
-        currentAmounts = [45, 90, 150];
       } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/ihre-spende-gegen-mobbing.*|.*\/fr\/soutenir\/dons\/votre-don-contre-le-harcelement.*|.*\/it\/supporto\/donare\/la-sua-donazione-contro-il-bullismo.*/)) {
         currentPurpose = "p15";
         currentAmounts = [45, 75, 120];
@@ -139,7 +139,7 @@ intervalLoopForRnw = setInterval(function () {
           },
           {
             if: "paymentType() == onetime && purpose() == p14",
-            then: [45, 90, 150],
+            then: [25, 75, 150],
           },
           {
             if: "paymentType() == onetime && purpose() == p15",
@@ -305,10 +305,6 @@ intervalLoopForRnw = setInterval(function () {
                     break;
                 }
                 break;
-              case "p14":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000001pP2bQAE";
-                break;
               case "p17":
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "7013X000001pP0vQAE";
@@ -394,7 +390,7 @@ intervalLoopForRnw = setInterval(function () {
                 break;
               case "p14":
                 event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000001pP2WQAU";
+                  "701Vj00000VdyaNIAR";
                 break;
               case "p15":
                 event.data.api.paymentForm.data.stored_campaign_id =
@@ -513,7 +509,7 @@ intervalLoopForRnw = setInterval(function () {
                 break;
               case "p14":
                 event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000001pP2gQAE";
+                  "701Vj00000Ve0XLIAZ";
                 break;
               case "p15":
                 event.data.api.paymentForm.data.stored_campaign_id =
