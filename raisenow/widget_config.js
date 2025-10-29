@@ -1,4 +1,4 @@
-// v2.5.2 - 2025-10-15
+// v2.5.3 - 2025-10-29
 
 // window.console.log('[raiseNow widget config] start');
 
