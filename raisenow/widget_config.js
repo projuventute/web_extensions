@@ -1,4 +1,4 @@
-// v2.5.3 - 2025-10-29
+// v2.5.4 - 2025-10-31
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -94,6 +94,9 @@ intervalLoopForRnw = setInterval(function () {
       } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/zuhoeren-kann-leben-retten-social-do.*|.*\/fr\/soutenir\/dons\/ecouter-peut-sauver-des-vies-social-do.*|.*\/it\/supporto\/donare\/ascoltare-puo-salvare-vite-social-do.*/)) {
         currentPurpose = "p14";
         currentAmounts = [25, 75, 150];
+      } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/zuhoeren-kann-leben-retten-mitmachen-bestaetigung.*|.*\/fr\/soutenir\/dons\/ecouter-peut-sauver-des-vies-participer-confirmation.*|.*\/it\/supporto\/donare\/ascoltare-puo-salvare-vite-participare-confirmazione.*/)) {
+        currentPurpose = "p6";
+        currentAmounts = [25, 75, 150];
       } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/zuhoeren-kann-leben-retten.*|.*\/fr\/soutenir\/dons\/ecouter-peut-sauver-des-vies.*|.*\/it\/supporto\/donare\/ascoltare-puo-salvare-vite.*/)) {
         currentPurpose = "p12";
         currentAmounts = [45, 75, 150];
@@ -120,6 +123,10 @@ intervalLoopForRnw = setInterval(function () {
           {
             if: "paymentType() == onetime && purpose() == p2",
             then: [20, 30, 50],
+          },
+          {
+            if: "paymentType() == onetime && purpose() == p6",
+            then: [25, 75, 150],
           },
           {
             if: "paymentType() == onetime && purpose() == p10",
@@ -288,10 +295,6 @@ intervalLoopForRnw = setInterval(function () {
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "7013X000002FL0zQAG";
                 break;
-              case "p6":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj000004uQTmIAM";
-                break;
               case "p7":
                 switch(event.data.api.paymentForm.data.payment_type) {
                   case "onetime":
@@ -349,7 +352,7 @@ intervalLoopForRnw = setInterval(function () {
                 break;
               case "p6":
                 event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj000004uK0CIAU";
+                  "701Vj00000TmDTmIAN";
                 break;
               case "p7":
                 event.data.api.paymentForm.data.stored_campaign_id =
@@ -459,7 +462,7 @@ intervalLoopForRnw = setInterval(function () {
                 break;
               case "p6":
                 event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj000004uOGkIAM";
+                  "701Vj00000TmJVwIAN";
                 break;
               case "p7":
                 switch(event.data.api.paymentForm.data.payment_type) {
