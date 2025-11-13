@@ -1,4 +1,4 @@
-// v2.5.4 - 2025-10-31
+// v2.5.5 - 2025-11-13
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -275,9 +275,8 @@ intervalLoopForRnw = setInterval(function () {
       // switch campaign according to payment method selected
       window.rnw.tamaro.events.paymentMethodChanged.subscribe(function (event) {
         // set UTM parameters for Opportunity.RaiseNow__Attachment__c if available (SD-17060)
-        event.data.api.paymentForm.data.raisenow_parameters.fundraising_automation = {
-          attachment: getUtmParams()
-        };
+        const utmParams = getUtmParams();
+        event.data.api.paymentForm.data.raisenow_parameters.fundraising_automation = utmParams ? { attachment: utmParams } : {};
         // set campaign id according to payment method and purpose
         switch (event.data.api.paymentForm.data.payment_method) {
           case "paypal":  // Paypal - replacing "pp" since tamaro v2.8.3
