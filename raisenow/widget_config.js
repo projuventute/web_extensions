@@ -1,4 +1,4 @@
-// v2.6.1 - 2025-11-14
+// v2.6.2 - 2025-11-14
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -23,11 +23,23 @@ function getUtmParams() {
       } 
     }
   });
-  var utmParamsString = "";
-  if (Object.keys(utmParams).length > 0) {
-    utmParamsString = JSON.stringify(utmParams);
-  };
-  return utmParamsString;
+  return utmParams;
+}
+
+function getSpidCookie() {
+  // get value of the current 'spid.' cookie
+  const cookies = document.cookie.split(';');
+
+  const spidCookie = cookies
+    .map(cookie => cookie.trim())
+    .find(cookie => cookie.startsWith('spid.'));
+
+  if (spidCookie) {
+    const value = spidCookie.substring(spidCookie.indexOf('=') + 1);
+    return { spid: value };
+  } else {
+    return {};
+  }
 }
 
 // set secondsToWait to 15 seconds
@@ -100,7 +112,7 @@ intervalLoopForRnw = setInterval(function () {
       } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/zuhoeren-kann-leben-retten.*|.*\/fr\/soutenir\/dons\/ecouter-peut-sauver-des-vies.*|.*\/it\/supporto\/donare\/ascoltare-puo-salvare-vite.*/)) {
         currentPurpose = "p12";
         currentAmounts = [45, 75, 150];
-      } else if (window.location.href.match(/.*\/de\/bestaetigung-ich-bin-der-kleine-hase.*|.*\/fr\/confirmation-petit-lapin.*|.*\/it\/confirmazione-piacere-sono-coniglietto.*/)) {
+      } else if (window.location.href.match(/.*\/de\/bestaetigung-ich-bin-der-kleine-hase.*|.*\/fr\/confirmation
         currentPurpose = "p13";
         currentAmounts = [25, 50, 100];
       } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/ihre-spende-gegen-mobbing.*|.*\/fr\/soutenir\/dons\/votre-don-contre-le-harcelement.*|.*\/it\/supporto\/donare\/la-sua-donazione-contro-il-bullismo.*/)) {
@@ -276,7 +288,9 @@ intervalLoopForRnw = setInterval(function () {
       window.rnw.tamaro.events.paymentMethodChanged.subscribe(function (event) {
         // set UTM parameters for Opportunity.RaiseNow__Attachment__c if available (SD-17060)
         const utmParams = getUtmParams();
-        event.data.api.paymentForm.data.raisenow_parameters.fundraising_automation = utmParams ? { attachment: utmParams } : {};
+        const spidCookie = getSpidCookie();
+        const attachmentObj = JSON.stringify({ ...utmParams, ...spidCookie });
+        event.data.api.paymentForm.data.raisenow_parameters.fundraising_automation = attachmentObj ? { attachment: utmPattachmentObjarams } : {};
         // set campaign id according to payment method and purpose
         switch (event.data.api.paymentForm.data.payment_method) {
           case "paypal":  // Paypal - replacing "pp" since tamaro v2.8.3
