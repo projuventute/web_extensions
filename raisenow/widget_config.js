@@ -1,4 +1,4 @@
-// v2.5.5 - 2025-11-13
+// v2.6.0 - 2025-11-14
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -543,22 +543,25 @@ intervalLoopForRnw = setInterval(function () {
         };
       });
       
-      /*
-         // trigger tracking (GTM) event on load
-         window.rnw.tamaro.events.afterRender.subscribe(function (event) {
-            try {
-               window.dataLayer.push({
-                  'event': 'raiseNow-afterRender'
-                  , 'event_data_api_configEnv': event.data.api.configEnv
-                  // , 'event_data_api_paymentForm': event.data.api.paymentForm
-               });
-            } catch (err) {
-               window.console.log('[raiseNow customEventHandler afterRender] error:');
-               window.console.error(err);
-            }
-         });
-      */
-
+      // trigger tracking (GTM) event on render to re-init event listeners
+      if (typeof window.dataLayer === "object") {
+        // agnosticalyze isnt availabe
+        window.rnw.tamaro.events.afterRender.subscribe(function (event) {
+          try {
+            window.dataLayer.push({
+              event: "raiseNow-afterRender",
+              event_data_api_configEnv_widget: event.data.api.configEnv.WIDGET_UUID,
+              event_data_api_configEnv_build: event.data.api.configEnv.BUILD_DATE
+            });
+          } catch (err) {
+            window.console.log(
+              "[raiseNow customEventHandler afterRender] error:"
+            );
+            window.console.error(err);
+          }
+        });
+      }
+      
       // trigger tracking (GTM) event on completion
       if (typeof window.dataLayer === "object") {
         // agnosticalyze isnt availabe
