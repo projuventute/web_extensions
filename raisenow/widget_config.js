@@ -1,4 +1,4 @@
-// v2.6.4 - 2025-11-15
+// v2.6.5 - 2025-11-15
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -585,12 +585,9 @@ intervalLoopForRnw = setInterval(function () {
               event_data_api_configEnv_widget: event.data.api.configEnv.WIDGET_UUID,
               event_data_api_configEnv_build: event.data.api.configEnv.BUILD_DATE,
               // , 'event_data_api_paymentForm': event.data.api.paymentForm
-              event_data_api_transactionInfo_amount: event.data.api.transactionInfo?.amount ?? event.data.api.epmsPaymentAgreementInfo?.amount,
-              event_data_api_transactionInfo_epaymentStatus: event.data.api.transactionInfo?.epayment_status ?? event.data.api.epmsPaymentAgreementInfo?.last_status,
-              event_data_api_transactionInfo_paymentMethod: event.data.api.transactionInfo?.payment_method ?? event.data.api.epmsPaymentAgreementInfo?.payment_method,
-              event_data_api_transactionInfo_purposeId: event.data.api.transactionInfo?.stored_rnw_purpose_id ?? event.data.api.epmsPaymentAgreementInfo?.custom_parameters?.rnw_purpose_id,
-              event_data_api_transactionInfo_transactionId: event.data.api.transactionInfo?.epp_transaction_id ?? event.data.api.transactionInfo?.epms_payment_uuid ?? event.data.api.epmsPaymentAgreementInfo?.uuid,
-              event_data_api_customer_email: event.data.api.transactionInfo?.stored_customer_email ?? event.data.api.epmsPaymentAgreementInfo?.supporter_snapshot?.email
+              event_data_api_transactionInfo_amount: event.data.api.paymentForm?.amount,
+              event_data_api_transactionInfo_paymentMethod: event.data.api.paymentForm?.payment_method,
+              event_data_api_transactionInfo_purposeId: event.data.api.paymentForm?.purpose
             });
           } catch (err) {
             window.console.log(
