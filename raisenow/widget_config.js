@@ -1,4 +1,4 @@
-// v2.6.3 - 2025-11-15
+// v2.6.4 - 2025-11-15
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -289,7 +289,7 @@ intervalLoopForRnw = setInterval(function () {
         const utmParams = getUtmParams();
         const spidCookie = getSpidCookie();
         const attachmentObj = JSON.stringify({ ...utmParams, ...spidCookie });
-        event.data.api.paymentForm.data.raisenow_parameters.fundraising_automation = attachmentObj ? { attachment: utmPattachmentObjarams } : {};
+        event.data.api.paymentForm.data.raisenow_parameters.fundraising_automation = attachmentObj ? { attachment: attachmentObj } : {};
         // set campaign id according to payment method and purpose
         switch (event.data.api.paymentForm.data.payment_method) {
           case "paypal":  // Paypal - replacing "pp" since tamaro v2.8.3
