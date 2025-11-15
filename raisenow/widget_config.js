@@ -1,4 +1,4 @@
-// v2.6.2 - 2025-11-14
+// v2.6.3 - 2025-11-15
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -29,7 +29,6 @@ function getUtmParams() {
 function getSpidCookie() {
   // get value of the current 'spid.' cookie
   const cookies = document.cookie.split(';');
-
   const spidCookie = cookies
     .map(cookie => cookie.trim())
     .find(cookie => cookie.startsWith('spid.'));
@@ -112,7 +111,7 @@ intervalLoopForRnw = setInterval(function () {
       } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/zuhoeren-kann-leben-retten.*|.*\/fr\/soutenir\/dons\/ecouter-peut-sauver-des-vies.*|.*\/it\/supporto\/donare\/ascoltare-puo-salvare-vite.*/)) {
         currentPurpose = "p12";
         currentAmounts = [45, 75, 150];
-      } else if (window.location.href.match(/.*\/de\/bestaetigung-ich-bin-der-kleine-hase.*|.*\/fr\/confirmation
+      } else if (window.location.href.match(/.*\/de\/bestaetigung-ich-bin-der-kleine-hase.*|.*\/fr\/confirmation-petit-lapin.*|.*\/it\/confirmazione-piacere-sono-coniglietto.*/)) {
         currentPurpose = "p13";
         currentAmounts = [25, 50, 100];
       } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/ihre-spende-gegen-mobbing.*|.*\/fr\/soutenir\/dons\/votre-don-contre-le-harcelement.*|.*\/it\/supporto\/donare\/la-sua-donazione-contro-il-bullismo.*/)) {
