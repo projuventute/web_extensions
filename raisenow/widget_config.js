@@ -1,4 +1,4 @@
-// v2.5.5 - 2025-11-13
+// v2.6.0 - 2026-02-26
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -220,6 +220,11 @@ intervalLoopForRnw = setInterval(function () {
               p19: "Hilfe für Kinder und Jugendliche in der Schweiz",
               p20: "Parkplatz",
             },
+            payment_form: {
+              stored_cover_transaction_fee: `
+                Ja, ich möchte die Transaktionsgebühren von %% toUpperCase(currency()) %% %% formattedFeeAmount() %% übernehmen, damit meine Spende vollumfänglich an Pro Juventute geht.
+              `,
+            },
           },
           fr: {
             purposes: {
@@ -243,6 +248,11 @@ intervalLoopForRnw = setInterval(function () {
               p18: "Aide pour enfants et des jeunes en Suisse",
               p19: "Aide pour enfants et des jeunes en Suisse",
               p20: "Parkplatz",
+            },
+            payment_form: {
+              stored_cover_transaction_fee: `
+                Oui, je souhaite prendre en charge les frais de transaction de %% toUpperCase(currency()) %% %% formattedFeeAmount() %% afin que mon don parvienne entièrement à Pro Juventute.
+              `,
             },
           },
           it: {
@@ -268,6 +278,11 @@ intervalLoopForRnw = setInterval(function () {
               p19: "Aiuto per bambini e giovani in Svizzera",
               p20: "Parkplatz",
             },
+            payment_form: {
+              stored_cover_transaction_fee: `
+                Sì, desidero coprire le spese di transazione di %% toUpperCase(currency()) %% %% formattedFeeAmount() %% affinché la mia donazione venga destinata interamente a Pro Juventute.
+              `,
+            },
           },
         },
       });
@@ -277,6 +292,19 @@ intervalLoopForRnw = setInterval(function () {
         // set UTM parameters for Opportunity.RaiseNow__Attachment__c if available (SD-17060)
         const utmParams = getUtmParams();
         event.data.api.paymentForm.data.raisenow_parameters.fundraising_automation = utmParams ? { attachment: utmParams } : {};
+        // set fee coverage according to payment method (SD-20469)
+        switch (event.data.api.paymentForm.data.payment_method) {
+          case "twint":   // Twint - cf. SD-11883
+          case "twi":     // Twint
+            event.data.api.paymentForm.data.coverFeeProcessingPercentage = 1.3;
+          case "chqr":            // QR Rechnung
+//        case 'ezs':             // Einzahlungsschein
+          case "qr-bill":         // QR Rechnung
+          case "ch_qr_reference": // QR Rechnung (SD-18716)
+            event.data.api.paymentForm.data.coverFeeProcessingPercentage = 0.2;
+          default:
+            event.data.api.paymentForm.data.coverFeeProcessingPercentage = 1.25;
+        }
         // set campaign id according to payment method and purpose
         switch (event.data.api.paymentForm.data.payment_method) {
           case "paypal":  // Paypal - replacing "pp" since tamaro v2.8.3
