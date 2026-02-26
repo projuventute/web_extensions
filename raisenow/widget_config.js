@@ -1,4 +1,4 @@
-// v2.7.6 - 2026-02-26
+// v2.7.7 - 2026-02-26
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -207,18 +207,20 @@ intervalLoopForRnw = setInterval(function () {
           payment_type: 'onetime',
           amount: getMedian(currentAmounts) // can't reference amounts here, hence using currentAmounts
         },
-        coverFeeFixed: 0,
+        // coverFeeFixed: 0,
         /*
         coverFeeProcessingFixed: 0,
         coverFeePlatformFixed: 0,
         coverFeeOrganisationCostsFixed: 0,
         */
+        /*
         coverFeePercentage: [
           { if: "paymentMethod() == 'twint'", then: 1.3 },
           { if: "paymentMethod() == 'qr-bill'", then: 0.2 },
           { if: "paymentMethod() == 'ch_qr_reference'", then: 0.2 },
           1.25,
         ],
+        */
         /*
         coverFeeProcessingPercentage: [
           { if: "paymentMethod() == 'twint'", then: 1.3 },
@@ -327,6 +329,7 @@ intervalLoopForRnw = setInterval(function () {
         const spidCookie = getSpidCookie();
         const attachmentObj = JSON.stringify({ ...utmParams, ...spidCookie });
         event.data.api.paymentForm.data.raisenow_parameters.fundraising_automation = attachmentObj ? { attachment: attachmentObj } : {};
+        /*
         // set fee coverage according to payment method (SD-20469)
         switch (event.data.api.paymentForm.data.payment_method) {
           case "twint":   // Twint - cf. SD-11883
@@ -342,6 +345,7 @@ intervalLoopForRnw = setInterval(function () {
           default:
             event.data.api.paymentForm.data.stored_rnw_cover_fee_percentage = 1.25;
         }
+        */
         // set campaign id according to payment method and purpose
         switch (event.data.api.paymentForm.data.payment_method) {
           case "paypal":  // Paypal - replacing "pp" since tamaro v2.8.3
