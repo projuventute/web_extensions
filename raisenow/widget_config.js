@@ -1,4 +1,4 @@
-// v2.7.2 - 2026-02-26
+// v2.7.3 - 2026-02-26
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -208,12 +208,25 @@ intervalLoopForRnw = setInterval(function () {
           amount: getMedian(currentAmounts) // can't reference amounts here, hence using currentAmounts
         },
         coverFeeFixed: 0,
+        coverFeeProcessingFixed: 0,
+        coverFeePlatformFixed: 0,
+        coverFeeOrganisationCostsFixed: 0,
+        /*
         coverFeePercentage: [
           { if: "paymentMethod() == 'twint'", then: 1.3 },
           { if: "paymentMethod() == 'qr-bill'", then: 0.2 },
           { if: "paymentMethod() == 'ch_qr_reference'", then: 0.2 },
           1.25,
         ],
+        */
+        coverFeeProcessingPercentage: [
+          { if: "paymentMethod() == 'twint'", then: 1.3 },
+          { if: "paymentMethod() == 'qr-bill'", then: 0.2 },
+          { if: "paymentMethod() == 'ch_qr_reference'", then: 0.2 },
+          1.25,
+        ],
+        // coverFeePlatformPercentage: 0,
+        coverFeeOrganisationCostsPercentage: 0,
         translations: {
           de: {
             purposes: {
