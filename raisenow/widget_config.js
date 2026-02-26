@@ -1,4 +1,4 @@
-// v2.7.5 - 2026-02-26
+// v2.7.6 - 2026-02-26
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -331,16 +331,16 @@ intervalLoopForRnw = setInterval(function () {
         switch (event.data.api.paymentForm.data.payment_method) {
           case "twint":   // Twint - cf. SD-11883
           case "twi":     // Twint
-            event.data.api.paymentForm.data.coverFeePercentage = 1.3;
+            event.data.api.paymentForm.data.stored_rnw_cover_fee_percentage = 1.3;
             break;
           case "chqr":            // QR Rechnung
 //        case 'ezs':             // Einzahlungsschein
           case "qr-bill":         // QR Rechnung
           case "ch_qr_reference": // QR Rechnung (SD-18716)
-            event.data.api.paymentForm.data.coverFeePercentage = 0.2;
+            event.data.api.paymentForm.data.stored_rnw_cover_fee_percentage = 0.2;
             break;
           default:
-            event.data.api.paymentForm.data.coverFeePercentage = 1.25;
+            event.data.api.paymentForm.data.stored_rnw_cover_fee_percentage = 1.25;
         }
         // set campaign id according to payment method and purpose
         switch (event.data.api.paymentForm.data.payment_method) {
