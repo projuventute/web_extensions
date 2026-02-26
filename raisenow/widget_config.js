@@ -1,4 +1,4 @@
-// v2.6.0 - 2026-02-26
+// v2.7.0 - 2026-02-26
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -23,11 +23,22 @@ function getUtmParams() {
       } 
     }
   });
-  var utmParamsString = "";
-  if (Object.keys(utmParams).length > 0) {
-    utmParamsString = JSON.stringify(utmParams);
-  };
-  return utmParamsString;
+  return utmParams;
+}
+
+function getSpidCookie() {
+  // get value of the current 'spid.' cookie
+  const cookies = document.cookie.split(';');
+  const spidCookie = cookies
+    .map(cookie => cookie.trim())
+    .find(cookie => cookie.startsWith('spid.'));
+
+  if (spidCookie) {
+    const value = spidCookie.substring(spidCookie.indexOf('=') + 1);
+    return { spid: value };
+  } else {
+    return {};
+  }
 }
 
 // set secondsToWait to 15 seconds
@@ -109,9 +120,9 @@ intervalLoopForRnw = setInterval(function () {
       } else if (window.location.href.match(/.*\/de\/sarah-fehlt.*|.*\/fr\/sarah-manque.*|.*\/it\/sarah-manca.*/)) {  // SD-13753 + SD-14721
         currentPurpose = "p16";
         currentAmounts = [45, 75, 120];
-      } else if (window.location.href.match(/.*\/(weltkindertag|de\/node\/1357).*/)) {
+      } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/giving-tuesday.*|.*\/fr\/soutenir\/dons\/giving-tuesday.*|.*\/it\/supporto\/donare\/giving-tuesday.*/)) {
         currentPurpose = "p17";
-        currentAmounts = [60, 120, 240];
+        currentAmounts = [45, 75, 150];
       } else if (window.location.href.match(/.*\/meine-spende-rettet-leben.*|.*\/mon-don-sauve-des-vies.*|.*\/la-mia-donazione-salva-delle-vite.*/)) {
         currentPurpose = "p18";
       } 
@@ -158,7 +169,7 @@ intervalLoopForRnw = setInterval(function () {
           },
           {
             if: "paymentType() == onetime && purpose() == p17",
-            then: [60, 120, 240],
+            then: [45, 75, 150],
           },
           {
             if: "paymentType() == onetime && purpose() == p19",
@@ -291,7 +302,9 @@ intervalLoopForRnw = setInterval(function () {
       window.rnw.tamaro.events.paymentMethodChanged.subscribe(function (event) {
         // set UTM parameters for Opportunity.RaiseNow__Attachment__c if available (SD-17060)
         const utmParams = getUtmParams();
-        event.data.api.paymentForm.data.raisenow_parameters.fundraising_automation = utmParams ? { attachment: utmParams } : {};
+        const spidCookie = getSpidCookie();
+        const attachmentObj = JSON.stringify({ ...utmParams, ...spidCookie });
+        event.data.api.paymentForm.data.raisenow_parameters.fundraising_automation = attachmentObj ? { attachment: attachmentObj } : {};
         // set fee coverage according to payment method (SD-20469)
         switch (event.data.api.paymentForm.data.payment_method) {
           case "twint":   // Twint - cf. SD-11883
@@ -334,10 +347,6 @@ intervalLoopForRnw = setInterval(function () {
                       "701Vj000007BNWjIAO";
                     break;
                 }
-                break;
-              case "p17":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000001pP0vQAE";
                 break;
               case "p18":
                 event.data.api.paymentForm.data.stored_campaign_id =
@@ -432,7 +441,7 @@ intervalLoopForRnw = setInterval(function () {
                 break;
               case "p17":
                 event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000001pP0uQAE";
+                  "701Vj00000XEWxwIAH";
                 break;
               case "p18":
                 event.data.api.paymentForm.data.stored_campaign_id =
@@ -551,7 +560,7 @@ intervalLoopForRnw = setInterval(function () {
                 break;
               case "p17":
                 event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000001pP0zQAE";
+                  "701Vj00000XEaYXIA1";
                 break;
               case "p18":
                 event.data.api.paymentForm.data.stored_campaign_id =
@@ -571,22 +580,48 @@ intervalLoopForRnw = setInterval(function () {
         };
       });
       
-      /*
-         // trigger tracking (GTM) event on load
-         window.rnw.tamaro.events.afterRender.subscribe(function (event) {
-            try {
-               window.dataLayer.push({
-                  'event': 'raiseNow-afterRender'
-                  , 'event_data_api_configEnv': event.data.api.configEnv
-                  // , 'event_data_api_paymentForm': event.data.api.paymentForm
-               });
-            } catch (err) {
-               window.console.log('[raiseNow customEventHandler afterRender] error:');
-               window.console.error(err);
-            }
-         });
-      */
+      // trigger tracking (GTM) event on render to re-init event listeners
+      if (typeof window.dataLayer === "object") {
+        // agnosticalyze isnt availabe
+        window.rnw.tamaro.events.afterRender.subscribe(function (event) {
+          try {
+            window.dataLayer.push({
+              event: "raiseNow-afterRender",
+              event_data_api_configEnv_widget: event.data.api.configEnv.WIDGET_UUID,
+              event_data_api_configEnv_build: event.data.api.configEnv.BUILD_DATE
+            });
+          } catch (err) {
+            window.console.log(
+              "[raiseNow customEventHandler afterRender] error:"
+            );
+            window.console.error(err);
+          }
+        });
+      }
 
+      // trigger tracking (GTM) event on send
+      if (typeof window.dataLayer === "object") {
+        // agnosticalyze isnt availabe
+        window.rnw.tamaro.events.beforePaymentSend.subscribe(function (event) {
+          try {
+            window.dataLayer.push({
+              event: "raiseNow-beforePaymentSend",
+              event_data_api_configEnv_widget: event.data.api.configEnv.WIDGET_UUID,
+              event_data_api_configEnv_build: event.data.api.configEnv.BUILD_DATE,
+              // , 'event_data_api_paymentForm': event.data.api.paymentForm
+              event_data_api_transactionInfo_amount: event.data.api.paymentForm.data?.amount,
+              event_data_api_transactionInfo_paymentMethod: event.data.api.paymentForm.data?.payment_method,
+              event_data_api_transactionInfo_purposeId: event.data.api.paymentForm.data?.purpose
+            });
+          } catch (err) {
+            window.console.log(
+              "[raiseNow customEventHandler beforePaymentSend] error:"
+            );
+            window.console.error(err);
+          }
+        });
+      }
+      
       // trigger tracking (GTM) event on completion
       if (typeof window.dataLayer === "object") {
         // agnosticalyze isnt availabe
