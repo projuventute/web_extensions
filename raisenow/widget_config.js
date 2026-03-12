@@ -1,4 +1,4 @@
-// v2.7.8 - 2026-03-12
+// v2.7.9 - 2026-03-12
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -125,6 +125,7 @@ intervalLoopForRnw = setInterval(function () {
         currentAmounts = [45, 75, 150];
       } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/kleine-katze.*|.*\/fr\/soutenir\/dons\/petit-chat.*|.*\/it\/supporto\/donare\/gattino.*/)) {
         currentPurpose = "p18";
+        currentAmounts = [45, 90, 150];
       } 
 
       // configure and run raiseNow widget
