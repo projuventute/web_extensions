@@ -1,4 +1,4 @@
-// v2.7.7 - 2026-02-26
+// v2.7.8 - 2026-03-12
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -123,7 +123,7 @@ intervalLoopForRnw = setInterval(function () {
       } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/giving-tuesday.*|.*\/fr\/soutenir\/dons\/giving-tuesday.*|.*\/it\/supporto\/donare\/giving-tuesday.*/)) {
         currentPurpose = "p17";
         currentAmounts = [45, 75, 150];
-      } else if (window.location.href.match(/.*\/meine-spende-rettet-leben.*|.*\/mon-don-sauve-des-vies.*|.*\/la-mia-donazione-salva-delle-vite.*/)) {
+      } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/kleine-katze.*|.*\/fr\/soutenir\/dons\/petit-chat.*|.*\/it\/supporto\/donare\/gattino.*/)) {
         currentPurpose = "p18";
       } 
 
@@ -170,6 +170,14 @@ intervalLoopForRnw = setInterval(function () {
           {
             if: "paymentType() == onetime && purpose() == p17",
             then: [45, 75, 150],
+          },
+          {
+            if: "paymentType() == onetime && purpose() == p17",
+            then: [45, 75, 150],
+          },
+          {
+            if: "paymentType() == onetime && purpose() == p18",
+            then: [45, 90, 150],
           },
           {
             if: "paymentType() == onetime && purpose() == p19",
@@ -376,10 +384,6 @@ intervalLoopForRnw = setInterval(function () {
                     break;
                 }
                 break;
-              case "p18":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002FLA0QAO";
-                break;
               case "p20":
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "7013X000002CkSXQA0";
@@ -473,7 +477,7 @@ intervalLoopForRnw = setInterval(function () {
                 break;
               case "p18":
                 event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002FLA5QAO";
+                  "701Vj00000b22JnIAI";
                 break;
               case "p19":
                 event.data.api.paymentForm.data.stored_campaign_id =
@@ -591,8 +595,17 @@ intervalLoopForRnw = setInterval(function () {
                   "701Vj00000XEaYXIA1";
                 break;
               case "p18":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002FL9qQAG";
+                switch(event.data.api.paymentForm.data.payment_type) {
+                  case "onetime":
+                  default:
+                    event.data.api.paymentForm.data.stored_campaign_id =
+                      "701Vj00000b1q5sIAA";
+                    break;
+                  case "recurring":
+                    event.data.api.paymentForm.data.stored_campaign_id =
+                      "701Vj00000b208LIAQ";
+                    break;
+                }
                 break;
               case "p19":
                 event.data.api.paymentForm.data.stored_campaign_id =
