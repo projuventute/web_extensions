@@ -1,4 +1,4 @@
-// v2.7.9 - 2026-03-12
+// v2.8.0 - 2026-03-19
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -64,7 +64,7 @@ intervalLoopForRnw = setInterval(function () {
       // get page language from meta tag - preferred over uri
       const pageLang_meta = document.head.querySelector(
         'meta[http-equiv="content-language"]'
-      ).content;
+      )?.content;
       var pageLang = "de"; // declare and set default
       if (typeof pageLang_meta === "undefined" || pageLang_meta === "") {
         // get page language from uri
