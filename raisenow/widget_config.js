@@ -1,11 +1,11 @@
-// v2.8.0 - 2026-03-19
+// v2.8.1 - 2026-03-19
 
 // window.console.log('[raiseNow widget config] start');
 
 function getMedian(arr) {
-  arr.sort((a, b) => a - b);
-  const middleIndex = Math.floor(arr.length / 2);
-  return arr[middleIndex];
+  const sorted = [...arr].sort((a, b) => a - b);
+  const middleIndex = Math.floor(sorted.length / 2);
+  return sorted[middleIndex];
 }
 
 function getUtmParams() {
@@ -17,10 +17,14 @@ function getUtmParams() {
     if (valueInUrl) {
       utmParams[param] = valueInUrl; // Add to object if it exists
     } else {  
-      const valueInLocalStorage = localStorage.getItem(param); // Check localStorage if not in URL
-      if (valueInLocalStorage) {
-        utmParams[param] = valueInLocalStorage; // Add to object if it exists in localStorage
-      } 
+      try {
+        const valueInLocalStorage = localStorage.getItem(param);
+        if (valueInLocalStorage) {
+          utmParams[param] = valueInLocalStorage;
+        }
+      } catch (e) {
+        // localStorage may be unavailable (private browsing, storage restrictions)
+      }
     }
   });
   return utmParams;
@@ -66,7 +70,7 @@ intervalLoopForRnw = setInterval(function () {
         'meta[http-equiv="content-language"]'
       )?.content;
       var pageLang = "de"; // declare and set default
-      if (typeof pageLang_meta === "undefined" || pageLang_meta === "") {
+      if (!pageLang_meta) {
         // get page language from uri
         if (window.location.href.match(/\/fr\//)) {
           pageLang = "fr";
@@ -167,10 +171,6 @@ intervalLoopForRnw = setInterval(function () {
           {
             if: "paymentType() == onetime && purpose() == p16",
             then: [45, 75, 120],
-          },
-          {
-            if: "paymentType() == onetime && purpose() == p17",
-            then: [45, 75, 150],
           },
           {
             if: "paymentType() == onetime && purpose() == p17",
@@ -336,8 +336,8 @@ intervalLoopForRnw = setInterval(function () {
         // set UTM parameters for Opportunity.RaiseNow__Attachment__c if available (SD-17060)
         const utmParams = getUtmParams();
         const spidCookie = getSpidCookie();
-        const attachmentObj = JSON.stringify({ ...utmParams, ...spidCookie });
-        event.data.api.paymentForm.data.raisenow_parameters.fundraising_automation = attachmentObj ? { attachment: attachmentObj } : {};
+        const combined = { ...utmParams, ...spidCookie };
+        event.data.api.paymentForm.data.raisenow_parameters.fundraising_automation = Object.keys(combined).length ? { attachment: JSON.stringify(combined) } : {};
         /*
         // set fee coverage according to payment method (SD-20469)
         switch (event.data.api.paymentForm.data.payment_method) {
