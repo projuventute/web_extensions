@@ -1,4 +1,4 @@
-// v2.8.1 - 2026-03-19
+// v2.8.2 - 2026-04-01
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -95,8 +95,9 @@ intervalLoopForRnw = setInterval(function () {
         currentAmounts = [20, 30, 50];
       } else if (window.location.href.match(/.*\/de\/so-koennen-sie-helfen.*/)) {  // SD-12555
         currentPurpose = "p7";
-      } else if (window.location.href.match(/.*\/adventskalender-24-ideen-fuer-gemeinsame-erlebnisse.*|.*\/le-calendrier-de-lavent.*|\/calendario-dellavvento.*/)) { // SD-14716
+      } else if (window.location.href.match(/.*\/postkartenset-bestaetigung.*|.*\/set-de-cartes-postales-confirmation.*|\/set-di-cartoline-conferma.*/)) { // SD-21592
         currentPurpose = "p9";
+        currentAmounts = [20, 30, 50];
       } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/kleiner-hase.*|.*\/fr\/soutenir\/dons\/petit-lapin.*|.*\/it\/supporto\/donare\/coniglietto.*/)) {
         currentPurpose = "p10";
         currentAmounts = [45, 100, 150];
@@ -143,6 +144,10 @@ intervalLoopForRnw = setInterval(function () {
           {
             if: "paymentType() == onetime && purpose() == p6",
             then: [25, 75, 150],
+          },
+          {
+            if: "paymentType() == onetime && purpose() == p9",
+            then: [20, 30, 50],
           },
           {
             if: "paymentType() == onetime && purpose() == p10",
@@ -442,7 +447,7 @@ intervalLoopForRnw = setInterval(function () {
                 break;
               case "p9":
                 event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj00000GK5iNIAT";
+                  "701Vj00000beCA8IAM";
                 break;
               case "p10":
                 event.data.api.paymentForm.data.stored_campaign_id =
@@ -561,7 +566,7 @@ intervalLoopForRnw = setInterval(function () {
                 break;
               case "p9":
                 event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj00000GK24hIAD";
+                  "701Vj00000beFRRIA2";
                 break;
               case "p10":
                 event.data.api.paymentForm.data.stored_campaign_id =
