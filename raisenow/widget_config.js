@@ -1,4 +1,4 @@
-// v2.8.2 - 2026-04-01
+// v2.8.3 - 2026-04-08
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -90,10 +90,7 @@ intervalLoopForRnw = setInterval(function () {
       // -> https://support.raisenow.com/hc/en-us/articles/360018786778-Adding-conditions-in-your-configuration
       var currentPurpose = "p1"; // declare and set default
       var currentAmounts = [60, 120, 250]; // declare and set default
-      if (window.location.href.match(/.*\/de\/bestaetigung-geburtstagskalender.*|.*\/fr\/confirmation-calendrier-anniversaires.*|.*\/it\/confirmazione-calendario-compleanni.*/)) {  // SD-17437
-        currentPurpose = "p2";
-        currentAmounts = [20, 30, 50];
-      } else if (window.location.href.match(/.*\/de\/so-koennen-sie-helfen.*/)) {  // SD-12555
+      if (window.location.href.match(/.*\/de\/so-koennen-sie-helfen.*/)) {  // SD-12555
         currentPurpose = "p7";
       } else if (window.location.href.match(/.*\/postkartenset-bestaetigung.*|.*\/set-de-cartes-postales-confirmation.*|\/set-di-cartoline-conferma.*/)) { // SD-21592
         currentPurpose = "p9";
@@ -137,10 +134,6 @@ intervalLoopForRnw = setInterval(function () {
       window.rnw.tamaro.runWidget(".rnw-widget-container", {
         language: pageLang,
         amounts: [
-          {
-            if: "paymentType() == onetime && purpose() == p2",
-            then: [20, 30, 50],
-          },
           {
             if: "paymentType() == onetime && purpose() == p6",
             then: [25, 75, 150],
@@ -410,7 +403,7 @@ intervalLoopForRnw = setInterval(function () {
                 break;
               case "p2":
                 event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj00000OxcwJIAR";
+                  "701Vj00000bkXDaIAM";
                 break;
               case "p3":
                 event.data.api.paymentForm.data.stored_campaign_id =
@@ -519,8 +512,17 @@ intervalLoopForRnw = setInterval(function () {
                 }
                 break;
               case "p2":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj00000OxdfRIAR";
+                switch(event.data.api.paymentForm.data.payment_type) {
+                  case "onetime":
+                  default:
+                    event.data.api.paymentForm.data.stored_campaign_id =
+                      "701Vj00000bkZWyIAM";
+                    break;
+                  case "recurring":
+                    event.data.api.paymentForm.data.stored_campaign_id =
+                      "701Vj00000bkarDIAQ";
+                    break;
+                }
                 break;
               case "p3":
                 event.data.api.paymentForm.data.stored_campaign_id =
