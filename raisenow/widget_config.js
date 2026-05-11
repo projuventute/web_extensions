@@ -1,4 +1,4 @@
-// v2.8.4 - 2026-05-06
+// v2.8.5 - 2026-05-06
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -92,7 +92,7 @@ intervalLoopForRnw = setInterval(function () {
       var currentAmounts = [60, 120, 250]; // declare and set default
       if (window.location.href.match(/.*\/de\/so-koennen-sie-helfen.*/)) {  // SD-12555
         currentPurpose = "p7";
-      } else if (window.location.href.match(/.*\/gigi-malua .*/)) { // SD-22010
+      } else if (window.location.href.match(/.*\/gigi-malua.*/)) { // SD-22010
         currentPurpose = "p9";
         currentAmounts = [45, 75, 150];
       } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/kleiner-hase.*|.*\/fr\/soutenir\/dons\/petit-lapin.*|.*\/it\/supporto\/donare\/coniglietto.*/)) {
