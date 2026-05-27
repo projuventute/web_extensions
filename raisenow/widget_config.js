@@ -1,4 +1,4 @@
-// v2.8.5 - 2026-05-06
+// v2.9.0 - 2026-05-27 - SD-22190
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -119,9 +119,9 @@ intervalLoopForRnw = setInterval(function () {
       } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/ihre-spende-gegen-mobbing.*|.*\/fr\/soutenir\/dons\/votre-don-contre-le-harcelement.*|.*\/it\/supporto\/donare\/la-sua-donazione-contro-il-bullismo.*/)) {
         currentPurpose = "p15";
         currentAmounts = [45, 75, 120];
-      } else if (window.location.href.match(/.*\/de\/sarah-fehlt.*|.*\/fr\/sarah-manque.*|.*\/it\/sarah-manca.*/)) {  // SD-13753 + SD-14721
+      } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/eltern-helfen.*|.*\/fr\/soutenir\/dons\/aider-les-parents.*|.*\/it\/supporto\/donare\/aiutare-i-genitori.*/)) { // SD-22190
         currentPurpose = "p16";
-        currentAmounts = [45, 75, 120];
+        currentAmounts = [45, 95, 150];
       } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/giving-tuesday.*|.*\/fr\/soutenir\/dons\/giving-tuesday.*|.*\/it\/supporto\/donare\/giving-tuesday.*/)) {
         currentPurpose = "p17";
         currentAmounts = [45, 75, 150];
@@ -168,7 +168,7 @@ intervalLoopForRnw = setInterval(function () {
           },
           {
             if: "paymentType() == onetime && purpose() == p16",
-            then: [45, 75, 120],
+            then: [45, 95, 150],
           },
           {
             if: "paymentType() == onetime && purpose() == p17",
@@ -468,7 +468,7 @@ intervalLoopForRnw = setInterval(function () {
                 break;
               case "p16":
                 event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj00000GK7qaIAD";
+                  "701Vj00000dNR2hIAG";
                 break;
               case "p17":
                 event.data.api.paymentForm.data.stored_campaign_id =
@@ -595,8 +595,17 @@ intervalLoopForRnw = setInterval(function () {
                   "701Vj00000RknsbIAB";
                 break;
               case "p16":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj00000GKFPtIAP";
+                switch(event.data.api.paymentForm.data.payment_type) {
+                  case "onetime":
+                  default:
+                    event.data.api.paymentForm.data.stored_campaign_id =
+                      "701Vj00000dNTHNIA4";
+                    break;
+                  case "recurring":
+                    event.data.api.paymentForm.data.stored_campaign_id =
+                      "701Vj00000dNSOYIA4";
+                    break;
+                }
                 break;
               case "p17":
                 event.data.api.paymentForm.data.stored_campaign_id =
