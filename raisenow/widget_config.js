@@ -1,4 +1,4 @@
-// v2.9.0 - 2026-05-27 - SD-22190
+// v2.10.0 - 2026-06-15 - SD-18301
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -44,6 +44,11 @@ function getSpidCookie() {
     return {};
   }
 }
+
+// Define a function which will handle the redirect to thank-you.page
+const redirectToCustomResultPage = () => {
+  window.location.replace('https://www.projuventute.ch/de/node/1660');
+};
 
 // set secondsToWait to 15 seconds
 var secondsToWaitForRnw = 15;
@@ -132,6 +137,7 @@ intervalLoopForRnw = setInterval(function () {
 
       // configure and run raiseNow widget
       window.rnw.tamaro.runWidget(".rnw-widget-container", {
+        redirectToCustomResultPage,
         language: pageLang,
         amounts: [
           {
