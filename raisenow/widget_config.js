@@ -1,4 +1,4 @@
-// v2.10.0 - 2026-06-15 - SD-18301
+// v2.10.1 - 2026-06-15 - SD-18301
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -46,8 +46,78 @@ function getSpidCookie() {
 }
 
 // Define a function which will handle the redirect to thank-you.page
-const redirectToCustomResultPage = () => {
-  window.location.replace('https://www.projuventute.ch/de/node/1660');
+const redirectToCustomResultPage = (widget) => {
+  // Legacy (Manager) objects
+  const transactionInfo = widget.transactionInfo;
+  const subscriptionInfo = widget.subscriptionInfo;
+
+  // Modern (Hub) objects
+  const epmsPaymentInfo = widget.epmsPaymentInfo;
+  const epmsPaymentAgreementInfo = widget.epmsPaymentAgreementInfo;
+  const epmsSubscriptionInfo = widget.epmsSubscriptionInfo;
+  const epmsPaymentSourceInfo = widget.epmsPaymentSourceInfo;
+  const epmsSupporterInfo = widget.epmsSupporterInfo;
+
+  // Define a base custom result page URL
+  const newUrl = new URL('https://www.projuventute.ch/de/node/1660');
+
+  // Feel free do dynamically add any additional params to the URL
+  // like in the example below
+
+  // Legacy (Manager) one-off payment
+  // prettier-ignore
+  if (transactionInfo && !subscriptionInfo) {
+    newUrl.searchParams.set('epp_payment_id', transactionInfo.epp_transaction_id);
+    newUrl.searchParams.set('epp_payment_status', transactionInfo.epayment_status);
+    newUrl.searchParams.set('supporter_first_name', transactionInfo.stored_customer_firstname);
+  }
+
+  // Legacy (Manager) subscription
+  // prettier-ignore
+  if (subscriptionInfo) {
+    newUrl.searchParams.set('epp_subscription_token', subscriptionInfo.subscription_token);
+    newUrl.searchParams.set('epp_subscription_status', subscriptionInfo.status);
+    newUrl.searchParams.set('supporter_first_name', subscriptionInfo.stored_customer_firstname);
+  }
+
+  // Modern (Hub) one-off payment
+  // prettier-ignore
+  if (epmsPaymentInfo) {
+    newUrl.searchParams.set('epms_payment_uuid', epmsPaymentInfo.uuid);
+    newUrl.searchParams.set('epms_payment_status', epmsPaymentInfo.last_status);
+
+    if (epmsPaymentInfo.supporter_snapshot) {
+      newUrl.searchParams.set('supporter_first_name', epmsPaymentInfo.supporter_snapshot.first_name);
+    }
+  }
+
+  // Modern (Hub) one-off payment agreement
+  // prettier-ignore
+  if (epmsPaymentAgreementInfo) {
+    newUrl.searchParams.set('epms_payment_agreement_uuid', epmsPaymentAgreementInfo.uuid);
+    newUrl.searchParams.set('epms_payment_agreement_status', epmsPaymentAgreementInfo.last_status);
+
+    if (epmsPaymentAgreementInfo.supporter_snapshot) {
+      newUrl.searchParams.set('supporter_first_name', epmsPaymentAgreementInfo.supporter_snapshot.first_name);
+    }
+  }
+
+  // Modern (Hub) subscription
+  // prettier-ignore
+  if (epmsSubscriptionInfo && epmsPaymentSourceInfo) {
+    newUrl.searchParams.set('epms_subscription_uuid', epmsSubscriptionInfo.uuid);
+    newUrl.searchParams.set('epms_subscription_status', epmsSubscriptionInfo.status);
+    newUrl.searchParams.set('epms_payment_source_uuid', epmsSubscriptionInfo.payment_source_uuid);
+    newUrl.searchParams.set('epms_payment_source_status', epmsPaymentSourceInfo.last_status);
+  }
+
+  // Modern (Hub) supporter
+  // prettier-ignore
+  if (epmsSupporterInfo) {
+    newUrl.searchParams.set('supporter_first_name', epmsSupporterInfo.first_name);
+  }
+
+  window.location.replace(newUrl.href);
 };
 
 // set secondsToWait to 15 seconds
