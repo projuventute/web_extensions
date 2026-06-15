@@ -1,4 +1,4 @@
-// v2.10.1 - 2026-06-15 - SD-18301
+// v2.10.2 - 2026-06-15 - SD-18301
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -207,7 +207,7 @@ intervalLoopForRnw = setInterval(function () {
 
       // configure and run raiseNow widget
       window.rnw.tamaro.runWidget(".rnw-widget-container", {
-        redirectToCustomResultPage,
+        // redirectToCustomResultPage,
         language: pageLang,
         amounts: [
           {
