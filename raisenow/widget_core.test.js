@@ -20,4 +20,6 @@ test("loads Tamaro core without legacy widget bootstrap", () => {
   assert.match(config, /raisenow-core-ready/);
   assert.match(config, /\.catch\(/);
   assert.match(config, /raisenow_parameters \|\|= \{\}/);
+  assert.match(config, /tamaroCore\.events\.paymentMethodChanged/);
+  assert.doesNotMatch(config, /widget\.events/);
 });

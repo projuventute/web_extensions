@@ -1,4 +1,4 @@
-// v2.11.0 - 2026-07-15 - SD-22955
+// v2.11.1 - 2026-07-15 - SD-22955
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -404,7 +404,7 @@ function initializeRnwWidget() {
       }}).then(function (widget) {
           
       // switch campaign according to payment method selected
-      widget.events.paymentMethodChanged.subscribe(function (event) {
+      window.rnw.tamaroCore.events.paymentMethodChanged.subscribe(function (event) {
         // set UTM parameters for Opportunity.RaiseNow__Attachment__c if available (SD-17060)
         const utmParams = getUtmParams();
         const spidCookie = getSpidCookie();
@@ -716,7 +716,7 @@ function initializeRnwWidget() {
       // trigger tracking (GTM) event on render to re-init event listeners
       if (typeof window.dataLayer === "object") {
         // agnosticalyze isnt availabe
-        widget.events.afterRender.subscribe(function (event) {
+        window.rnw.tamaroCore.events.afterRender.subscribe(function (event) {
           try {
             window.dataLayer.push({
               event: "raiseNow-afterRender",
@@ -735,7 +735,7 @@ function initializeRnwWidget() {
       // trigger tracking (GTM) event on send
       if (typeof window.dataLayer === "object") {
         // agnosticalyze isnt availabe
-        widget.events.beforePaymentSend.subscribe(function (event) {
+        window.rnw.tamaroCore.events.beforePaymentSend.subscribe(function (event) {
           try {
             window.dataLayer.push({
               event: "raiseNow-beforePaymentSend",
@@ -758,7 +758,7 @@ function initializeRnwWidget() {
       // trigger tracking (GTM) event on completion
       if (typeof window.dataLayer === "object") {
         // agnosticalyze isnt availabe
-        widget.events.paymentComplete.subscribe(function (event) {
+        window.rnw.tamaroCore.events.paymentComplete.subscribe(function (event) {
           try {
             window.dataLayer.push({
               event: "raiseNow-paymentComplete",
