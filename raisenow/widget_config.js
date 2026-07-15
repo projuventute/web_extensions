@@ -1,4 +1,4 @@
-// v2.10.2 - 2026-06-15 - SD-18301
+// v2.11.0 - 2026-07-15 - SD-22955
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -46,6 +46,7 @@ function getSpidCookie() {
 }
 
 // Define a function which will handle the redirect to thank-you.page
+// https://docs.raisenow.com/elements/tamaro/guides/redirect-to-custom-result-page
 const redirectToCustomResultPage = (widget) => {
   // Legacy (Manager) objects
   const transactionInfo = widget.transactionInfo;
@@ -120,25 +121,22 @@ const redirectToCustomResultPage = (widget) => {
   window.location.replace(newUrl.href);
 };
 
-// set secondsToWait to 15 seconds
-var secondsToWaitForRnw = 15;
+var widgetInitialized = false;
 
-var intervalCounterForRnw = 1;
-intervalLoopForRnw = setInterval(function () {
+function initializeRnwWidget() {
   var styleLoaded = document.head.querySelector('style[id="spendenwidget"]');
   if (
-    typeof window.rnw === "object" &&
-    typeof window.rnw.tamaro === "object" &&
-    styleLoaded
+    widgetInitialized ||
+    !window.rnw ||
+    typeof window.rnw.tamaroCore !== "object" ||
+    !styleLoaded
   ) {
-    // RaiseNow widget core is ready
-    clearInterval(intervalLoopForRnw);
+    return;
+  }
+
+  widgetInitialized = true;
 
     // config and execute the widget (after the core is added!)
-    if (
-      typeof window.rnw === "object" &&
-      typeof window.rnw.tamaro === "object"
-    ) {
       // determine language of widget
       // get page language from meta tag - preferred over uri
       const pageLang_meta = document.head.querySelector(
@@ -206,7 +204,7 @@ intervalLoopForRnw = setInterval(function () {
       } 
 
       // configure and run raiseNow widget
-      window.rnw.tamaro.runWidget(".rnw-widget-container", {
+      window.rnw.tamaroCore.createWidget({ runtimeConfig: {
         // redirectToCustomResultPage,
         language: pageLang,
         amounts: [
@@ -403,14 +401,15 @@ intervalLoopForRnw = setInterval(function () {
             },
           },
         },
-      });
+      }}).then(function (widget) {
           
       // switch campaign according to payment method selected
-      window.rnw.tamaro.events.paymentMethodChanged.subscribe(function (event) {
+      widget.events.paymentMethodChanged.subscribe(function (event) {
         // set UTM parameters for Opportunity.RaiseNow__Attachment__c if available (SD-17060)
         const utmParams = getUtmParams();
         const spidCookie = getSpidCookie();
         const combined = { ...utmParams, ...spidCookie };
+        event.data.api.paymentForm.data.raisenow_parameters ||= {};
         event.data.api.paymentForm.data.raisenow_parameters.fundraising_automation = Object.keys(combined).length ? { attachment: JSON.stringify(combined) } : {};
         /*
         // set fee coverage according to payment method (SD-20469)
@@ -717,7 +716,7 @@ intervalLoopForRnw = setInterval(function () {
       // trigger tracking (GTM) event on render to re-init event listeners
       if (typeof window.dataLayer === "object") {
         // agnosticalyze isnt availabe
-        window.rnw.tamaro.events.afterRender.subscribe(function (event) {
+        widget.events.afterRender.subscribe(function (event) {
           try {
             window.dataLayer.push({
               event: "raiseNow-afterRender",
@@ -736,7 +735,7 @@ intervalLoopForRnw = setInterval(function () {
       // trigger tracking (GTM) event on send
       if (typeof window.dataLayer === "object") {
         // agnosticalyze isnt availabe
-        window.rnw.tamaro.events.beforePaymentSend.subscribe(function (event) {
+        widget.events.beforePaymentSend.subscribe(function (event) {
           try {
             window.dataLayer.push({
               event: "raiseNow-beforePaymentSend",
@@ -759,7 +758,7 @@ intervalLoopForRnw = setInterval(function () {
       // trigger tracking (GTM) event on completion
       if (typeof window.dataLayer === "object") {
         // agnosticalyze isnt availabe
-        window.rnw.tamaro.events.paymentComplete.subscribe(function (event) {
+        widget.events.paymentComplete.subscribe(function (event) {
           try {
             window.dataLayer.push({
               event: "raiseNow-paymentComplete",
@@ -781,19 +780,14 @@ intervalLoopForRnw = setInterval(function () {
           }
         });
       }
-    }
-  } else if (intervalCounterForRnw >= secondsToWaitForRnw * 2) {
-    // after X * 2 tries = X seconds, stop the loop
-    clearInterval(intervalLoopForRnw);
-    window.console.log(
-      "[raiseNow widget core] -> warning: waited too long, widget core not ready"
-    );
-  } else {
-    window.console.log(
-      "[raiseNow widget core] -> info: widget core not ready, trying again in 0.5 seconds..."
-    );
-    intervalCounterForRnw++;
-  }
-}, 500);
+
+      return window.rnw.tamaroCore.renderWidget(widget, ".rnw-widget-container");
+      }).catch(function (error) {
+        window.console.error("[raiseNow widget] failed to initialize", error);
+      });
+}
+
+window.addEventListener("raisenow-core-ready", initializeRnwWidget, { once: true });
+initializeRnwWidget();
 
 // window.console.log('     widget config complete');
