@@ -1,4 +1,4 @@
-// v2.11.1 - 2026-07-15 - SD-22955
+// v2.12.0 - 2026-07-20 - SD-23040 revert v2.9.0
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -45,98 +45,25 @@ function getSpidCookie() {
   }
 }
 
-// Define a function which will handle the redirect to thank-you.page
-// https://docs.raisenow.com/elements/tamaro/guides/redirect-to-custom-result-page
-const redirectToCustomResultPage = (widget) => {
-  // Legacy (Manager) objects
-  const transactionInfo = widget.transactionInfo;
-  const subscriptionInfo = widget.subscriptionInfo;
+// set secondsToWait to 15 seconds
+var secondsToWaitForRnw = 15;
 
-  // Modern (Hub) objects
-  const epmsPaymentInfo = widget.epmsPaymentInfo;
-  const epmsPaymentAgreementInfo = widget.epmsPaymentAgreementInfo;
-  const epmsSubscriptionInfo = widget.epmsSubscriptionInfo;
-  const epmsPaymentSourceInfo = widget.epmsPaymentSourceInfo;
-  const epmsSupporterInfo = widget.epmsSupporterInfo;
-
-  // Define a base custom result page URL
-  const newUrl = new URL('https://www.projuventute.ch/de/node/1660');
-
-  // Feel free do dynamically add any additional params to the URL
-  // like in the example below
-
-  // Legacy (Manager) one-off payment
-  // prettier-ignore
-  if (transactionInfo && !subscriptionInfo) {
-    newUrl.searchParams.set('epp_payment_id', transactionInfo.epp_transaction_id);
-    newUrl.searchParams.set('epp_payment_status', transactionInfo.epayment_status);
-    newUrl.searchParams.set('supporter_first_name', transactionInfo.stored_customer_firstname);
-  }
-
-  // Legacy (Manager) subscription
-  // prettier-ignore
-  if (subscriptionInfo) {
-    newUrl.searchParams.set('epp_subscription_token', subscriptionInfo.subscription_token);
-    newUrl.searchParams.set('epp_subscription_status', subscriptionInfo.status);
-    newUrl.searchParams.set('supporter_first_name', subscriptionInfo.stored_customer_firstname);
-  }
-
-  // Modern (Hub) one-off payment
-  // prettier-ignore
-  if (epmsPaymentInfo) {
-    newUrl.searchParams.set('epms_payment_uuid', epmsPaymentInfo.uuid);
-    newUrl.searchParams.set('epms_payment_status', epmsPaymentInfo.last_status);
-
-    if (epmsPaymentInfo.supporter_snapshot) {
-      newUrl.searchParams.set('supporter_first_name', epmsPaymentInfo.supporter_snapshot.first_name);
-    }
-  }
-
-  // Modern (Hub) one-off payment agreement
-  // prettier-ignore
-  if (epmsPaymentAgreementInfo) {
-    newUrl.searchParams.set('epms_payment_agreement_uuid', epmsPaymentAgreementInfo.uuid);
-    newUrl.searchParams.set('epms_payment_agreement_status', epmsPaymentAgreementInfo.last_status);
-
-    if (epmsPaymentAgreementInfo.supporter_snapshot) {
-      newUrl.searchParams.set('supporter_first_name', epmsPaymentAgreementInfo.supporter_snapshot.first_name);
-    }
-  }
-
-  // Modern (Hub) subscription
-  // prettier-ignore
-  if (epmsSubscriptionInfo && epmsPaymentSourceInfo) {
-    newUrl.searchParams.set('epms_subscription_uuid', epmsSubscriptionInfo.uuid);
-    newUrl.searchParams.set('epms_subscription_status', epmsSubscriptionInfo.status);
-    newUrl.searchParams.set('epms_payment_source_uuid', epmsSubscriptionInfo.payment_source_uuid);
-    newUrl.searchParams.set('epms_payment_source_status', epmsPaymentSourceInfo.last_status);
-  }
-
-  // Modern (Hub) supporter
-  // prettier-ignore
-  if (epmsSupporterInfo) {
-    newUrl.searchParams.set('supporter_first_name', epmsSupporterInfo.first_name);
-  }
-
-  window.location.replace(newUrl.href);
-};
-
-var widgetInitialized = false;
-
-function initializeRnwWidget() {
+var intervalCounterForRnw = 1;
+intervalLoopForRnw = setInterval(function () {
   var styleLoaded = document.head.querySelector('style[id="spendenwidget"]');
   if (
-    widgetInitialized ||
-    !window.rnw ||
-    typeof window.rnw.tamaroCore !== "object" ||
-    !styleLoaded
+    typeof window.rnw === "object" &&
+    typeof window.rnw.tamaro === "object" &&
+    styleLoaded
   ) {
-    return;
-  }
-
-  widgetInitialized = true;
+    // RaiseNow widget core is ready
+    clearInterval(intervalLoopForRnw);
 
     // config and execute the widget (after the core is added!)
+    if (
+      typeof window.rnw === "object" &&
+      typeof window.rnw.tamaro === "object"
+    ) {
       // determine language of widget
       // get page language from meta tag - preferred over uri
       const pageLang_meta = document.head.querySelector(
@@ -204,8 +131,7 @@ function initializeRnwWidget() {
       } 
 
       // configure and run raiseNow widget
-      window.rnw.tamaroCore.createWidget({ runtimeConfig: {
-        // redirectToCustomResultPage,
+      window.rnw.tamaro.runWidget(".rnw-widget-container", {
         language: pageLang,
         amounts: [
           {
@@ -401,15 +327,14 @@ function initializeRnwWidget() {
             },
           },
         },
-      }}).then(function (widget) {
+      });
           
       // switch campaign according to payment method selected
-      window.rnw.tamaroCore.events.paymentMethodChanged.subscribe(function (event) {
+      window.rnw.tamaro.events.paymentMethodChanged.subscribe(function (event) {
         // set UTM parameters for Opportunity.RaiseNow__Attachment__c if available (SD-17060)
         const utmParams = getUtmParams();
         const spidCookie = getSpidCookie();
         const combined = { ...utmParams, ...spidCookie };
-        event.data.api.paymentForm.data.raisenow_parameters ||= {};
         event.data.api.paymentForm.data.raisenow_parameters.fundraising_automation = Object.keys(combined).length ? { attachment: JSON.stringify(combined) } : {};
         /*
         // set fee coverage according to payment method (SD-20469)
@@ -716,7 +641,7 @@ function initializeRnwWidget() {
       // trigger tracking (GTM) event on render to re-init event listeners
       if (typeof window.dataLayer === "object") {
         // agnosticalyze isnt availabe
-        window.rnw.tamaroCore.events.afterRender.subscribe(function (event) {
+        window.rnw.tamaro.events.afterRender.subscribe(function (event) {
           try {
             window.dataLayer.push({
               event: "raiseNow-afterRender",
@@ -735,7 +660,7 @@ function initializeRnwWidget() {
       // trigger tracking (GTM) event on send
       if (typeof window.dataLayer === "object") {
         // agnosticalyze isnt availabe
-        window.rnw.tamaroCore.events.beforePaymentSend.subscribe(function (event) {
+        window.rnw.tamaro.events.beforePaymentSend.subscribe(function (event) {
           try {
             window.dataLayer.push({
               event: "raiseNow-beforePaymentSend",
@@ -758,7 +683,7 @@ function initializeRnwWidget() {
       // trigger tracking (GTM) event on completion
       if (typeof window.dataLayer === "object") {
         // agnosticalyze isnt availabe
-        window.rnw.tamaroCore.events.paymentComplete.subscribe(function (event) {
+        window.rnw.tamaro.events.paymentComplete.subscribe(function (event) {
           try {
             window.dataLayer.push({
               event: "raiseNow-paymentComplete",
@@ -780,14 +705,19 @@ function initializeRnwWidget() {
           }
         });
       }
-
-      return window.rnw.tamaroCore.renderWidget(widget, ".rnw-widget-container");
-      }).catch(function (error) {
-        window.console.error("[raiseNow widget] failed to initialize", error);
-      });
-}
-
-window.addEventListener("raisenow-core-ready", initializeRnwWidget, { once: true });
-initializeRnwWidget();
+    }
+  } else if (intervalCounterForRnw >= secondsToWaitForRnw * 2) {
+    // after X * 2 tries = X seconds, stop the loop
+    clearInterval(intervalLoopForRnw);
+    window.console.log(
+      "[raiseNow widget core] -> warning: waited too long, widget core not ready"
+    );
+  } else {
+    window.console.log(
+      "[raiseNow widget core] -> info: widget core not ready, trying again in 0.5 seconds..."
+    );
+    intervalCounterForRnw++;
+  }
+}, 500);
 
 // window.console.log('     widget config complete');
