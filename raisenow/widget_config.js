@@ -1,4 +1,4 @@
-// v2.12.1 - 2026-07-20 - SD-23040: restore v2.9.0
+// v2.12.2 - 2026-07-20 - SD-23040: safe style and tracking guards
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -335,6 +335,7 @@ intervalLoopForRnw = setInterval(function () {
         const utmParams = getUtmParams();
         const spidCookie = getSpidCookie();
         const combined = { ...utmParams, ...spidCookie };
+        event.data.api.paymentForm.data.raisenow_parameters ||= {};
         event.data.api.paymentForm.data.raisenow_parameters.fundraising_automation = Object.keys(combined).length ? { attachment: JSON.stringify(combined) } : {};
         /*
         // set fee coverage according to payment method (SD-20469)
