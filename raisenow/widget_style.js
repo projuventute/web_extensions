@@ -38,9 +38,12 @@ var widgetStyleInnerText = `
    }
 `;
 
-if (!document.getElementById("spendenwidget")) {
-  var widgetStyle = document.createElement("style");
-  widgetStyle.id = "spendenwidget";
-  widgetStyle.textContent = widgetStyleInnerText;
-  document.head.append(widgetStyle);
-}
+// var widgetContainer = document.getElementsByClassName("rnw-widget-container")[0];
+
+// var widgetStyle = document.createElement("style");
+// widgetStyle.innerText = widgetStyleInnerText;
+// widgetContainer.append(widgetStyle);
+
+// window.console.log('     widget style start');
+document.head.innerHTML += '<style id="spendenwidget">' + widgetStyleInnerText + '</style>';
+// window.console.log('     widget style end');

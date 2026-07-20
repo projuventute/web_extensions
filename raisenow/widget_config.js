@@ -1,4 +1,4 @@
-// v2.12.0 - 2026-07-20 - SD-23040 revert v2.9.0
+// v2.12.1 - 2026-07-20 - SD-23040: restore v2.9.0
 
 // window.console.log('[raiseNow widget config] start');
 
