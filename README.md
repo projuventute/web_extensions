@@ -29,3 +29,11 @@ git push origin main --tags
 ```
 
 Do not push unreviewed changes. Update website embeds to the new tag when they use pinned URLs.
+
+## Skills
+
+opencode in this workspace has a custom skill for repetitive dev work:
+
+- `raisenow-purpose-setup`: wires up a new donation purpose in `raisenow/widget_config.js` for a fundraising campaign. Trigger by passing a Jira issue key (e.g. `SD-23224`). The skill reads the Jira issue, picks the oldest replaceable purpose from the Confluence `Spendenwidget Tamaro` table (never `p1`–`p5`, `p8`, `p20`), and plans the four config edits: URL-based default purpose + amounts, onetime amounts, per-payment-method Salesforce campaign IDs, version bump. Asks for confirmation before each edit. The Confluence table itself must be updated manually by the user.
+
+Skills live at `.opencode/skills/<name>/SKILL.md`.

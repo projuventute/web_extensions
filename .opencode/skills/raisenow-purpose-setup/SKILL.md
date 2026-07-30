@@ -117,13 +117,27 @@ node --check raisenow/widget_config.js
 
 All must pass. If any fails, fix and re-run before reporting back.
 
-## Constraints (from `raisenow/AGENTS.md`)
+### 7. Commit, tag, push, and release on GitHub
 
-- Campaign IDs, purposes, amounts, translations, and tracking field names are production configuration. Change only with a confirmed requirement.
-- Do not commit, push, or tag. User releases manually.
+```powershell
+git add raisenow/widget_config.js
+git commit -m "SD-NNNNN: add purpose pXX for <short description>"
+git tag vX.Y.Z
+git push origin main --tags
+```
 
-## After validation, suggest (do not act)
+Then go to [GitHub releases page](https://github.com/projuventute/web_extensions/releases/new) and create a release for tag `vX.Y.Z`. Title and description should match the commit message.
 
-- Commit message and `vX.Y.Z` git tag for jsDelivr
-- Push `main` and the tag, purge jsDelivr cache for any `@latest` embeds
-- Update the Confluence table row for the reused purpose: new "Zugeordnet am" date and the new Jira key if not already done
+### 8. Purge jsDelivr and comment on Jira
+
+Purge the jsDelivr cache for the `@latest` URLs:
+
+<https://www.jsdelivr.com/tools/purge>
+
+After purge, add a comment to the initiating Jira issue confirming the release:
+
+Call `atlassian_addCommentToJiraIssue` with `issueIdOrKey=SD-NNNNN` and a comment body like:
+
+> RaiseNow Widget Config deployed, vX.Y.Z... jsDelivr cache ist purged, alles bereit zum Testen. Purpose: pXX.
+
+Update the Confluence table row for the reused purpose: new "Zugeordnet am" date and the new Jira key if not already done (human step).
