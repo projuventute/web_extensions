@@ -1,4 +1,4 @@
-// v2.12.2 - 2026-07-20 - SD-23040: safe style and tracking guards
+// v2.13.0 - 2026-07-30 - SD-23224: Ferienfonds August-Mailing
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -90,8 +90,9 @@ intervalLoopForRnw = setInterval(function () {
       // -> https://support.raisenow.com/hc/en-us/articles/360018786778-Adding-conditions-in-your-configuration
       var currentPurpose = "p1"; // declare and set default
       var currentAmounts = [60, 120, 250]; // declare and set default
-      if (window.location.href.match(/.*\/de\/so-koennen-sie-helfen.*/)) {  // SD-12555
+      if (window.location.href.match(/.*\/de\/helfen\/spenden\/zeit-zum-durchatmen-schenken.*|.*\/fr\/soutenir\/dons\/offrez-familles-un-moment-pour-respirer.*|.*\/it\/supporto\/donare\/offra-un-momento-per-tirare-il-fiato.*/)) {
         currentPurpose = "p7";
+        currentAmounts = [45, 95, 150];
       } else if (window.location.href.match(/.*\/gigi-malua.*/)) { // SD-22010
         currentPurpose = "p9";
         currentAmounts = [45, 75, 150];
@@ -137,6 +138,10 @@ intervalLoopForRnw = setInterval(function () {
           {
             if: "paymentType() == onetime && purpose() == p6",
             then: [25, 75, 150],
+          },
+          {
+            if: "paymentType() == onetime && purpose() == p7",
+            then: [45, 95, 150],
           },
           {
             if: "paymentType() == onetime && purpose() == p9",
@@ -371,19 +376,6 @@ intervalLoopForRnw = setInterval(function () {
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "7013X000002FL0zQAG";
                 break;
-              case "p7":
-                switch(event.data.api.paymentForm.data.payment_type) {
-                  case "onetime":
-                  default:
-                    event.data.api.paymentForm.data.stored_campaign_id =
-                      "701Vj000006ZNYCIA4";
-                    break;
-                  case "recurring":
-                    event.data.api.paymentForm.data.stored_campaign_id =
-                      "701Vj000007BNWjIAO";
-                    break;
-                }
-                break;
               case "p20":
                 event.data.api.paymentForm.data.stored_campaign_id =
                   "7013X000002CkSXQA0";
@@ -424,7 +416,7 @@ intervalLoopForRnw = setInterval(function () {
                 break;
               case "p7":
                 event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj000006YXpJIAW";
+                  "701Vj00000gfcSZIAY";
                 break;
               case "p8":
                 switch(event.data.api.paymentForm.data.payment_type) {
@@ -546,11 +538,11 @@ intervalLoopForRnw = setInterval(function () {
                   case "onetime":
                   default:
                     event.data.api.paymentForm.data.stored_campaign_id =
-                      "701Vj000006ZLMLIA4";
+                      "701Vj00000gfXj5IAE";
                     break;
                   case "recurring":
                     event.data.api.paymentForm.data.stored_campaign_id =
-                      "701Vj000007BOB4IAO";
+                      "701Vj00000gfMCZIA2";
                     break;
                 }
                 break;
