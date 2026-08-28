@@ -2,10 +2,14 @@
 
 var widgetContainer = document.getElementsByClassName("rnw-widget-container")[0];
 
-// add the widget core
-var widgetCore = document.createElement("script");
-widgetCore.setAttribute("src", "https://tamaro.raisenow.com/projuventute/latest/widget.js");
-widgetCore.setAttribute("defer", ""); // script is added after DOM-ready => to execute it, defer!
-widgetContainer.append(widgetCore);
+if (widgetContainer) {
+  // add the widget core
+  var widgetCore = document.createElement("script");
+  widgetCore.setAttribute("src", "https://tamaro.raisenow.com/projuventute/latest/widget.js");
+  widgetCore.setAttribute("defer", ""); // script is added after DOM-ready => to execute it, defer!
+  widgetContainer.append(widgetCore);
+} else {
+  window.console.log("[raiseNow widget core] -> warning: .rnw-widget-container not found");
+}
 
 // window.console.log('     widget core complete');

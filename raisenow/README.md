@@ -48,3 +48,15 @@ Purge applies to `@latest` or other mutable aliases. A tagged URL such as `@v2.1
 ## Compatibility Boundary
 
 Current integration uses legacy `window.rnw.tamaro` and polling. Do not migrate to `tamaroCore`, `createWidget`, `renderWidget`, or `@raisenow/tamaro-core` without live Edge and Chrome verification. An earlier migration failed in Edge when the third-party core attempted a cross-origin dynamic import.
+
+## Accepted Risk: Third-Party Script Trust
+
+`widget_core.js` loads `https://tamaro.raisenow.com/projuventute/latest/widget.js` — a mutable, vendor-controlled URL with no Subresource Integrity (SRI) hash. RaiseNow can change this script's content at any time without our review, and it runs with full page privileges on the donation page (reads/writes the DOM, has access to `window`, can see whatever the donor enters into the payment form).
+
+This is accepted because:
+
+- RaiseNow's own `tamaroCore` product requires loading from their CDN this way; pinning a fixed version or self-hosting is not supported by their platform.
+- SRI is not viable against a `latest` alias that changes on RaiseNow's own release schedule.
+- The donation form itself (card/IBAN entry) already runs on RaiseNow's infrastructure; this is the same trust boundary the whole integration depends on.
+
+No first-party analytics beyond Google Tag Manager (GTM) reads from `window.dataLayer`; tracking pushed here is first-party only.

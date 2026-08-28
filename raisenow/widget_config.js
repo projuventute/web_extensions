@@ -2,6 +2,8 @@
 
 // window.console.log('[raiseNow widget config] start');
 
+(function () {
+
 function getMedian(arr) {
   const sorted = [...arr].sort((a, b) => a - b);
   const middleIndex = Math.floor(sorted.length / 2);
@@ -15,12 +17,12 @@ function getUtmParams() {
   ['utm_campaign', 'utm_content', 'utm_medium', 'utm_source', 'utm_term', 'dclid', 'fbclid', 'gclid', 'ttclid'].forEach(param => {
     const valueInUrl = urlParams.get(param); // Get the value of the UTM parameter
     if (valueInUrl) {
-      utmParams[param] = valueInUrl; // Add to object if it exists
-    } else {  
+      utmParams[param] = valueInUrl.slice(0, 255); // Add to object if it exists (capped length)
+    } else {
       try {
         const valueInLocalStorage = localStorage.getItem(param);
         if (valueInLocalStorage) {
-          utmParams[param] = valueInLocalStorage;
+          utmParams[param] = valueInLocalStorage.slice(0, 255);
         }
       } catch (e) {
         // localStorage may be unavailable (private browsing, storage restrictions)
@@ -44,6 +46,9 @@ function getSpidCookie() {
     return {};
   }
 }
+
+// ensure GTM dataLayer exists so tracking pushes below always land, even if GTM's own snippet hasn't run yet
+window.dataLayer = window.dataLayer || [];
 
 // set secondsToWait to 15 seconds
 var secondsToWaitForRnw = 15;
@@ -634,72 +639,63 @@ var intervalLoopForRnw = setInterval(function () {
       });
       
       // trigger tracking (GTM) event on render to re-init event listeners
-      if (typeof window.dataLayer === "object") {
-        // agnosticalyze isnt availabe
-        window.rnw.tamaro.events.afterRender.subscribe(function (event) {
-          try {
-            window.dataLayer.push({
-              event: "raiseNow-afterRender",
-              event_data_api_configEnv_widget: event.data.api.configEnv.WIDGET_UUID,
-              event_data_api_configEnv_build: event.data.api.configEnv.BUILD_DATE
-            });
-          } catch (err) {
-            window.console.log(
-              "[raiseNow customEventHandler afterRender] error:"
-            );
-            window.console.error(err);
-          }
-        });
-      }
+      window.rnw.tamaro.events.afterRender.subscribe(function (event) {
+        try {
+          window.dataLayer.push({
+            event: "raiseNow-afterRender",
+            event_data_api_configEnv_widget: event.data.api.configEnv.WIDGET_UUID,
+            event_data_api_configEnv_build: event.data.api.configEnv.BUILD_DATE
+          });
+        } catch (err) {
+          window.console.log(
+            "[raiseNow customEventHandler afterRender] error:"
+          );
+          window.console.error(err);
+        }
+      });
 
       // trigger tracking (GTM) event on send
-      if (typeof window.dataLayer === "object") {
-        // agnosticalyze isnt availabe
-        window.rnw.tamaro.events.beforePaymentSend.subscribe(function (event) {
-          try {
-            window.dataLayer.push({
-              event: "raiseNow-beforePaymentSend",
-              event_data_api_configEnv_widget: event.data.api.configEnv.WIDGET_UUID,
-              event_data_api_configEnv_build: event.data.api.configEnv.BUILD_DATE,
-              // , 'event_data_api_paymentForm': event.data.api.paymentForm
-              event_data_api_transactionInfo_amount: event.data.api.paymentForm.data?.amount,
-              event_data_api_transactionInfo_paymentMethod: event.data.api.paymentForm.data?.payment_method,
-              event_data_api_transactionInfo_purposeId: event.data.api.paymentForm.data?.purpose
-            });
-          } catch (err) {
-            window.console.log(
-              "[raiseNow customEventHandler beforePaymentSend] error:"
-            );
-            window.console.error(err);
-          }
-        });
-      }
-      
+      window.rnw.tamaro.events.beforePaymentSend.subscribe(function (event) {
+        try {
+          window.dataLayer.push({
+            event: "raiseNow-beforePaymentSend",
+            event_data_api_configEnv_widget: event.data.api.configEnv.WIDGET_UUID,
+            event_data_api_configEnv_build: event.data.api.configEnv.BUILD_DATE,
+            // , 'event_data_api_paymentForm': event.data.api.paymentForm
+            event_data_api_transactionInfo_amount: event.data.api.paymentForm.data?.amount,
+            event_data_api_transactionInfo_paymentMethod: event.data.api.paymentForm.data?.payment_method,
+            event_data_api_transactionInfo_purposeId: event.data.api.paymentForm.data?.purpose
+          });
+        } catch (err) {
+          window.console.log(
+            "[raiseNow customEventHandler beforePaymentSend] error:"
+          );
+          window.console.error(err);
+        }
+      });
+
       // trigger tracking (GTM) event on completion
-      if (typeof window.dataLayer === "object") {
-        // agnosticalyze isnt availabe
-        window.rnw.tamaro.events.paymentComplete.subscribe(function (event) {
-          try {
-            window.dataLayer.push({
-              event: "raiseNow-paymentComplete",
-              event_data_api_configEnv_widget: event.data.api.configEnv.WIDGET_UUID,
-              event_data_api_configEnv_build: event.data.api.configEnv.BUILD_DATE,
-              // , 'event_data_api_paymentForm': event.data.api.paymentForm
-              event_data_api_transactionInfo_amount: event.data.api.transactionInfo?.amount ?? event.data.api.epmsPaymentAgreementInfo?.amount,
-              event_data_api_transactionInfo_epaymentStatus: event.data.api.transactionInfo?.epayment_status ?? event.data.api.epmsPaymentAgreementInfo?.last_status,
-              event_data_api_transactionInfo_paymentMethod: event.data.api.transactionInfo?.payment_method ?? event.data.api.epmsPaymentAgreementInfo?.payment_method,
-              event_data_api_transactionInfo_purposeId: event.data.api.transactionInfo?.stored_rnw_purpose_id ?? event.data.api.epmsPaymentAgreementInfo?.custom_parameters?.rnw_purpose_id,
-              event_data_api_transactionInfo_transactionId: event.data.api.transactionInfo?.epp_transaction_id ?? event.data.api.transactionInfo?.epms_payment_uuid ?? event.data.api.epmsPaymentAgreementInfo?.uuid,
-              event_data_api_customer_email: event.data.api.transactionInfo?.stored_customer_email ?? event.data.api.epmsPaymentAgreementInfo?.supporter_snapshot?.email
-            });
-          } catch (err) {
-            window.console.log(
-              "[raiseNow customEventHandler paymentComplete] error:"
-            );
-            window.console.error(err);
-          }
-        });
-      }
+      window.rnw.tamaro.events.paymentComplete.subscribe(function (event) {
+        try {
+          window.dataLayer.push({
+            event: "raiseNow-paymentComplete",
+            event_data_api_configEnv_widget: event.data.api.configEnv.WIDGET_UUID,
+            event_data_api_configEnv_build: event.data.api.configEnv.BUILD_DATE,
+            // , 'event_data_api_paymentForm': event.data.api.paymentForm
+            event_data_api_transactionInfo_amount: event.data.api.transactionInfo?.amount ?? event.data.api.epmsPaymentAgreementInfo?.amount,
+            event_data_api_transactionInfo_epaymentStatus: event.data.api.transactionInfo?.epayment_status ?? event.data.api.epmsPaymentAgreementInfo?.last_status,
+            event_data_api_transactionInfo_paymentMethod: event.data.api.transactionInfo?.payment_method ?? event.data.api.epmsPaymentAgreementInfo?.payment_method,
+            event_data_api_transactionInfo_purposeId: event.data.api.transactionInfo?.stored_rnw_purpose_id ?? event.data.api.epmsPaymentAgreementInfo?.custom_parameters?.rnw_purpose_id,
+            event_data_api_transactionInfo_transactionId: event.data.api.transactionInfo?.epp_transaction_id ?? event.data.api.transactionInfo?.epms_payment_uuid ?? event.data.api.epmsPaymentAgreementInfo?.uuid,
+            event_data_api_customer_email: event.data.api.transactionInfo?.stored_customer_email ?? event.data.api.epmsPaymentAgreementInfo?.supporter_snapshot?.email
+          });
+        } catch (err) {
+          window.console.log(
+            "[raiseNow customEventHandler paymentComplete] error:"
+          );
+          window.console.error(err);
+        }
+      });
     }
   } else if (intervalCounterForRnw >= secondsToWaitForRnw * 2) {
     // after X * 2 tries = X seconds, stop the loop
@@ -707,12 +703,12 @@ var intervalLoopForRnw = setInterval(function () {
     window.console.log(
       "[raiseNow widget core] -> warning: waited too long, widget core not ready"
     );
+    window.dataLayer.push({ event: "raiseNow-loadFailed" });
   } else {
-    window.console.log(
-      "[raiseNow widget core] -> info: widget core not ready, trying again in 0.5 seconds..."
-    );
     intervalCounterForRnw++;
   }
 }, 500);
+
+})();
 
 // window.console.log('     widget config complete');
