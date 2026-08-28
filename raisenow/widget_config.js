@@ -1,4 +1,4 @@
-// v3.0.0 - 2026-08-28 - Fix button contrast/hover, validate page language, scope interval var
+// v3.2.0 - 2026-08-28 - Extract PURPOSE_AMOUNTS/CAMPAIGN_IDS tables, dedupe translations, add campaign-id test
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -8,6 +8,101 @@ function getMedian(arr) {
   const sorted = [...arr].sort((a, b) => a - b);
   const middleIndex = Math.floor(sorted.length / 2);
   return sorted[middleIndex];
+}
+
+function buildPurposeTranslations(defaultText) {
+  // p1-p19 share one generic label; p20 is the dedicated test/parking purpose
+  const purposes = {};
+  for (let i = 1; i <= 19; i++) {
+    purposes["p" + i] = defaultText;
+  }
+  purposes.p20 = "Parkplatz";
+  return purposes;
+}
+
+// payment method -> campaign ID lookup group. "card" also covers unrecognized/future methods.
+function campaignMethodGroup(method) {
+  switch (method) {
+    case "paypal":  // Paypal - replacing "pp" since tamaro v2.8.3
+    case "pp":      // Paypal
+      return "paypal";
+    case "chqr":            // QR Rechnung
+//  case "ezs":             // Einzahlungsschein
+    case "dd":              // Lastschriftverfahren / Direct Debit
+    case "qr-bill":         // QR Rechnung
+    case "ch_qr_reference": // QR Rechnung (SD-18716)
+      return "qr";
+    case "twint":   // Twint - cf. SD-11883
+    case "twi":     // Twint
+    case "card":    // Kreditkarte - replacing "vis" and "eca" since tamaro v2.8.3
+    case "vis":     // Kreditkarte - Visa
+    case "eca":     // Kreditkarte - Mastercard
+    case "pfc":     // Postfinance
+    default:
+      return "card";
+  }
+}
+
+// stored_campaign_id per payment-method group and purpose; entries that also depend on
+// payment_type (onetime vs. recurring) hold { onetime, recurring } instead of a plain id.
+// note: RaiseNow allows max. 20 different purposes
+const CAMPAIGN_IDS = {
+  paypal: {
+    default: "7013X000002FKzUQAW", // = p1
+    p4: "7013X000002FKzuQAG",
+    p5: "7013X000002FL0zQAG",
+    p20: "7013X000002CkSXQA0",
+  },
+  qr: {
+    default: "7013X000002FKzZQAW", // = p1
+    p2: "701Vj00000bkXDaIAM",
+    p3: "701Vj00000NHXASIA5",
+    p4: "7013X000002FL03QAG",
+    p5: "7013X000002FL10QAG",
+    p6: "701Vj00000TmDTmIAN",
+    p7: "701Vj00000gfcSZIAY",
+    p8: { onetime: "701Vj00000CfjH6IAJ", recurring: "7013X000002FKzZQAW" },
+    p9: "701Vj00000cmmR6IAI",
+    p10: "701Vj00000KXGLsIAP",
+    p11: "701Vj00000KXM34IAH",
+    p12: "701Vj00000TGKOkIAP",
+    p13: "701Vj00000KgaV6IAJ",
+    p14: "701Vj00000VdyaNIAR",
+    p15: "701Vj00000RkmLSIAZ",
+    p16: "701Vj00000dNR2hIAG",
+    p17: "701Vj00000XEWxwIAH",
+    p18: "701Vj00000b22JnIAI",
+    p19: "701Vj00000TVCH7IAP",
+    p20: "7013X000002CkSSQA0",
+  },
+  card: {
+    default: { onetime: "7013X000002FKzKQAW", recurring: "701Vj00000BZZB5IAP" }, // = p1
+    p2: { onetime: "701Vj00000bkZWyIAM", recurring: "701Vj00000bkarDIAQ" },
+    p3: "701Vj00000NHbdqIAD",
+    p4: "7013X000002FKztQAG",
+    p5: "7013X000002FL0vQAG",
+    p6: "701Vj00000TmJVwIAN",
+    p7: { onetime: "701Vj00000gfXj5IAE", recurring: "701Vj00000gfMCZIA2" },
+    p8: { onetime: "701Vj00000CfiB4IAJ", recurring: "701Vj00000BZZB5IAP" },
+    p9: "701Vj00000cmndJIAQ",
+    p10: "701Vj00000KXKA8IAP",
+    p11: "701Vj00000KXEf3IAH",
+    p12: "701Vj00000TGJfdIAH",
+    p13: "701Vj00000KgbsWIAR",
+    p14: "701Vj00000Ve0XLIAZ",
+    p15: "701Vj00000RknsbIAB",
+    p16: { onetime: "701Vj00000dNTHNIA4", recurring: "701Vj00000dNSOYIA4" },
+    p17: "701Vj00000XEaYXIA1",
+    p18: { onetime: "701Vj00000b1q5sIAA", recurring: "701Vj00000b208LIAQ" },
+    p19: "701Vj00000TV0FzIAL",
+    p20: "7013X000002CkSNQA0",
+  },
+};
+
+function getCampaignId(paymentMethod, purpose, paymentType) {
+  const group = CAMPAIGN_IDS[campaignMethodGroup(paymentMethod)];
+  const entry = Object.prototype.hasOwnProperty.call(group, purpose) ? group[purpose] : group.default;
+  return typeof entry === "string" ? entry : (paymentType === "recurring" ? entry.recurring : entry.onetime);
 }
 
 function getUtmParams() {
@@ -92,112 +187,69 @@ var intervalLoopForRnw = setInterval(function () {
         pageLang = pageLang_metaNormalized;
       }
 
-      // set default purpose and amounts based on page uri
-      // why define the amounts here, too? -> for getMedian() to work on prefill
-      // -> https://support.raisenow.com/hc/en-us/articles/360018786778-Adding-conditions-in-your-configuration
+      // single source of truth for per-purpose amount defaults (SD-23224 cleanup: was duplicated
+      // between this page-uri lookup and the runWidget "amounts" conditions below)
+      var PURPOSE_AMOUNTS = {
+        p6: [25, 75, 150],
+        p7: [45, 95, 150],
+        p9: [45, 75, 150],
+        p10: [45, 100, 150],
+        p11: [45, 100, 150],
+        p12: [45, 75, 150],
+        p13: [25, 50, 100],
+        p14: [25, 75, 150],
+        p15: [45, 75, 120],
+        p16: [45, 95, 150],
+        p17: [45, 75, 150],
+        p18: [45, 90, 150],
+        p19: [125, 250, 375],
+        p20: [5, 10, 20],
+      };
+
+      // set default purpose based on page uri
       var currentPurpose = "p1"; // declare and set default
-      var currentAmounts = [60, 120, 250]; // declare and set default
       if (window.location.href.match(/.*\/de\/helfen\/spenden\/zeit-zum-durchatmen-schenken.*|.*\/fr\/soutenir\/dons\/offrez-familles-un-moment-pour-respirer.*|.*\/it\/supporto\/donare\/offra-un-momento-per-tirare-il-fiato.*/)) {
         currentPurpose = "p7";
-        currentAmounts = [45, 95, 150];
       } else if (window.location.href.match(/.*\/gigi-malua.*/)) { // SD-22010
         currentPurpose = "p9";
-        currentAmounts = [45, 75, 150];
       } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/kleiner-hase.*|.*\/fr\/soutenir\/dons\/petit-lapin.*|.*\/it\/supporto\/donare\/coniglietto.*/)) {
         currentPurpose = "p10";
-        currentAmounts = [45, 100, 150];
       } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/kleine-maus.*|.*\/fr\/soutenir\/dons\/petite-souris.*|.*\/it\/supporto\/donare\/topino.*/)) {
         currentPurpose = "p11";
-        currentAmounts = [45, 100, 150];
       } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/zuhoeren-kann-leben-retten-unternehmen.*/)) {
         currentPurpose = "p19";
-        currentAmounts = [125, 250, 375];
       } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/zuhoeren-kann-leben-retten-social-do.*|.*\/fr\/soutenir\/dons\/ecouter-peut-sauver-des-vies-social-do.*|.*\/it\/supporto\/donare\/ascoltare-puo-salvare-vite-social-do.*/)) {
         currentPurpose = "p14";
-        currentAmounts = [25, 75, 150];
       } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/zuhoeren-kann-leben-retten-mitmachen-bestaetigung.*|.*\/fr\/soutenir\/dons\/ecouter-peut-sauver-des-vies-participer-confirmation.*|.*\/it\/supporto\/donare\/ascoltare-puo-salvare-vite-participare-confirmazione.*/)) {
         currentPurpose = "p6";
-        currentAmounts = [25, 75, 150];
       } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/zuhoeren-kann-leben-retten.*|.*\/fr\/soutenir\/dons\/ecouter-peut-sauver-des-vies.*|.*\/it\/supporto\/donare\/ascoltare-puo-salvare-vite.*/)) {
         currentPurpose = "p12";
-        currentAmounts = [45, 75, 150];
       } else if (window.location.href.match(/.*\/de\/bestaetigung-ich-bin-der-kleine-hase.*|.*\/fr\/confirmation-petit-lapin.*|.*\/it\/confirmazione-piacere-sono-coniglietto.*/)) {
         currentPurpose = "p13";
-        currentAmounts = [25, 50, 100];
       } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/ihre-spende-gegen-mobbing.*|.*\/fr\/soutenir\/dons\/votre-don-contre-le-harcelement.*|.*\/it\/supporto\/donare\/la-sua-donazione-contro-il-bullismo.*/)) {
         currentPurpose = "p15";
-        currentAmounts = [45, 75, 120];
       } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/eltern-helfen.*|.*\/fr\/soutenir\/dons\/aider-les-parents.*|.*\/it\/supporto\/donare\/aiutare-i-genitori.*/)) { // SD-22190
         currentPurpose = "p16";
-        currentAmounts = [45, 95, 150];
       } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/giving-tuesday.*|.*\/fr\/soutenir\/dons\/giving-tuesday.*|.*\/it\/supporto\/donare\/giving-tuesday.*/)) {
         currentPurpose = "p17";
-        currentAmounts = [45, 75, 150];
       } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/kleine-katze.*|.*\/fr\/soutenir\/dons\/petit-chat.*|.*\/it\/supporto\/donare\/gattino.*/)) {
         currentPurpose = "p18";
-        currentAmounts = [45, 90, 150];
-      } 
+      }
+
+      // why define the amounts here, too? -> for getMedian() to work on prefill
+      // -> https://support.raisenow.com/hc/en-us/articles/360018786778-Adding-conditions-in-your-configuration
+      var currentAmounts = PURPOSE_AMOUNTS[currentPurpose] || [60, 120, 250]; // declare and set default
 
       // configure and run raiseNow widget
       window.rnw.tamaro.runWidget(".rnw-widget-container", {
         language: pageLang,
         amounts: [
-          {
-            if: "paymentType() == onetime && purpose() == p6",
-            then: [25, 75, 150],
-          },
-          {
-            if: "paymentType() == onetime && purpose() == p7",
-            then: [45, 95, 150],
-          },
-          {
-            if: "paymentType() == onetime && purpose() == p9",
-            then: [45, 75, 150],
-          },
-          {
-            if: "paymentType() == onetime && purpose() == p10",
-            then: [45, 100, 150],
-          },
-          {
-            if: "paymentType() == onetime && purpose() == p11",
-            then: [45, 100, 150],
-          },
-          {
-            if: "paymentType() == onetime && purpose() == p12",
-            then: [45, 75, 150],
-          },
-          {
-            if: "paymentType() == onetime && purpose() == p13",
-            then: [25, 50, 100],
-          },
-          {
-            if: "paymentType() == onetime && purpose() == p14",
-            then: [25, 75, 150],
-          },
-          {
-            if: "paymentType() == onetime && purpose() == p15",
-            then: [45, 75, 120],
-          },
-          {
-            if: "paymentType() == onetime && purpose() == p16",
-            then: [45, 95, 150],
-          },
-          {
-            if: "paymentType() == onetime && purpose() == p17",
-            then: [45, 75, 150],
-          },
-          {
-            if: "paymentType() == onetime && purpose() == p18",
-            then: [45, 90, 150],
-          },
-          {
-            if: "paymentType() == onetime && purpose() == p19",
-            then: [125, 250, 375],
-          },
-          {
-            if: "paymentType() == onetime && purpose() == p20",
-            then: [5, 10, 20],
-          },
+          ...Object.keys(PURPOSE_AMOUNTS).map(function (purpose) {
+            return {
+              if: "paymentType() == onetime && purpose() == " + purpose,
+              then: PURPOSE_AMOUNTS[purpose],
+            };
+          }),
           {
             if: "paymentType() == onetime",
             then: currentAmounts, // default or page-specific value
@@ -252,28 +304,7 @@ var intervalLoopForRnw = setInterval(function () {
         */
         translations: {
           de: {
-            purposes: {
-              p1: "Hilfe für Kinder und Jugendliche in der Schweiz",
-              p2: "Hilfe für Kinder und Jugendliche in der Schweiz", 
-              p3: "Hilfe für Kinder und Jugendliche in der Schweiz",
-              p4: "Hilfe für Kinder und Jugendliche in der Schweiz",
-              p5: "Hilfe für Kinder und Jugendliche in der Schweiz",
-              p6: "Hilfe für Kinder und Jugendliche in der Schweiz",
-              p7: "Hilfe für Kinder und Jugendliche in der Schweiz", 
-              p8: "Hilfe für Kinder und Jugendliche in der Schweiz",
-              p9: "Hilfe für Kinder und Jugendliche in der Schweiz", 
-              p10: "Hilfe für Kinder und Jugendliche in der Schweiz",
-              p11: "Hilfe für Kinder und Jugendliche in der Schweiz",
-              p12: "Hilfe für Kinder und Jugendliche in der Schweiz",
-              p13: "Hilfe für Kinder und Jugendliche in der Schweiz",
-              p14: "Hilfe für Kinder und Jugendliche in der Schweiz",
-              p15: "Hilfe für Kinder und Jugendliche in der Schweiz",
-              p16: "Hilfe für Kinder und Jugendliche in der Schweiz",
-              p17: "Hilfe für Kinder und Jugendliche in der Schweiz",
-              p18: "Hilfe für Kinder und Jugendliche in der Schweiz",
-              p19: "Hilfe für Kinder und Jugendliche in der Schweiz",
-              p20: "Parkplatz",
-            },
+            purposes: buildPurposeTranslations("Hilfe für Kinder und Jugendliche in der Schweiz"),
             payment_form: {
               stored_cover_transaction_fee: `
                 Ja, ich möchte die Transaktionsgebühren von %% toUpperCase(currency()) %% %% formattedFeeAmount() %% übernehmen, damit meine Spende vollumfänglich an Pro Juventute geht.
@@ -281,28 +312,7 @@ var intervalLoopForRnw = setInterval(function () {
             },
           },
           fr: {
-            purposes: {
-              p1: "Aide pour enfants et des jeunes en Suisse",
-              p2: "Aide pour enfants et des jeunes en Suisse", 
-              p3: "Aide pour enfants et des jeunes en Suisse",
-              p4: "Aide pour enfants et des jeunes en Suisse",
-              p5: "Aide pour enfants et des jeunes en Suisse",
-              p6: "Aide pour enfants et des jeunes en Suisse",
-              p7: "Aide pour enfants et des jeunes en Suisse", 
-              p8: "Aide pour enfants et des jeunes en Suisse",
-              p9: "Aide pour enfants et des jeunes en Suisse", 
-              p10: "Aide pour enfants et des jeunes en Suisse",
-              p11: "Aide pour enfants et des jeunes en Suisse",
-              p12: "Aide pour enfants et des jeunes en Suisse",
-              p13: "Aide pour enfants et des jeunes en Suisse",
-              p14: "Aide pour enfants et des jeunes en Suisse",
-              p15: "Aide pour enfants et des jeunes en Suisse",
-              p16: "Aide pour enfants et des jeunes en Suisse",
-              p17: "Aide pour enfants et des jeunes en Suisse",
-              p18: "Aide pour enfants et des jeunes en Suisse",
-              p19: "Aide pour enfants et des jeunes en Suisse",
-              p20: "Parkplatz",
-            },
+            purposes: buildPurposeTranslations("Aide pour enfants et des jeunes en Suisse"),
             payment_form: {
               stored_cover_transaction_fee: `
                 Oui, je souhaite prendre en charge les frais de transaction de %% toUpperCase(currency()) %% %% formattedFeeAmount() %% afin que mon don parvienne entièrement à Pro Juventute.
@@ -310,28 +320,7 @@ var intervalLoopForRnw = setInterval(function () {
             },
           },
           it: {
-            purposes: {
-              p1: "Aiuto per bambini e giovani in Svizzera",
-              p2: "Aiuto per bambini e giovani in Svizzera", 
-              p3: "Aiuto per bambini e giovani in Svizzera",
-              p4: "Aiuto per bambini e giovani in Svizzera",
-              p5: "Aiuto per bambini e giovani in Svizzera",
-              p6: "Aiuto per bambini e giovani in Svizzera",
-              p7: "Aiuto per bambini e giovani in Svizzera", 
-              p8: "Aiuto per bambini e giovani in Svizzera",
-              p9: "Aiuto per bambini e giovani in Svizzera", 
-              p10: "Aiuto per bambini e giovani in Svizzera",
-              p11: "Aiuto per bambini e giovani in Svizzera",
-              p12: "Aiuto per bambini e giovani in Svizzera",
-              p13: "Aiuto per bambini e giovani in Svizzera",
-              p14: "Aiuto per bambini e giovani in Svizzera",
-              p15: "Aiuto per bambini e giovani in Svizzera",
-              p16: "Aiuto per bambini e giovani in Svizzera",
-              p17: "Aiuto per bambini e giovani in Svizzera",
-              p18: "Aiuto per bambini e giovani in Svizzera",
-              p19: "Aiuto per bambini e giovani in Svizzera",
-              p20: "Parkplatz",
-            },
+            purposes: buildPurposeTranslations("Aiuto per bambini e giovani in Svizzera"),
             payment_form: {
               stored_cover_transaction_fee: `
                 Sì, desidero coprire le spese di transazione di %% toUpperCase(currency()) %% %% formattedFeeAmount() %% affinché la mia donazione venga destinata interamente a Pro Juventute.
@@ -367,275 +356,11 @@ var intervalLoopForRnw = setInterval(function () {
         }
         */
         // set campaign id according to payment method and purpose
-        switch (event.data.api.paymentForm.data.payment_method) {
-          case "paypal":  // Paypal - replacing "pp" since tamaro v2.8.3
-          case "pp":      // Paypal
-            switch (event.data.api.paymentForm.data.purpose) {
-              default:
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002FKzUQAW";
-                break;
-              case "p4":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002FKzuQAG";
-                break;
-              case "p5":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002FL0zQAG";
-                break;
-              case "p20":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002CkSXQA0";
-                break;
-              // note: RaiseNow allows max. 20 different purposes
-            }
-            break;
-          case "chqr":            // QR Rechnung
-          case "dd":              // Lastschriftverfahren / Direct Debit
-//        case 'ezs':             // Einzahlungsschein
-          case "qr-bill":         // QR Rechnung
-          case "ch_qr_reference": // QR Rechnung (SD-18716)
-            switch (event.data.api.paymentForm.data.purpose) {
-              case "p1":
-              default:
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002FKzZQAW";
-                break;
-              case "p2":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj00000bkXDaIAM";
-                break;
-              case "p3":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj00000NHXASIA5";
-                break;
-              case "p4":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002FL03QAG";
-                break;
-              case "p5":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002FL10QAG";
-                break;
-              case "p6":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj00000TmDTmIAN";
-                break;
-              case "p7":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj00000gfcSZIAY";
-                break;
-              case "p8":
-                switch(event.data.api.paymentForm.data.payment_type) {
-                  case "onetime":
-                  default:
-                    event.data.api.paymentForm.data.stored_campaign_id =
-                      "701Vj00000CfjH6IAJ";
-                    break;
-                  case "recurring":
-                    event.data.api.paymentForm.data.stored_campaign_id =
-                      "7013X000002FKzZQAW";
-                    break;
-                }
-                break;
-              case "p9":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj00000cmmR6IAI";
-                break;
-              case "p10":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj00000KXGLsIAP";
-                break;
-              case "p11":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj00000KXM34IAH";
-                break;
-              case "p12":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj00000TGKOkIAP";
-                break;
-              case "p13":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj00000KgaV6IAJ";
-                break;
-              case "p14":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj00000VdyaNIAR";
-                break;
-              case "p15":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj00000RkmLSIAZ";
-                break;
-              case "p16":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj00000dNR2hIAG";
-                break;
-              case "p17":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj00000XEWxwIAH";
-                break;
-              case "p18":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj00000b22JnIAI";
-                break;
-              case "p19":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj00000TVCH7IAP";
-                break;
-              case "p20":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002CkSSQA0";
-                break;
-              // note: RaiseNow allows max. 20 different purposes
-            }
-            break;
-          case "twint":   // Twint - cf. SD-11883
-          case "twi":     // Twint
-          case "card":    // Kreditkarte - replacing "vis" and "eca" since tamaro v2.8.3
-          case "vis":     // Kreditkarte - Visa
-          case "eca":     // Kreditkarte - Mastercard
-          case "pfc":     // Postfinance
-          default:
-            switch (event.data.api.paymentForm.data.purpose) {
-              case "p1":
-              default:
-                switch(event.data.api.paymentForm.data.payment_type) {
-                  case "onetime":
-                  default:
-                    event.data.api.paymentForm.data.stored_campaign_id =
-                      "7013X000002FKzKQAW";
-                    break;
-                  case "recurring":
-                    event.data.api.paymentForm.data.stored_campaign_id =
-                      "701Vj00000BZZB5IAP";
-                    break;
-                }
-                break;
-              case "p2":
-                switch(event.data.api.paymentForm.data.payment_type) {
-                  case "onetime":
-                  default:
-                    event.data.api.paymentForm.data.stored_campaign_id =
-                      "701Vj00000bkZWyIAM";
-                    break;
-                  case "recurring":
-                    event.data.api.paymentForm.data.stored_campaign_id =
-                      "701Vj00000bkarDIAQ";
-                    break;
-                }
-                break;
-              case "p3":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj00000NHbdqIAD";
-                break;
-              case "p4":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002FKztQAG";
-                break;
-              case "p5":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002FL0vQAG";
-                break;
-              case "p6":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj00000TmJVwIAN";
-                break;
-              case "p7":
-                switch(event.data.api.paymentForm.data.payment_type) {
-                  case "onetime":
-                  default:
-                    event.data.api.paymentForm.data.stored_campaign_id =
-                      "701Vj00000gfXj5IAE";
-                    break;
-                  case "recurring":
-                    event.data.api.paymentForm.data.stored_campaign_id =
-                      "701Vj00000gfMCZIA2";
-                    break;
-                }
-                break;
-              case "p8":
-                switch(event.data.api.paymentForm.data.payment_type) {
-                  case "onetime":
-                  default:
-                    event.data.api.paymentForm.data.stored_campaign_id =
-                      "701Vj00000CfiB4IAJ";
-                    break;
-                  case "recurring":
-                    event.data.api.paymentForm.data.stored_campaign_id =
-                      "701Vj00000BZZB5IAP";
-                    break;
-                }
-                break;
-              case "p9":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj00000cmndJIAQ";
-                break;
-              case "p10":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj00000KXKA8IAP";
-                break;
-              case "p11":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj00000KXEf3IAH";
-                break;
-              case "p12":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj00000TGJfdIAH";
-                break;
-              case "p13":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj00000KgbsWIAR";
-                break;
-              case "p14":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj00000Ve0XLIAZ";
-                break;
-              case "p15":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj00000RknsbIAB";
-                break;
-              case "p16":
-                switch(event.data.api.paymentForm.data.payment_type) {
-                  case "onetime":
-                  default:
-                    event.data.api.paymentForm.data.stored_campaign_id =
-                      "701Vj00000dNTHNIA4";
-                    break;
-                  case "recurring":
-                    event.data.api.paymentForm.data.stored_campaign_id =
-                      "701Vj00000dNSOYIA4";
-                    break;
-                }
-                break;
-              case "p17":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj00000XEaYXIA1";
-                break;
-              case "p18":
-                switch(event.data.api.paymentForm.data.payment_type) {
-                  case "onetime":
-                  default:
-                    event.data.api.paymentForm.data.stored_campaign_id =
-                      "701Vj00000b1q5sIAA";
-                    break;
-                  case "recurring":
-                    event.data.api.paymentForm.data.stored_campaign_id =
-                      "701Vj00000b208LIAQ";
-                    break;
-                }
-                break;
-              case "p19":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "701Vj00000TV0FzIAL";
-                break;
-              case "p20":
-                event.data.api.paymentForm.data.stored_campaign_id =
-                  "7013X000002CkSNQA0";
-                break;
-              // note: RaiseNow allows max. 20 different purposes
-            }
-            break;
-        };
+        event.data.api.paymentForm.data.stored_campaign_id = getCampaignId(
+          event.data.api.paymentForm.data.payment_method,
+          event.data.api.paymentForm.data.purpose,
+          event.data.api.paymentForm.data.payment_type
+        );
       });
       
       // trigger tracking (GTM) event on render to re-init event listeners

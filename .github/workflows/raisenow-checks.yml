@@ -1,0 +1,26 @@
+name: RaiseNow checks
+
+# scoped to raisenow/ so other top-level snippet folders in this repo don't trigger it
+on:
+  push:
+    paths:
+      - "raisenow/**"
+      - ".github/workflows/raisenow-checks.yml"
+  pull_request:
+    paths:
+      - "raisenow/**"
+      - ".github/workflows/raisenow-checks.yml"
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      # mirrors raisenow/AGENTS.md "Required Checks"
+      - run: node --test raisenow/widget_core.test.js
+      - run: node --check raisenow/widget_style.js
+      - run: node --check raisenow/widget_core.js
+      - run: node --check raisenow/widget_config.js

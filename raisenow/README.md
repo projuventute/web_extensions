@@ -22,6 +22,8 @@ node --check raisenow/widget_config.js
 
 Test the donation page in Edge and Chrome after any loader or startup change.
 
+These checks also run automatically in CI (`.github/workflows/raisenow-checks.yml`) on any push or pull request touching `raisenow/**`.
+
 ## Publish A Version
 
 1. Update version comment at top of `widget_config.js`.
@@ -60,3 +62,21 @@ This is accepted because:
 - The donation form itself (card/IBAN entry) already runs on RaiseNow's infrastructure; this is the same trust boundary the whole integration depends on.
 
 No first-party analytics beyond Google Tag Manager (GTM) reads from `window.dataLayer`; tracking pushed here is first-party only.
+
+## Dynamically-Inserted Scripts
+
+`widget_core.js` creates the `<script>` tag via `document.createElement` and appends it after DOM-ready. Browsers always run such dynamically-inserted scripts asynchronously; the HTML `defer`/`async` attributes only affect scripts the parser finds in the initial HTML, so setting them here has no effect and was removed. Since this loader only inserts one script, execution order is not a concern.
+
+If a future change needs to dynamically insert more than one script and preserve their relative order, set the `async` *property* (not the HTML attribute) to `false` right after `createElement`:
+
+```js
+var script = document.createElement("script");
+script.src = "...";
+script.async = false; // forces in-order execution once each script finishes downloading
+document.head.append(script);
+```
+
+## References
+
+- Purpose ID glossary (which `p1`-`p20` maps to which campaign/page): [Confluence — Spendenwidget Tamaro](https://projuventute.atlassian.net/wiki/spaces/SFCRM/pages/3010330677/Spendenwidget+Tamaro)
+- RaiseNow Tamaro widget documentation: [docs.raisenow.com/elements/tamaro](https://docs.raisenow.com/elements/tamaro)
