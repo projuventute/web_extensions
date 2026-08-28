@@ -16,7 +16,7 @@ var widgetStyleInnerText = `
       --tamaro-info-icon-color: #fbbb21 !important;
       /*--tamaro-error-color*/
       --tamaro-button-color: #fbbb21 !important;
-      --tamaro-button-color__hover: #f0eeeb !important;
+      --tamaro-button-color__hover: #fbbb21 !important;
       --tamaro-button-bg-color: #f0eeeb !important;
       --tamaro-button-bg-color__hover: #f0eeeb !important;
       --tamaro-button-border-color: #fbbb21 !important;

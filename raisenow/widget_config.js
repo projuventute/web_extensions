@@ -1,4 +1,4 @@
-// v2.13.0 - 2026-07-30 - SD-23224: Ferienfonds August-Mailing
+// v3.0.0 - 2026-08-28 - Fix button contrast/hover, validate page language, scope interval var
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -49,7 +49,7 @@ function getSpidCookie() {
 var secondsToWaitForRnw = 15;
 
 var intervalCounterForRnw = 1;
-intervalLoopForRnw = setInterval(function () {
+var intervalLoopForRnw = setInterval(function () {
   var styleLoaded = document.head.querySelector('style[id="spendenwidget"]');
   if (
     typeof window.rnw === "object" &&
@@ -66,11 +66,13 @@ intervalLoopForRnw = setInterval(function () {
     ) {
       // determine language of widget
       // get page language from meta tag - preferred over uri
+      const supportedLanguages = ["de", "fr", "it", "en"];
       const pageLang_meta = document.head.querySelector(
         'meta[http-equiv="content-language"]'
       )?.content;
+      const pageLang_metaNormalized = pageLang_meta?.toLowerCase().split("-")[0];
       var pageLang = "de"; // declare and set default
-      if (!pageLang_meta) {
+      if (!pageLang_metaNormalized || !supportedLanguages.includes(pageLang_metaNormalized)) {
         // get page language from uri
         if (window.location.href.match(/\/fr\//)) {
           pageLang = "fr";
@@ -82,7 +84,7 @@ intervalLoopForRnw = setInterval(function () {
           pageLang = "de"; // practically defines the global fallback
         }
       } else {
-        pageLang = pageLang_meta;
+        pageLang = pageLang_metaNormalized;
       }
 
       // set default purpose and amounts based on page uri
