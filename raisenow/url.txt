@@ -1,4 +1,8 @@
 https://cdn.jsdelivr.net/combine/gh/projuventute/web_extensions@v0.0.2/raisenow/widget_core.min.js,gh/projuventute/web_extensions@v0.0.2/raisenow/widget_config.min.js,gh/projuventute/web_extensions@v0.0.2/raisenow/widget_style.min.js
 
 
+purge:
+https://www.jsdelivr.com/tools/purge
 https://cdn.jsdelivr.net/gh/projuventute/web_extensions@latest/raisenow/widget_config.js
+https://cdn.jsdelivr.net/gh/projuventute/web_extensions@latest/raisenow/widget_core.js
+https://cdn.jsdelivr.net/gh/projuventute/web_extensions@latest/raisenow/widget_style.js
