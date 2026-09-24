@@ -1,4 +1,4 @@
-// v3.2.0 - 2026-08-28 - Extract PURPOSE_AMOUNTS/CAMPAIGN_IDS tables, dedupe translations, add campaign-id test
+// v3.3.0 - 2026-09-24 - SD-24253: Herbstkampagne 2026 (p12, p14, p6, p17; p19 folgt)
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -59,18 +59,18 @@ const CAMPAIGN_IDS = {
     p3: "701Vj00000NHXASIA5",
     p4: "7013X000002FL03QAG",
     p5: "7013X000002FL10QAG",
-    p6: "701Vj00000TmDTmIAN",
+    p6: "701Vj00000jBg3iIAC",
     p7: "701Vj00000gfcSZIAY",
     p8: { onetime: "701Vj00000CfjH6IAJ", recurring: "7013X000002FKzZQAW" },
     p9: "701Vj00000cmmR6IAI",
     p10: "701Vj00000KXGLsIAP",
     p11: "701Vj00000KXM34IAH",
-    p12: "701Vj00000TGKOkIAP",
+    p12: "701Vj00000jBdiXIAS",
     p13: "701Vj00000KgaV6IAJ",
-    p14: "701Vj00000VdyaNIAR",
+    p14: "701Vj00000jBdiXIAS",
     p15: "701Vj00000RkmLSIAZ",
     p16: "701Vj00000dNR2hIAG",
-    p17: "701Vj00000XEWxwIAH",
+    p17: "701Vj00000jUiUnIAK",
     p18: "701Vj00000b22JnIAI",
     p19: "701Vj00000TVCH7IAP",
     p20: "7013X000002CkSSQA0",
@@ -81,18 +81,18 @@ const CAMPAIGN_IDS = {
     p3: "701Vj00000NHbdqIAD",
     p4: "7013X000002FKztQAG",
     p5: "7013X000002FL0vQAG",
-    p6: "701Vj00000TmJVwIAN",
+    p6: "701Vj00000jBet7IAC",
     p7: { onetime: "701Vj00000gfXj5IAE", recurring: "701Vj00000gfMCZIA2" },
     p8: { onetime: "701Vj00000CfiB4IAJ", recurring: "701Vj00000BZZB5IAP" },
     p9: "701Vj00000cmndJIAQ",
     p10: "701Vj00000KXKA8IAP",
     p11: "701Vj00000KXEf3IAH",
-    p12: "701Vj00000TGJfdIAH",
+    p12: { onetime: "701Vj00000jBDWMIA4", recurring: "701Vj00000jBjRLIA0" },
     p13: "701Vj00000KgbsWIAR",
-    p14: "701Vj00000Ve0XLIAZ",
+    p14: { onetime: "701Vj00000jBDWMIA4", recurring: "701Vj00000jBjRLIA0" },
     p15: "701Vj00000RknsbIAB",
     p16: { onetime: "701Vj00000dNTHNIA4", recurring: "701Vj00000dNSOYIA4" },
-    p17: "701Vj00000XEaYXIA1",
+    p17: { onetime: "701Vj00000jUUA8IAO", recurring: "701Vj00000jUdoSIAS" },
     p18: { onetime: "701Vj00000b1q5sIAA", recurring: "701Vj00000b208LIAQ" },
     p19: "701Vj00000TV0FzIAL",
     p20: "7013X000002CkSNQA0",
@@ -190,17 +190,17 @@ var intervalLoopForRnw = setInterval(function () {
       // single source of truth for per-purpose amount defaults (SD-23224 cleanup: was duplicated
       // between this page-uri lookup and the runWidget "amounts" conditions below)
       var PURPOSE_AMOUNTS = {
-        p6: [25, 75, 150],
+        p6: [10, 25, 50],
         p7: [45, 95, 150],
         p9: [45, 75, 150],
         p10: [45, 100, 150],
         p11: [45, 100, 150],
-        p12: [45, 75, 150],
+        p12: [45, 95, 150],
         p13: [25, 50, 100],
-        p14: [25, 75, 150],
+        p14: [45, 95, 150],
         p15: [45, 75, 120],
         p16: [45, 95, 150],
-        p17: [45, 75, 150],
+        p17: [45, 95, 150],
         p18: [45, 90, 150],
         p19: [125, 250, 375],
         p20: [5, 10, 20],
@@ -218,11 +218,11 @@ var intervalLoopForRnw = setInterval(function () {
         currentPurpose = "p11";
       } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/zuhoeren-kann-leben-retten-unternehmen.*/)) {
         currentPurpose = "p19";
-      } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/zuhoeren-kann-leben-retten-social-do.*|.*\/fr\/soutenir\/dons\/ecouter-peut-sauver-des-vies-social-do.*|.*\/it\/supporto\/donare\/ascoltare-puo-salvare-vite-social-do.*/)) {
+      } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/hk26-damit-sorgen-weniger-werden-social.*|.*\/fr\/soutenir\/dons\/hk26-pour-alleger-les-soucis-social.*|.*\/it\/supporto\/hk26-per-ridurre-le-preoccupazioni-social.*/)) { // SD-24253
         currentPurpose = "p14";
-      } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/zuhoeren-kann-leben-retten-mitmachen-bestaetigung.*|.*\/fr\/soutenir\/dons\/ecouter-peut-sauver-des-vies-participer-confirmation.*|.*\/it\/supporto\/donare\/ascoltare-puo-salvare-vite-participare-confirmazione.*/)) {
+      } else if (window.location.href.match(/.*\/hk26-sticker-voting-bestaetigung.*|.*\/hk26-sticker-voting-confirmation.*|.*\/hk26-sticker-voting-conferma.*/)) { // SD-24253
         currentPurpose = "p6";
-      } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/zuhoeren-kann-leben-retten.*|.*\/fr\/soutenir\/dons\/ecouter-peut-sauver-des-vies.*|.*\/it\/supporto\/donare\/ascoltare-puo-salvare-vite.*/)) {
+      } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/hk26-damit-sorgen-weniger-werden.*|.*\/fr\/soutenir\/dons\/hk26-pour-alleger-les-soucis.*|.*\/it\/supporto\/hk26-per-ridurre-le-preoccupazioni.*/)) { // SD-24253
         currentPurpose = "p12";
       } else if (window.location.href.match(/.*\/de\/bestaetigung-ich-bin-der-kleine-hase.*|.*\/fr\/confirmation-petit-lapin.*|.*\/it\/confirmazione-piacere-sono-coniglietto.*/)) {
         currentPurpose = "p13";
