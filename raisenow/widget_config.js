@@ -1,4 +1,4 @@
-// v3.4.0 - 2026-10-06 - SD-24550: Herbstkampagne 2026 Appell-Spendenseite (p19)
+// v3.4.1 - 2026-10-06 - SD-24574: fix Herbstkampagne campaign ids (p12, p14)
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -65,9 +65,9 @@ const CAMPAIGN_IDS = {
     p9: "701Vj00000cmmR6IAI",
     p10: "701Vj00000KXGLsIAP",
     p11: "701Vj00000KXM34IAH",
-    p12: "701Vj00000jBdiXIAS",
+    p12: "701Vj00000jAcLSIA0",
     p13: "701Vj00000KgaV6IAJ",
-    p14: "701Vj00000jBdiXIAS",
+    p14: "701Vj00000kIdzlIAC",
     p15: "701Vj00000RkmLSIAZ",
     p16: "701Vj00000dNR2hIAG",
     p17: "701Vj00000jUiUnIAK",
@@ -89,7 +89,7 @@ const CAMPAIGN_IDS = {
     p11: "701Vj00000KXEf3IAH",
     p12: { onetime: "701Vj00000jBDWMIA4", recurring: "701Vj00000jBjRLIA0" },
     p13: "701Vj00000KgbsWIAR",
-    p14: { onetime: "701Vj00000jBDWMIA4", recurring: "701Vj00000jBjRLIA0" },
+    p14: { onetime: "701Vj00000kJ5zBIAS", recurring: "701Vj00000kJ3V9IAK" },
     p15: "701Vj00000RknsbIAB",
     p16: { onetime: "701Vj00000dNTHNIA4", recurring: "701Vj00000dNSOYIA4" },
     p17: { onetime: "701Vj00000jUUA8IAO", recurring: "701Vj00000jUdoSIAS" },
