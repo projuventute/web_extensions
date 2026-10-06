@@ -218,7 +218,7 @@ test("maps payment method, purpose, and payment type to the correct Salesforce c
       p16: "701Vj00000dNR2hIAG",
       p17: "701Vj00000jUiUnIAK",
       p18: "701Vj00000b22JnIAI",
-      p19: "701Vj00000TVCH7IAP",
+      p19: "701Vj00000jBdiXIAS",
       p20: "7013X000002CkSSQA0",
     },
     vis: { // card / twint / postfinance group
@@ -240,7 +240,7 @@ test("maps payment method, purpose, and payment type to the correct Salesforce c
       p16: { onetime: "701Vj00000dNTHNIA4", recurring: "701Vj00000dNSOYIA4" },
       p17: { onetime: "701Vj00000jUUA8IAO", recurring: "701Vj00000jUdoSIAS" },
       p18: { onetime: "701Vj00000b1q5sIAA", recurring: "701Vj00000b208LIAQ" },
-      p19: "701Vj00000TV0FzIAL",
+      p19: { onetime: "701Vj00000jB5duIAC", recurring: "701Vj00000kFCT0IAO" },
       p20: "7013X000002CkSNQA0",
     },
   };
@@ -341,7 +341,9 @@ test("resolves purpose, per-purpose amounts, and median prefill amount from the 
     ["https://www.projuventute.ch/de/helfen/spenden/kleiner-hase", "p10", 100],
     ["https://www.projuventute.ch/it/supporto/donare/coniglietto", "p10", 100],
     ["https://www.projuventute.ch/de/helfen/spenden/kleine-maus", "p11", 100],
-    ["https://www.projuventute.ch/de/helfen/spenden/zuhoeren-kann-leben-retten-unternehmen", "p19", 250],
+    ["https://www.projuventute.ch/de/helfen/spenden/hk26-appell-3-spenden", "p19", 25],
+    ["https://www.projuventute.ch/fr/soutenir/dons/hk26-appel-3-spenden", "p19", 25],
+    ["https://www.projuventute.ch/it/supporto/hk26-appello-3-spenden", "p19", 25],
     ["https://www.projuventute.ch/de/helfen/spenden/hk26-damit-sorgen-weniger-werden-social", "p14", 95],
     ["https://www.projuventute.ch/fr/soutenir/dons/hk26-pour-alleger-les-soucis-social", "p14", 95],
     ["https://www.projuventute.ch/it/supporto/hk26-per-ridurre-le-preoccupazioni-social", "p14", 95],

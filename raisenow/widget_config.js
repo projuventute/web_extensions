@@ -1,4 +1,4 @@
-// v3.3.0 - 2026-09-24 - SD-24253: Herbstkampagne 2026 (p12, p14, p6, p17; p19 folgt)
+// v3.4.0 - 2026-10-06 - SD-24550: Herbstkampagne 2026 Appell-Spendenseite (p19)
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -72,7 +72,7 @@ const CAMPAIGN_IDS = {
     p16: "701Vj00000dNR2hIAG",
     p17: "701Vj00000jUiUnIAK",
     p18: "701Vj00000b22JnIAI",
-    p19: "701Vj00000TVCH7IAP",
+    p19: "701Vj00000jBdiXIAS",
     p20: "7013X000002CkSSQA0",
   },
   card: {
@@ -94,7 +94,7 @@ const CAMPAIGN_IDS = {
     p16: { onetime: "701Vj00000dNTHNIA4", recurring: "701Vj00000dNSOYIA4" },
     p17: { onetime: "701Vj00000jUUA8IAO", recurring: "701Vj00000jUdoSIAS" },
     p18: { onetime: "701Vj00000b1q5sIAA", recurring: "701Vj00000b208LIAQ" },
-    p19: "701Vj00000TV0FzIAL",
+    p19: { onetime: "701Vj00000jB5duIAC", recurring: "701Vj00000kFCT0IAO" },
     p20: "7013X000002CkSNQA0",
   },
 };
@@ -202,7 +202,7 @@ var intervalLoopForRnw = setInterval(function () {
         p16: [45, 95, 150],
         p17: [45, 95, 150],
         p18: [45, 90, 150],
-        p19: [125, 250, 375],
+        p19: [10, 25, 50],
         p20: [5, 10, 20],
       };
 
@@ -216,7 +216,7 @@ var intervalLoopForRnw = setInterval(function () {
         currentPurpose = "p10";
       } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/kleine-maus.*|.*\/fr\/soutenir\/dons\/petite-souris.*|.*\/it\/supporto\/donare\/topino.*/)) {
         currentPurpose = "p11";
-      } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/zuhoeren-kann-leben-retten-unternehmen.*/)) {
+      } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/hk26-appell-3-spenden.*|.*\/fr\/soutenir\/dons\/hk26-appel-3-spenden.*|.*\/it\/supporto\/hk26-appello-3-spenden.*/)) { // SD-24550
         currentPurpose = "p19";
       } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/hk26-damit-sorgen-weniger-werden-social.*|.*\/fr\/soutenir\/dons\/hk26-pour-alleger-les-soucis-social.*|.*\/it\/supporto\/hk26-per-ridurre-le-preoccupazioni-social.*/)) { // SD-24253
         currentPurpose = "p14";
