@@ -1,4 +1,4 @@
-// v3.4.1 - 2026-10-06 - SD-24574: fix Herbstkampagne campaign ids (p12, p14)
+// v3.4.2 - 2026-10-08 - SD-24574: p14 page uri renamed -social -> -direkt
 
 // window.console.log('[raiseNow widget config] start');
 
@@ -218,7 +218,7 @@ var intervalLoopForRnw = setInterval(function () {
         currentPurpose = "p11";
       } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/hk26-appell-3-spenden.*|.*\/fr\/soutenir\/dons\/hk26-appel-3-spenden.*|.*\/it\/supporto\/hk26-appello-3-spenden.*/)) { // SD-24550
         currentPurpose = "p19";
-      } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/hk26-damit-sorgen-weniger-werden-social.*|.*\/fr\/soutenir\/dons\/hk26-pour-alleger-les-soucis-social.*|.*\/it\/supporto\/hk26-per-ridurre-le-preoccupazioni-social.*/)) { // SD-24253
+      } else if (window.location.href.match(/.*\/de\/helfen\/spenden\/hk26-damit-sorgen-weniger-werden-direkt.*|.*\/fr\/soutenir\/dons\/hk26-pour-alleger-les-soucis-direkt.*|.*\/it\/supporto\/hk26-per-ridurre-le-preoccupazioni-direkt.*/)) { // SD-24253; URL renamed -social -> -direkt (SD-24574)
         currentPurpose = "p14";
       } else if (window.location.href.match(/.*\/hk26-sticker-voting-bestaetigung.*|.*\/hk26-sticker-voting-confirmation.*|.*\/hk26-sticker-voting-conferma.*/)) { // SD-24253
         currentPurpose = "p6";
